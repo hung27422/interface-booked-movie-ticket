@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-white: #ffffff;
+  --black-color: #171717;
+  --font-barlow: "Barlow", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,13 +16,39 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--black-color);
+  font-family: var(--font-barlow);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+@layer components {
+}
+.navbar {
+  border-bottom: 3px solid #9400ff; /* Đường viền màu tím neon */
+  box-shadow: 0px 4px 10px rgba(148, 0, 255, 0.5); /* Hiệu ứng sáng */
+}
+
+.glowing-border-bottom {
+  padding: 15px 20px;
+  box-shadow: 0px 2px 5px rgba(160, 0, 229, 0.6);
+  border-bottom: 2px solid #a000e5;
+}
+.tech-border {
+  position: relative;
+  border: 2px solid #00eaff; /* Màu viền chính */
+  border-radius: 10px;
+  box-shadow: 0 0 2px #00eaff, 0 0 2px #7d2aff, 0 0 3px #7d2aff;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Hiệu ứng hover để viền đổi màu */
+.tech-border:hover {
+  box-shadow: 0 0 6px #ff00ff, 0 0 10px #00eaff, 0 0 12px #00eaff;
+  border-color: #ff00ff;
 }
