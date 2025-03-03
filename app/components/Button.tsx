@@ -8,11 +8,19 @@ interface ButtonProps {
   >;
   onClick?: () => void;
   title: string;
+  className?: string;
+  size?: OverridableStringUnion<"small" | "medium" | "large">;
 }
-function Button({ title, variant, color, onClick }: ButtonProps) {
+function Button({ title, variant, color, size, className, onClick }: ButtonProps) {
   return (
     <Box>
-      <ButtonMUI variant={variant} color={color} onClick={onClick}>
+      <ButtonMUI
+        size={size}
+        className={className}
+        variant={variant}
+        color={color}
+        onClick={onClick}
+      >
         {title}
       </ButtonMUI>
     </Box>

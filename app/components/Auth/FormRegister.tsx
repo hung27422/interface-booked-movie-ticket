@@ -17,25 +17,37 @@ const style = {
 };
 interface FormRegisterProps {
   setIsLoginPage: (value: boolean) => void;
+  setOpen: (value: boolean) => void;
 }
 const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) => {
   return (
     <Box ref={ref} sx={style} {...props}>
-      <Typography
-        className="text-3xl text-center font-bold"
-        id="modal-modal-title"
-        variant="h6"
-        component="h2"
-      >
-        ĐĂNG KÝ
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box></Box>
+        <Typography
+          className="text-3xl text-center font-bold"
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+        >
+          ĐĂNG KÝ
+        </Typography>
+        <Button
+          className="text-sm"
+          title="X"
+          variant="outlined"
+          color="error"
+          size="small"
+          onClick={() => props.setOpen(false)}
+        />
+      </Box>
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
         <TextFieldInput label="Tài khoản" />
         <TextFieldInput label="Mật khẩu" />
         <TextFieldInput label="Nhập lại mật khẩu" />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Button title="Đăng Ký" variant="contained" color="primary" />
+          <Button className="text-lg" title="Đăng Ký" variant="outlined" color="primary" />
         </Box>
 
         <Typography sx={{ mt: 2, textAlign: "center" }}>

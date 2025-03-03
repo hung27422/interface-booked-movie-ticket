@@ -26,7 +26,7 @@ export default function RootLayout({
           <div>
             <Navbar />
           </div>
-          {children}
+          <div className="bg-[#0F0F0F] h-screen w-full">{children}</div>
         </div>
       </body>
     </html>

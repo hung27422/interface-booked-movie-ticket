@@ -12,7 +12,6 @@ const textFieldStyles = {
   fontWeight: "bold",
   textTransform: "uppercase",
   transition: "all 0.3s ease-in-out",
-
   "& .MuiOutlinedInput-root": {
     border: "2px solid #00eaff",
     borderRadius: "10px",
@@ -39,25 +38,27 @@ const textFieldStyles = {
   "& .MuiInputLabel-root": {
     color: "#fff",
     backgroundColor: "#121212",
-    padding: "4px 10px",
+    padding: "1px 10px",
     borderRadius: "8px",
     border: "none", // ❌ Không có viền mặc định
     position: "absolute",
     fontSize: "0.85rem",
     fontWeight: "bold",
     transition: "all 0.3s ease-in-out",
+    transform: "translate(14px, 12px) scale(1)",
   },
 
   // **Khi label focus hoặc có giá trị (hiện viền)**
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.MuiFormLabel-filled": {
-    border: "2px solid #00eaff", // ✅ Chỉ hiện viền khi focus
+    border: "2px solid #00eaff",
     boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
+    transform: "translate(14px, -12px) scale(0.85)",
   },
 };
 
 export default function SearchInput() {
   return (
-    <Stack spacing={2} sx={{ width: 300 }}>
+    <Stack spacing={2} sx={{ width: 400 }}>
       <Autocomplete
         className="text-white"
         freeSolo
@@ -65,18 +66,20 @@ export default function SearchInput() {
         disableClearable
         options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Tìm kiếm"
-            size="small"
-            sx={textFieldStyles}
-            slotProps={{
-              input: {
-                ...params.InputProps,
-                type: "search",
-              },
-            }}
-          />
+          <div>
+            <TextField
+              {...params}
+              label="Tìm kiếm"
+              size="small"
+              sx={textFieldStyles}
+              slotProps={{
+                input: {
+                  ...params.InputProps,
+                  type: "search",
+                },
+              }}
+            />
+          </div>
         )}
       />
     </Stack>

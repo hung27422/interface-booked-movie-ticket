@@ -52,3 +52,7 @@ body {
   box-shadow: 0 0 6px #ff00ff, 0 0 10px #00eaff, 0 0 12px #00eaff;
   border-color: #ff00ff;
 }
+.tech-border-focused {
+  box-shadow: 0 0 6px #ff00ff, 0 0 10px #00eaff, 0 0 12px #00eaff;
+  border-color: #ff00ff;
+}

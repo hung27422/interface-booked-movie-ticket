@@ -25,9 +25,9 @@ export default function ModalLAuth() {
         aria-describedby="modal-modal-description"
       >
         {isLoginPage ? (
-          <FormLogin setIsLoginPage={setIsLoginPage} />
+          <FormLogin setIsLoginPage={setIsLoginPage} setOpen={setOpen} />
         ) : (
-          <FormRegister setIsLoginPage={setIsLoginPage} />
+          <FormRegister setIsLoginPage={setIsLoginPage} setOpen={setOpen} />
         )}
       </Modal>
     </div>

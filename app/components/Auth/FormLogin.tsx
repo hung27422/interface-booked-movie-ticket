@@ -19,25 +19,37 @@ const style = {
 
 interface FormLoginProps {
   setIsLoginPage: (value: boolean) => void;
+  setOpen: (value: boolean) => void;
 }
 
 const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
   return (
     <Box tabIndex={-1} ref={ref} sx={style}>
-      <Typography
-        className="text-3xl text-center font-bold"
-        id="modal-modal-title"
-        variant="h6"
-        component="h2"
-      >
-        ĐĂNG NHẬP
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box></Box>
+        <Typography
+          className="text-3xl text-center font-bold"
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+        >
+          ĐĂNG NHẬP
+        </Typography>
+        <Button
+          className="text-sm"
+          title="X"
+          variant="outlined"
+          color="error"
+          size="small"
+          onClick={() => props.setOpen(false)}
+        />
+      </Box>
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
         <TextFieldInput label="Tài khoản" />
         <TextFieldInput label="Mật khẩu" />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Button title="Đăng Nhập" variant="contained" color="primary" />
+          <Button className="text-lg" title="Đăng Nhập" variant="outlined" color="primary" />
         </Box>
 
         <Typography sx={{ mt: 2, textAlign: "center" }}>
