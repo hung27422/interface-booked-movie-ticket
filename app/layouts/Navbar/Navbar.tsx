@@ -5,6 +5,7 @@ import Logo from "../../assets/images/Logo.png";
 import SearchInput from "@/app/components/SearchInput";
 import ModalLAuth from "@/app/components/Auth/ModalLAuth";
 import { usePathname } from "next/navigation";
+import DrawerNavbar from "@/app/components/DrawerNavbar";
 const menus = [
   {
     id: 1,
@@ -26,29 +27,49 @@ function Navbar() {
   const pathName = usePathname();
 
   return (
-    <div className="flex justify-between items-center h-20 py-3 px-40 border-b-2 border-red-500 glowing-border-bottom bg-[#121212] text-white">
-      <div className="flex items-center">
-        {menus.map((item) => {
-          return (
-            <Link
-              className={`mx-2 tech-border py-2 px-1 w-32 ${
-                pathName === item.path ? "tech-border-focused" : ""
-              }`}
-              href={`${item.path}`}
-              key={item.id}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+    <div className="navbar-wrapper">
+      {/* Drawer menu - Chỉ hiển thị khi màn hình nhỏ */}
+      <div className="lg:hidden">
+        <DrawerNavbar />
       </div>
-      <div className="tech-border p-2">
+
+      {/* Logo */}
+      <div className="p-2 text-center tech-border">
         <Link href={"/"}>
-          <Image className="" src={Logo} alt="Logo"></Image>
+          {/* Hiển thị desktop */}
+          <Image className="px-4 py-1 hidden md:block" src={Logo} alt="Logo" />
+
+          {/* Hiển thị mobile */}
+          <Image
+            className="px-4 py-1 block md:hidden"
+            src={Logo}
+            alt="Logo"
+            width={100}
+            height={60}
+          />
         </Link>
       </div>
+
+      {/* Menu - Chỉ hiển thị trên màn hình lớn */}
+      <div className="hidden lg:flex items-center">
+        {menus.map((item) => (
+          <Link
+            className={`w-32 mx-2 py-2 px-1 tech-border ${
+              pathName === item.path ? "tech-border-focused" : ""
+            }`}
+            href={`${item.path}`}
+            key={item.id}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* SearchInput + User - Search chỉ hiển thị trên màn hình lớn */}
       <div className="flex items-center">
-        <SearchInput />
+        <div className="hidden lg:block">
+          <SearchInput width={400} />
+        </div>
         <ModalLAuth />
       </div>
     </div>

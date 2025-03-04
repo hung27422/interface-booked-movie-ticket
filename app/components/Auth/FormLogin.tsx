@@ -10,7 +10,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: "rgba(0, 0, 0, 0.6)",
+  bgcolor: "rgba(0, 0, 0, 0.9)",
   border: "2px solid #ff00ff",
   boxShadow: 24,
   p: 4,
@@ -25,18 +25,21 @@ interface FormLoginProps {
 const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
   return (
     <Box tabIndex={-1} ref={ref} sx={style}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Box></Box>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <div className="w-16"></div>
+
         <Typography
-          className="text-3xl text-center font-bold"
+          className="text-3xl font-bold"
           id="modal-modal-title"
           variant="h6"
           component="h2"
+          sx={{ flexGrow: 1, textAlign: "center" }}
         >
           ĐĂNG NHẬP
         </Typography>
+
         <Button
-          className="text-sm"
+          className="w-16"
           title="X"
           variant="outlined"
           color="error"
@@ -44,6 +47,7 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
           onClick={() => props.setOpen(false)}
         />
       </Box>
+
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
         <TextFieldInput label="Tài khoản" />
         <TextFieldInput label="Mật khẩu" />

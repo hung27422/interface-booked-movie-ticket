@@ -56,9 +56,12 @@ const textFieldStyles = {
   },
 };
 
-export default function SearchInput() {
+interface SearchInputProps {
+  width: number;
+}
+export default function SearchInput({ width }: SearchInputProps) {
   return (
-    <Stack spacing={2} sx={{ width: 400 }}>
+    <Stack spacing={2} sx={{ width: width }}>
       <Autocomplete
         className="text-white"
         freeSolo

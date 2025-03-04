@@ -23,10 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${fontBarlow.variable} bg-white antialiased`}>
         <div>
-          <div>
+          <div className="fixed top-0 right-0 left-0 z-50">
             <Navbar />
           </div>
-          <div className="bg-[#0F0F0F] h-screen w-full">{children}</div>
+          <div className="bg-[#0F0F0F] text-[#EAEAEA] h-auto pb-10 w-full pt-20">{children}</div>
         </div>
       </body>
     </html>

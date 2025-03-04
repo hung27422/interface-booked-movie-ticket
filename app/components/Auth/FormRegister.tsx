@@ -9,7 +9,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: "rgba(0, 0, 0, 0.6)",
+  bgcolor: "rgba(0, 0, 0, 0.9)",
   border: "2px solid #ff00ff",
   boxShadow: 24,
   p: 4,
@@ -21,9 +21,9 @@ interface FormRegisterProps {
 }
 const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) => {
   return (
-    <Box ref={ref} sx={style} {...props}>
+    <Box ref={ref} sx={style}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Box></Box>
+        <div className="w-16"></div>
         <Typography
           className="text-3xl text-center font-bold"
           id="modal-modal-title"
@@ -33,7 +33,7 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
           ĐĂNG KÝ
         </Typography>
         <Button
-          className="text-sm"
+          className="text-sm w-16"
           title="X"
           variant="outlined"
           color="error"
@@ -51,7 +51,7 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
         </Box>
 
         <Typography sx={{ mt: 2, textAlign: "center" }}>
-          Đã có tài khoản?{" "}
+          Đã có tài khoản?
           <a href="#" className="text-blue-500" onClick={() => props.setIsLoginPage(true)}>
             Đăng Nhập
           </a>
