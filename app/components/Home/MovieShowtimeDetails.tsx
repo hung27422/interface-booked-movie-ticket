@@ -8,7 +8,7 @@ function MovieShowtimeDetails() {
     <>
       <div className="flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10">
         <InfoIcon />
-        <h4 className="ml-3 text-sm"> Nhấn vào suất chiếu để tiến hành mua voucher </h4>
+        <h4 className="ml-3 text-sm md:text-xl"> Nhấn vào suất chiếu để tiến hành mua voucher </h4>
       </div>
       {/* Chọn ngày */}
       <div className=" justify-center text-center p-2  border-2 border-[#9400ff] mt-2 rounded-md hidden md:flex">

@@ -23,6 +23,12 @@ export default function ModalLAuth() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        disableScrollLock
       >
         {isLoginPage ? (
           <FormLogin setIsLoginPage={setIsLoginPage} setOpen={setOpen} />

@@ -1,7 +1,11 @@
-import React, { forwardRef } from "react";
+"use client";
+import React, { forwardRef, useContext, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import TextFieldInput from "../TextFieldInput";
 import Button from "../Button";
+import { Account } from "@/app/types/User";
+import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
+import useSnackbar from "../Hooks/useSnackbar";
 
 const style = {
   position: "absolute",
@@ -23,6 +27,32 @@ interface FormLoginProps {
 }
 
 const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
+  //Context
+  const { login } = useContext(AuthContext);
+
+  // State
+  const [valueAccount, setValueAccount] = useState<Account>({ username: "", password: "" });
+  const { username, password } = valueAccount;
+
+  // Snackbar
+  const { showSnackbar } = useSnackbar();
+
+  // Function
+  const handleChangValueAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValueAccount((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleLogin = async () => {
+    console.log("Login function:", login);
+    const loginData = await login(valueAccount);
+
+    if (loginData.success) {
+      showSnackbar("Đăng nhập thành công", "success");
+      props.setOpen(false);
+    }
+  };
+
   return (
     <Box tabIndex={-1} ref={ref} sx={style}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -49,11 +79,27 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
       </Box>
 
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
-        <TextFieldInput label="Tài khoản" />
-        <TextFieldInput label="Mật khẩu" />
+        <TextFieldInput
+          label="Tài khoản"
+          name="username"
+          value={username}
+          onChange={handleChangValueAccount}
+        />
+        <TextFieldInput
+          label="Mật khẩu"
+          name="password"
+          value={password}
+          onChange={handleChangValueAccount}
+        />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Button className="text-lg" title="Đăng Nhập" variant="outlined" color="primary" />
+          <Button
+            onClick={handleLogin}
+            className="text-lg"
+            title="Đăng Nhập"
+            variant="outlined"
+            color="primary"
+          />
         </Box>
 
         <Typography sx={{ mt: 2, textAlign: "center" }}>

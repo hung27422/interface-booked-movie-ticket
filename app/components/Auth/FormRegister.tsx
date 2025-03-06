@@ -42,9 +42,9 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
         />
       </Box>
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
-        <TextFieldInput label="Tài khoản" />
-        <TextFieldInput label="Mật khẩu" />
-        <TextFieldInput label="Nhập lại mật khẩu" />
+        <TextFieldInput label="Tài khoản" name="account" />
+        <TextFieldInput label="Mật khẩu" name="password"/>
+        <TextFieldInput label="Nhập lại mật khẩu" name="confirmPassword" />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>
           <Button className="text-lg" title="Đăng Ký" variant="outlined" color="primary" />

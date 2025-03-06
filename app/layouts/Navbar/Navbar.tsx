@@ -6,6 +6,9 @@ import SearchInput from "@/app/components/SearchInput";
 import ModalLAuth from "@/app/components/Auth/ModalLAuth";
 import { usePathname } from "next/navigation";
 import DrawerNavbar from "@/app/components/DrawerNavbar";
+import { useContext } from "react";
+import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
+import AccountMenu from "@/app/components/Auth/AccountMenu";
 const menus = [
   {
     id: 1,
@@ -24,6 +27,9 @@ const menus = [
   },
 ];
 function Navbar() {
+  //Context
+  const { authState } = useContext(AuthContext);
+
   const pathName = usePathname();
 
   return (
@@ -36,16 +42,13 @@ function Navbar() {
       {/* Logo */}
       <div className="p-2 text-center tech-border">
         <Link href={"/"}>
-          {/* Hiển thị desktop */}
-          <Image className="px-4 py-1 hidden md:block" src={Logo} alt="Logo" />
-
-          {/* Hiển thị mobile */}
           <Image
-            className="px-4 py-1 block md:hidden"
+            className="px-4 py-1"
             src={Logo}
             alt="Logo"
             width={100}
             height={60}
+            sizes="(max-width: 768px) 100px, auto"
           />
         </Link>
       </div>
@@ -70,7 +73,7 @@ function Navbar() {
         <div className="hidden lg:block">
           <SearchInput width={400} />
         </div>
-        <ModalLAuth />
+        {authState.isAuthenticated ? <AccountMenu /> : <ModalLAuth />}
       </div>
     </div>
   );

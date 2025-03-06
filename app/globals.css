@@ -42,7 +42,7 @@ body {
     @apply text-lg font-bold;
   }
   .navbar-wrapper {
-    @apply flex justify-between items-center h-20 py-3 px-6 text-white bg-[#121212] glowing-border-bottom md:px-10 lg:px-40;
+    @apply flex justify-between items-center max-w-full h-20 py-3 px-6 text-white bg-[#121212] glowing-border-bottom md:px-10 lg:px-40;
   }
   .neon-text {
     @apply font-bold text-white text-center  

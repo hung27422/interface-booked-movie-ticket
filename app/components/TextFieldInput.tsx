@@ -2,13 +2,19 @@ import { TextField } from "@mui/material";
 
 interface TextFieldProps {
   label: string;
+  name: string;
+  value?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-function TextFieldInput({ label }: TextFieldProps) {
+function TextFieldInput({ label, name, value, onChange }: TextFieldProps) {
   return (
     <TextField
       className="w-full"
       id="outlined-basic"
       label={label}
+      name={name}
+      value={value}
+      onChange={onChange}
       variant="outlined"
       sx={textFieldStyles}
     />
