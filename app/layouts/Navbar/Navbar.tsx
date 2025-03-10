@@ -69,8 +69,8 @@ function Navbar() {
       </div>
 
       {/* SearchInput + User - Search chỉ hiển thị trên màn hình lớn */}
-      <div className="flex items-center">
-        <div className="hidden lg:block">
+      <div className="flex items-center justify-center">
+        <div className="hidden lg:block mr-3">
           <SearchInput width={400} />
         </div>
         {authState.isAuthenticated ? <AccountMenu /> : <ModalLAuth />}

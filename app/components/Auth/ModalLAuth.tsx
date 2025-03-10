@@ -16,7 +16,7 @@ export default function ModalLAuth() {
   return (
     <div>
       <ButtonModal onClick={handleOpen}>
-        <User className="ml-3 text-red-500 text-4xl" />
+        <User className="text-red-500 text-4xl text-center mx-auto" />
       </ButtonModal>
       <Modal
         open={open}

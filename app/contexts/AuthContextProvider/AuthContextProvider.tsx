@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthState, authReducer } from "@/app/reducer/authReducer ";
 import { createContext, useReducer, ReactNode, useEffect } from "react";
-import { Account } from "@/app/types/User";
+import { Account, Register } from "@/app/types/User";
 import api from "@/app/utils/api";
 import { LOCAL_STORAGE_TOKEN_NAME } from "../Constants/constants";
 
@@ -23,6 +23,9 @@ interface AuthContextTypes {
     account: Account
   ) => Promise<{ success: boolean; token?: string; data?: LoginData; message?: string }>;
   logout: () => void;
+  register: (
+    register: Register
+  ) => Promise<{ success: boolean; token?: string; data?: LoginData; message?: string }>;
 }
 
 const defaultValue: AuthContextTypes = {
@@ -32,6 +35,7 @@ const defaultValue: AuthContextTypes = {
   },
   login: () => Promise.resolve({ success: false }),
   logout: () => {},
+  register: () => Promise.resolve({ success: false }),
 };
 // Tạo Context
 export const AuthContext = createContext<AuthContextTypes>(defaultValue);
@@ -39,7 +43,7 @@ export const AuthContext = createContext<AuthContextTypes>(defaultValue);
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [authState, dispatch] = useReducer(authReducer, initialState);
 
-  // 
+  // Load User (-- Khi đăng nhập hoặc đăng xuất isAuthenticated sẽ thay đổi --)
   const loadUser = async () => {
     try {
       const response = await api.get("/auth");
@@ -89,7 +93,18 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: "LOGOUT" });
   };
 
-  const authContextValue = { authState, login, logout };
+  // Register
+  const register = async (register: Register): Promise<{ success: boolean; message?: string }> => {
+    try {
+      const response = await api.post("/auth/register", register);
+      console.log({ response });
+      return response.data;
+    } catch (error: any) {
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
+
+  const authContextValue = { authState, login, logout, register };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };

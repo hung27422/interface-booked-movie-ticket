@@ -44,7 +44,6 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
   };
 
   const handleLogin = async () => {
-    console.log("Login function:", login);
     const loginData = await login(valueAccount);
 
     if (loginData.success) {
