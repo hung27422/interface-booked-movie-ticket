@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useAppContext } from "../contexts/AppContextProvider/AppContextProvider";
 
 const MovieDateSelector = () => {
   const [dates, setDates] = useState<{ date: string; day: string }[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const { selectedDate, setSelectedDate } = useAppContext();
 
   useEffect(() => {
     const generateDates = () => {

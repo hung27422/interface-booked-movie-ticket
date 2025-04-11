@@ -13,6 +13,7 @@ export interface Register {
   fullName: string;
   username: string;
   password: string;
+  confirmPassword?: string;
   email: string;
   phone: string;
 }

@@ -47,7 +47,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const loadUser = async () => {
     try {
       const response = await api.get("/auth");
-      console.log({ response });
       if (response.data.success) {
         dispatch({ type: "LOGIN", payload: { isAuthenticated: true, user: response.data.user } });
       }
@@ -59,14 +58,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   // useEffect
   useEffect(() => {
-    console.log("Auth state trong AuthContext cập nhật:", authState);
-  }, [authState]);
-
-  useEffect(() => {
     if (localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)) {
       loadUser();
     }
   }, []);
+
   //Login
   const login = async (
     account: Account

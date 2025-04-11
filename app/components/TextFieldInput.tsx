@@ -5,8 +5,9 @@ interface TextFieldProps {
   name: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  helperText?: string;
 }
-function TextFieldInput({ label, name, value, onChange }: TextFieldProps) {
+function TextFieldInput({ label, name, value, helperText, onChange }: TextFieldProps) {
   return (
     <TextField
       className="w-full"
@@ -17,6 +18,7 @@ function TextFieldInput({ label, name, value, onChange }: TextFieldProps) {
       onChange={onChange}
       variant="outlined"
       sx={textFieldStyles}
+      helperText={helperText}
     />
   );
 }
@@ -71,5 +73,10 @@ const textFieldStyles = {
     border: "2px solid #00eaff",
     boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
     backgroundColor: "#121212",
+  },
+  "& .MuiFormHelperText-root": {
+    color: "red",
+    fontSize: "0.85rem",
+    fontWeight: "bold",
   },
 };

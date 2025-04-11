@@ -27,15 +27,16 @@ interface FormLoginProps {
 }
 
 const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
+  // Snackbar
+  const { showSnackbar } = useSnackbar();
+
   //Context
   const { login } = useContext(AuthContext);
 
   // State
   const [valueAccount, setValueAccount] = useState<Account>({ username: "", password: "" });
   const { username, password } = valueAccount;
-
-  // Snackbar
-  const { showSnackbar } = useSnackbar();
+  const [helperText, setHelperText] = useState<string>("");
 
   // Function
   const handleChangValueAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +50,10 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
     if (loginData.success) {
       showSnackbar("Đăng nhập thành công", "success");
       props.setOpen(false);
+    } else {
+      setHelperText("Tài khoản hoặc mật khẩu không đúng");
     }
+    console.log({ loginData });
   };
 
   return (
@@ -83,12 +87,14 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
           name="username"
           value={username}
           onChange={handleChangValueAccount}
+          helperText={helperText}
         />
         <TextFieldInput
           label="Mật khẩu"
           name="password"
           value={password}
           onChange={handleChangValueAccount}
+          helperText={helperText}
         />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>

@@ -1,0 +1,68 @@
+interface IMovie {
+  _id: string;
+  title: string;
+}
+
+interface IRoom {
+  _id: string;
+  name: string;
+}
+interface ICinemas {
+  _id: string;
+  name: string;
+}
+export interface IShowTime {
+  _id?: string;
+  movieId: string;
+  cinemaId: string;
+  roomId: string;
+  movie?: IMovie;
+  room?: IRoom;
+  cinema?: ICinemas;
+  startTime: string;
+  endTime: string;
+  price: number;
+  availableSeats: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IShowtimeByCinemaDate {
+  _id: string;
+  movie: {
+    _id: string;
+    title: string;
+    description: string;
+    duration: number;
+    genre: string[];
+    releaseDate: string;
+    director: string;
+    cast: string[];
+    poster: string;
+    trailer: string;
+    rating: number;
+    ageRate: number;
+    country: string;
+    caption: string;
+    status: string;
+    user: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  room: {
+    _id: string;
+    name: string;
+  };
+  cinema: {
+    _id: string;
+    name: string;
+    location: string;
+  };
+  startTime: string;
+  endTime: string;
+  price: number;
+  availableSeats: number;
+  createdAt: string;
+  updatedAt: string;
+}

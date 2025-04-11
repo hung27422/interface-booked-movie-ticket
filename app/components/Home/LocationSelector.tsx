@@ -1,6 +1,14 @@
+import addressCinemas from "@/app/utils/addressCinemas";
 import SearchAddressInput from "../SearchAddressInput";
+import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 
 function LocationSelector() {
+  const { selectedAddress, setSelectedAddress } = useAppContext();
+
+  const handleSelectAddress = (address: string) => {
+    setSelectedAddress(address);
+  };
+  
   return (
     <>
       {/* Hiển thị trên desktop */}
@@ -9,15 +17,20 @@ function LocationSelector() {
           Khu Vực
         </h3>
         <ul className="border-2 border-[#9400ff] mt-2 rounded-md text-center hidden md:block">
-          <li className="py-2  px-8 border-[#9400ff] border-b text-base cursor-pointer hover-neon-text">
-            Tp. Hồ Chí Minh
-          </li>
-          <li className="py-2  px-8 border-[#9400ff] border-b text-base cursor-pointer hover-neon-text">
-            Hà Nội
-          </li>
-          <li className="py-2  px-8 border-[#9400ff] border-b text-base cursor-pointer hover-neon-text">
-            Đồng Nai
-          </li>
+          {addressCinemas.map((item) => (
+            <li
+              key={item.id}
+              onClick={() => handleSelectAddress(item.address)}
+              className={`border-b-2 border-[#9400ff] cursor-pointer py-2 text-lg font-semibold transition-all duration-200 
+                ${
+                  selectedAddress === item.address
+                    ? "bg-blue-950 text-pink-400"
+                    : "hover:bg-blue-950 hover:text-pink-400"
+                }`}
+            >
+              {item.address}
+            </li>
+          ))}
         </ul>
       </div>
       {/* Hiển thị trên mobile */}

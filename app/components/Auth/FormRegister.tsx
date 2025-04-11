@@ -30,6 +30,7 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
     fullName: "",
     username: "",
     password: "",
+    confirmPassword: "",
     email: "",
     phone: "",
   });
@@ -41,6 +42,10 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
     setValueRegister((prev) => ({ ...prev, [name]: value }));
   };
   const handleRegister = async () => {
+    if (valueRegister.password !== valueRegister.confirmPassword) {
+      showSnackbar("Mật khẩu không thống nhất", "error");
+      return;
+    }
     const registerData = await register(valueRegister);
     console.log({ registerData });
 
@@ -72,9 +77,14 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
       </Box>
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
         <TextFieldInput label="Họ tên" name="fullName" onChange={handleChangValueRegister} />
+        <TextFieldInput label="Email" name="email" onChange={handleChangValueRegister} />
         <TextFieldInput label="Tài khoản" name="username" onChange={handleChangValueRegister} />
         <TextFieldInput label="Mật khẩu" name="password" onChange={handleChangValueRegister} />
-        <TextFieldInput label="Email" name="email" onChange={handleChangValueRegister} />
+        <TextFieldInput
+          label="Nhập lại mật khẩu"
+          name="confirmPassword"
+          onChange={handleChangValueRegister}
+        />
         <TextFieldInput label="Số điện thoại" name="phone" onChange={handleChangValueRegister} />
 
         <Box sx={{ textAlign: "center", mt: 2 }}>
