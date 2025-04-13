@@ -8,7 +8,7 @@ function LocationSelector() {
   const handleSelectAddress = (address: string) => {
     setSelectedAddress(address);
   };
-  
+
   return (
     <>
       {/* Hiển thị trên desktop */}
