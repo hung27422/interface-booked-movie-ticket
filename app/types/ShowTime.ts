@@ -26,43 +26,56 @@ export interface IShowTime {
   createdAt?: string;
   updatedAt?: string;
 }
+/// ========================== "filter-by-cinema-date"========================= ///
+export interface IShowtimeByCinemaDate {
+  cinema: ICinemaByCinemaDate;
+  data: DataByCinemaDate[];
+}
+export interface DataByCinemaDate {
+  _id: string;
+  movie: IMovieByCinemaDate;
+  showtimes: IShowtimeByCinemaDate[];
+}
+export interface IMovieByCinemaDate {
+  _id: string;
+  title: string;
+  description: string;
+  duration: number;
+  genre: string[];
+  releaseDate: string;
+  director: string;
+  cast: string[];
+  poster: string;
+  trailer: string;
+  rating: number;
+  ageRate: number;
+  country: string;
+  caption: string;
+  status: "COMINGSOON" | "NOWSHOWING" | "STOPSHOWING";
+  numberMovieScreening: number;
+  movieScreenings: string[];
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface ICinemaByCinemaDate {
+  _id: string;
+  name: string;
+  location: string;
+}
 
 export interface IShowtimeByCinemaDate {
   _id: string;
-  movie: {
-    _id: string;
-    title: string;
-    description: string;
-    duration: number;
-    genre: string[];
-    releaseDate: string;
-    director: string;
-    cast: string[];
-    poster: string;
-    trailer: string;
-    rating: number;
-    ageRate: number;
-    country: string;
-    caption: string;
-    status: string;
-    user: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
-  room: {
-    _id: string;
-    name: string;
-  };
-  cinema: {
-    _id: string;
-    name: string;
-    location: string;
-  };
+  room: IRoom;
   startTime: string;
   endTime: string;
   price: number;
   availableSeats: number;
-  createdAt: string;
-  updatedAt: string;
+}
+
+export interface IRoomByCinemaDate {
+  _id: string;
+  name: string;
 }

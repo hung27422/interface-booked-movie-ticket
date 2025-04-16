@@ -12,7 +12,7 @@ function useShowTime({ idRoom, idMovie, idCinema, date }: useShowTimeProps = {})
   const { data: getShowTimeByRoomIdAndMovieID } = useSWR<IShowTime[]>(
     idRoom && idMovie && `/showtimes/filter?roomId=${idRoom}&movieId=${idMovie}`
   );
-  const { data: filterByCinemaDateCinemaId } = useSWR<IShowtimeByCinemaDate[]>(
+  const { data: filterByCinemaDateCinemaId } = useSWR<IShowtimeByCinemaDate>(
     idCinema && date && `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}`
   );
 

@@ -55,17 +55,22 @@ function Navbar() {
 
       {/* Menu - Chỉ hiển thị trên màn hình lớn */}
       <div className="hidden lg:flex items-center">
-        {menus.map((item) => (
-          <Link
-            className={`w-32 mx-2 py-2 px-1 tech-border ${
-              pathName === item.path ? "tech-border-focused" : ""
-            }`}
-            href={`${item.path}`}
-            key={item.id}
-          >
-            {item.label}
-          </Link>
-        ))}
+        {menus.map((item) => {
+          const isActive =
+            item.path === "/"
+              ? pathName === "/" || pathName.startsWith("/pages/book-ticket")
+              : pathName.startsWith(item.path);
+
+          return (
+            <Link
+              className={`w-32 mx-2 py-2 px-1 tech-border ${isActive ? "tech-border-focused" : ""}`}
+              href={item.path}
+              key={item.id}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </div>
 
       {/* SearchInput + User - Search chỉ hiển thị trên màn hình lớn */}

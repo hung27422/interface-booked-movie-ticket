@@ -23,15 +23,15 @@ function MovieShowtimeDetails() {
       <div className=" justify-center text-center p-2  border-2 border-[#9400ff] mt-2 rounded-md hidden md:flex">
         <MovieDateSelector />
       </div>
+      {/* Thông tin rạp */}
+      <div className="flex flex-col justify-center text-center p-2  border-2 border-[#9400ff] mt-2 rounded-md">
+        <h3 className="text-lg">{filterByCinemaDateCinemaId?.cinema.name}</h3>
+        <span className="text-xs">{filterByCinemaDateCinemaId?.cinema.location}</span>
+      </div>
       <div>
-        {filterByCinemaDateCinemaId?.map((item) => {
+        {filterByCinemaDateCinemaId?.data?.map((item) => {
           return (
             <div key={item._id}>
-              {/* Thông tin rạp */}
-              <div className="flex flex-col justify-center text-center p-2  border-2 border-[#9400ff] mt-2 rounded-md">
-                <h3 className="text-lg">{item.cinema.name}</h3>
-                <span className="text-xs">{item.cinema.location}</span>
-              </div>
               {/* Thông tin suất phim */}
               <div className="flex p-2  border-2 border-[#9400ff] mt-2 rounded-md">
                 <div className="flex items-start justify-center mr-4 w-[20%] md:w-36 text-center ">
@@ -50,7 +50,7 @@ function MovieShowtimeDetails() {
                   </span>
                   <span className="mt-2">Phụ đề: {item.movie.caption}</span>
                   <div className="mt-3">
-                    <MovieShowTimes />
+                    <MovieShowTimes data={item.showtimes} />
                   </div>
                 </div>
               </div>
