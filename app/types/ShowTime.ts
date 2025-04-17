@@ -11,6 +11,10 @@ interface ICinemas {
   _id: string;
   name: string;
 }
+interface ISeatPricing {
+  SINGLE: number;
+  DOUBLE: number;
+}
 export interface IShowTime {
   _id?: string;
   movieId: string;
@@ -23,6 +27,7 @@ export interface IShowTime {
   endTime: string;
   price: number;
   availableSeats: number;
+  seatPricing: ISeatPricing;
   createdAt?: string;
   updatedAt?: string;
 }

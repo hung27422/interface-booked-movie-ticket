@@ -11,7 +11,6 @@ function MovieShowtimeDetails() {
     idCinema: cinemaIDSelected ?? "",
     date: selectedDate,
   });
-  console.log({ filterByCinemaDateCinemaId });
 
   return (
     <>

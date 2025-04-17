@@ -15,7 +15,7 @@ const MovieShowTimes = ({ data }: MovieShowTimesProps) => {
         return (
           <Link
             key={item._id}
-            href={isPast ? "#" : `pages/book-ticket/${item.room._id}`}
+            href={isPast ? "#" : `pages/book-ticket/${item._id}`}
             className={`p-3 tech-border rounded text-sm w-16 h-10 flex flex-col justify-center items-center font-bold
               ${isPast ? "bg-gray-200 text-gray-400 cursor-not-allowed pointer-events-none" : ""}
             `}

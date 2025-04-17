@@ -27,7 +27,9 @@ export default function RootLayout({
             <div className="fixed top-0 right-0 left-0 overflow-hidden z-50">
               <Navbar />
             </div>
-            <div className="bg-[#0F0F0F] text-[#EAEAEA] h-auto pb-10 w-full pt-20">{children}</div>
+            <div className="bg-[#0F0F0F] text-[#EAEAEA] h-auto pb-10 pt-20 w-[100%] px-20">
+              {children}
+            </div>
           </div>
         </Providers>
       </body>

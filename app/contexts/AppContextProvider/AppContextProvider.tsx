@@ -1,3 +1,4 @@
+import { Seat } from "@/app/types/Rooms";
 import React, { createContext, useContext, useState } from "react";
 
 type AppContextType = {
@@ -7,6 +8,8 @@ type AppContextType = {
   setCinemaIDSelected: (value: string) => void;
   selectedDate: string;
   setSelectedDate: (value: string) => void;
+  selectedSeats: Seat[];
+  setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -19,7 +22,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [cinemaIDSelected, setCinemaIDSelected] = useState<string>("");
   // Tạo state để lưu trữ ngày đã chọn
   const [selectedDate, setSelectedDate] = useState<string>(getTodayVN());
-
+  // Tạo state để lưu trữ danh sách ghế đã chọn
+  const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
   const appContextValue = {
     selectedAddress,
     setSelectedAddress,
@@ -27,6 +31,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setCinemaIDSelected,
     selectedDate,
     setSelectedDate,
+    selectedSeats,
+    setSelectedSeats,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

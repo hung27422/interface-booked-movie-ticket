@@ -7,7 +7,7 @@ import CinemaSelector from "./components/Home/CinemaSelector";
 import MovieShowtimeDetails from "./components/Home/MovieShowtimeDetails";
 export default function Home() {
   return (
-    <main className="mt-4 w-[90%] mx-auto">
+    <main className="mt-4">
       {/* Book movie tickets according to movies: Đặt vé xem phim theo phim */}
       <div className="text-center ">
         <SectionTitle title="Mua Vé Theo Phim" />
