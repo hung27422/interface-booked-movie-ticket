@@ -2,6 +2,7 @@
 import CinemaSeatMap from "@/app/components/BookTicket/CinemaSeatMap";
 import StepperBookTicket from "@/app/components/BookTicket/StepperBookTicket";
 import TicketSummary from "@/app/components/BookTicket/TicketSummary";
+import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import useRooms from "@/app/hooks/useRooms";
 import useShowTime from "@/app/hooks/useShowTimes";
 
@@ -10,6 +11,8 @@ interface BookTicketDetailProps {
 }
 
 function BookTicketDetail({ params }: BookTicketDetailProps) {
+  //context
+  const { stepBooking } = useAppContext();
   //hooks
   const { getShowTimeById } = useShowTime({ idShowTime: params.slug });
   const idRoom = getShowTimeById?.room?._id;
@@ -23,13 +26,12 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
   return (
     <div>
       <div>
-        <StepperBookTicket />
+        <StepperBookTicket stepBooking={stepBooking} />
       </div>
       <div className="mt-4 grid grid-cols-10 gap-4">
         <div className="col-span-7">
-          <CinemaSeatMap dataRoom={dataRoom} />
+          {stepBooking === 0 && <CinemaSeatMap dataRoom={dataRoom} />}
         </div>
-
         <div className="col-span-3">
           <TicketSummary getShowTimeById={getShowTimeById} />
         </div>

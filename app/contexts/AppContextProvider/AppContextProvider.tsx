@@ -10,6 +10,8 @@ type AppContextType = {
   setSelectedDate: (value: string) => void;
   selectedSeats: Seat[];
   setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>;
+  stepBooking: number;
+  setStepBooking: React.Dispatch<React.SetStateAction<number>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -24,6 +26,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [selectedDate, setSelectedDate] = useState<string>(getTodayVN());
   // Tạo state để lưu trữ danh sách ghế đã chọn
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+  // Tạo state để lưu trữ các bước đặt vé
+  const [stepBooking, setStepBooking] = useState<number>(0);
   const appContextValue = {
     selectedAddress,
     setSelectedAddress,
@@ -33,6 +37,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setSelectedDate,
     selectedSeats,
     setSelectedSeats,
+    stepBooking,
+    setStepBooking,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

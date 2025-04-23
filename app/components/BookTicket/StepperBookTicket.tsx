@@ -56,8 +56,10 @@ const CustomConnector = styled(StepConnector)(() => ({
 }));
 
 const steps = ["Chọn Vé", "Bắp Nước", "Thanh Toán", "Thông Tin Vé"];
-
-export default function StepperBookTicket() {
+interface StepperBookTicketProps {
+  stepBooking: number;
+}
+export default function StepperBookTicket({ stepBooking }: StepperBookTicketProps) {
   return (
     <Box
       sx={{
@@ -67,7 +69,7 @@ export default function StepperBookTicket() {
         borderRadius: 2,
       }}
     >
-      <Stepper activeStep={0} alternativeLabel connector={<CustomConnector />}>
+      <Stepper activeStep={stepBooking} alternativeLabel connector={<CustomConnector />}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel
