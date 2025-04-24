@@ -1,5 +1,6 @@
 "use client";
 import CinemaSeatMap from "@/app/components/BookTicket/CinemaSeatMap";
+import SnackSelector from "@/app/components/BookTicket/SnackSelector";
 import StepperBookTicket from "@/app/components/BookTicket/StepperBookTicket";
 import TicketSummary from "@/app/components/BookTicket/TicketSummary";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
@@ -31,6 +32,7 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
       <div className="mt-4 grid grid-cols-10 gap-4">
         <div className="col-span-7">
           {stepBooking === 0 && <CinemaSeatMap dataRoom={dataRoom} />}
+          {stepBooking === 1 && <SnackSelector dataRoom={dataRoom} />}
         </div>
         <div className="col-span-3">
           <TicketSummary getShowTimeById={getShowTimeById} />

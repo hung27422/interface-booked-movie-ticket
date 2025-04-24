@@ -3,7 +3,7 @@ import { IBooking } from "../types/Booking";
 import bookingServices from "../services/bookingServices";
 
 interface useBookingProps {
-  status?: string; // Trạng thái để lọc các booking theo trạng thái (tuỳ chọn)
+  status?: string;
 }
 
 function useBooking({ status }: useBookingProps = {}) {

@@ -2,21 +2,18 @@ import { IShowTime } from "@/app/types/ShowTime";
 import FormattedTime from "@/app/utils/formattedTime";
 import Button from "../Button";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
+import { useContext } from "react";
+import { IBooking } from "@/app/types/Booking";
+import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
+import useBooking from "@/app/hooks/useBooking";
 
 interface TicketSummaryProps {
   getShowTimeById: IShowTime;
 }
 function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   // context
-  const { selectedSeats, setStepBooking } = useAppContext();
-  //hooks
-  const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
-  const timeStartShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "time" });
-  const timeEndShowTime = FormattedTime({ isoString: getShowTimeById?.endTime, type: "time" });
-  // function
-  const handleContinueBooking = () => {
-    setStepBooking((prev) => prev + 1);
-  };
+  const { selectedSeats, setStepBooking, setIdBooking } = useAppContext();
+  const { authState } = useContext(AuthContext);
   // contanst
   const totalPrice = selectedSeats.reduce((total, seat) => {
     const seatType = seat.type || "SINGLE";
@@ -24,6 +21,30 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
       getShowTimeById?.seatPricing[seatType as keyof typeof getShowTimeById.seatPricing] ?? 1;
     return total + getShowTimeById.price * multiplier;
   }, 0);
+
+  //hooks
+  const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
+  const timeStartShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "time" });
+  const timeEndShowTime = FormattedTime({ isoString: getShowTimeById?.endTime, type: "time" });
+  const { addBooking } = useBooking();
+  // function
+  const handleContinueBooking = async () => {
+    const addDataTicket: IBooking = {
+      userId: authState.user?._id || "",
+      showtimeId: getShowTimeById._id || "",
+      seatNumbers: selectedSeats.map((seat) => seat.seatNumber.toString()),
+      snacks: [],
+      ticketPrice: getShowTimeById.price,
+      totalPrice: totalPrice,
+      status: "PENDING",
+    };
+
+    const dataBooking = await addBooking(addDataTicket);
+
+    await setIdBooking(dataBooking.booking._id);
+
+    await setStepBooking((prev) => prev + 1);
+  };
 
   return (
     <div>
