@@ -1,21 +1,19 @@
 import { IShowTime } from "@/app/types/ShowTime";
 import FormattedTime from "@/app/utils/formattedTime";
-import Button from "../Button";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
-import { useContext } from "react";
-import { IBooking } from "@/app/types/Booking";
-import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
-import useBooking from "@/app/hooks/useBooking";
+import ButtonSeatAndTicketSelector from "./ButtonSeatAndTicketSelector";
+import ButtonSnackSelector from "./ButtonSnackSelector";
 
 interface TicketSummaryProps {
   getShowTimeById: IShowTime;
 }
 function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   // context
-  const { selectedSeats, setStepBooking, setIdBooking } = useAppContext();
-  const { authState } = useContext(AuthContext);
+  const { selectedSeats, stepBooking, totalPriceSnack } = useAppContext();
+  console.log({ selectedSeats });
+
   // contanst
-  const totalPrice = selectedSeats.reduce((total, seat) => {
+  const totalPriceTicket = selectedSeats.reduce((total, seat) => {
     const seatType = seat.type || "SINGLE";
     const multiplier =
       getShowTimeById?.seatPricing[seatType as keyof typeof getShowTimeById.seatPricing] ?? 1;
@@ -26,26 +24,9 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
   const timeStartShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "time" });
   const timeEndShowTime = FormattedTime({ isoString: getShowTimeById?.endTime, type: "time" });
-  const { addBooking } = useBooking();
-  // function
-  const handleContinueBooking = async () => {
-    const addDataTicket: IBooking = {
-      userId: authState.user?._id || "",
-      showtimeId: getShowTimeById._id || "",
-      seatNumbers: selectedSeats.map((seat) => seat.seatNumber.toString()),
-      snacks: [],
-      ticketPrice: getShowTimeById.price,
-      totalPrice: totalPrice,
-      status: "PENDING",
-    };
 
-    const dataBooking = await addBooking(addDataTicket);
-
-    await setIdBooking(dataBooking.booking._id);
-
-    await setStepBooking((prev) => prev + 1);
-  };
-
+  // constant
+  const totalPrice = totalPriceSnack ? totalPriceTicket + totalPriceSnack : totalPriceTicket;
   return (
     <div>
       <div className="flex flex-col items-center justify-center bg-gray-800 p-4 rounded-lg shadow-md">
@@ -82,13 +63,8 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
         </div>
       </div>
       <div className="mt-4">
-        <Button
-          onClick={handleContinueBooking}
-          title="Tiêp tục"
-          color="primary"
-          variant="contained"
-          className="w-32"
-        />
+        {stepBooking === 0 && <ButtonSeatAndTicketSelector getShowTimeById={getShowTimeById} />}
+        {stepBooking === 1 && <ButtonSnackSelector getShowTimeById={getShowTimeById} />}
       </div>
     </div>
   );

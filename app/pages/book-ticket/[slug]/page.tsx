@@ -1,5 +1,6 @@
 "use client";
 import CinemaSeatMap from "@/app/components/BookTicket/CinemaSeatMap";
+import PaymentBooking from "@/app/components/BookTicket/PaymentBooking";
 import SnackSelector from "@/app/components/BookTicket/SnackSelector";
 import StepperBookTicket from "@/app/components/BookTicket/StepperBookTicket";
 import TicketSummary from "@/app/components/BookTicket/TicketSummary";
@@ -25,7 +26,7 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
   }
 
   return (
-    <div>
+    <div className="min-h-svh">
       <div>
         <StepperBookTicket stepBooking={stepBooking} />
       </div>
@@ -33,6 +34,7 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
         <div className="col-span-7">
           {stepBooking === 0 && <CinemaSeatMap dataRoom={dataRoom} />}
           {stepBooking === 1 && <SnackSelector dataRoom={dataRoom} />}
+          {stepBooking === 2 && <PaymentBooking />}
         </div>
         <div className="col-span-3">
           <TicketSummary getShowTimeById={getShowTimeById} />

@@ -1,3 +1,4 @@
+import { Snack } from "@/app/types/Booking";
 import { Seat } from "@/app/types/Rooms";
 import React, { createContext, useContext, useState } from "react";
 
@@ -14,6 +15,10 @@ type AppContextType = {
   setStepBooking: React.Dispatch<React.SetStateAction<number>>;
   idBooking: string;
   setIdBooking: React.Dispatch<React.SetStateAction<string>>;
+  totalPriceSnack: number;
+  setTotalPriceSnack: React.Dispatch<React.SetStateAction<number>>;
+  selectedSnacks: Snack[];
+  setSelectedSnacks: React.Dispatch<React.SetStateAction<Snack[]>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -32,6 +37,10 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [stepBooking, setStepBooking] = useState<number>(0);
   // Tạo state để lưu trữ id booking
   const [idBooking, setIdBooking] = useState<string>("");
+  // Tạo state để lưu trữ giá của Snack
+  const [totalPriceSnack, setTotalPriceSnack] = useState(0);
+  // Tạo state để lưu trữ danh sách đồ ăn đã chọn
+  const [selectedSnacks, setSelectedSnacks] = useState<Snack[]>([]);
   const appContextValue = {
     selectedAddress,
     setSelectedAddress,
@@ -45,6 +54,10 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setStepBooking,
     idBooking,
     setIdBooking,
+    totalPriceSnack,
+    setTotalPriceSnack,
+    selectedSnacks,
+    setSelectedSnacks,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

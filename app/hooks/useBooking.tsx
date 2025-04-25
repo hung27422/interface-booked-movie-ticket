@@ -1,25 +1,23 @@
 import useSWR from "swr";
-import { IBooking } from "../types/Booking";
+import { IBooking, IBookingData } from "../types/Booking";
 import bookingServices from "../services/bookingServices";
 
 interface useBookingProps {
-  status?: string;
+  bookingId?: string;
 }
 
-function useBooking({ status }: useBookingProps = {}) {
-  // Dữ liệu tất cả các booking
-  const { data: bookings, error, mutate } = useSWR<IBooking[]>("/bookings");
+function useBooking({ bookingId }: useBookingProps = {}) {
+  const { data: bookings, error, mutate: mutateBookings } = useSWR<IBooking[]>("/bookings");
 
-  // Dữ liệu tìm kiếm theo trạng thái (nếu có)
-  const { data: dataSearchBookings } = useSWR<IBooking[]>(
-    status && `/bookings/search?status=${status}`
+  const { data: dataBookingById, mutate: mutateDataBookingById } = useSWR<IBooking>(
+    `/bookings/${bookingId}`
   );
 
   // Thêm mới một booking
-  const addBooking = async (booking: IBooking) => {
+  const addBooking = async (booking: IBookingData) => {
     try {
       const newBooking = await bookingServices.addBooking(booking);
-      mutate(); // Cập nhật dữ liệu ngay lập tức
+      mutateBookings(); // Cập nhật dữ liệu ngay lập tức
       console.log({ newBooking });
       return newBooking;
     } catch (error) {
@@ -29,10 +27,11 @@ function useBooking({ status }: useBookingProps = {}) {
   };
 
   // Cập nhật một booking
-  const updateBooking = async (id: string, booking: IBooking) => {
+  const updateBooking = async (id: string, booking: IBookingData) => {
     try {
       const updatedBooking = await bookingServices.updateBooking(id, booking);
-      mutate(); // Cập nhật dữ liệu ngay lập tức
+      mutateBookings();
+      mutateDataBookingById(); // Cập nhật dữ liệu ngay lập tức
       console.log({ updatedBooking });
       return updatedBooking;
     } catch (error) {
@@ -45,14 +44,24 @@ function useBooking({ status }: useBookingProps = {}) {
   const deleteBooking = async (id: string) => {
     try {
       await bookingServices.deleteBooking(id);
-      mutate(); // Cập nhật dữ liệu ngay lập tức
+      mutateBookings();
+      mutateDataBookingById(); // Cập nhật dữ liệu ngay lập tức
     } catch (error) {
       console.error("Lỗi khi xóa đơn đặt vé:", error);
       throw error;
     }
   };
 
-  return { bookings, dataSearchBookings, error, addBooking, updateBooking, deleteBooking };
+  return {
+    bookings,
+    dataBookingById,
+    mutateBookings,
+    mutateDataBookingById,
+    error,
+    addBooking,
+    updateBooking,
+    deleteBooking,
+  };
 }
 
 export default useBooking;

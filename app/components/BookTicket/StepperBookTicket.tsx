@@ -65,7 +65,7 @@ export default function StepperBookTicket({ stepBooking }: StepperBookTicketProp
       sx={{
         width: "100%",
         bgcolor: "#121212", // Nền tối
-        py: 3,
+        py: 2,
         borderRadius: 2,
       }}
     >
