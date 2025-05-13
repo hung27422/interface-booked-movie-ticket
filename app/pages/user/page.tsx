@@ -1,3 +1,5 @@
+"use client";
+import TextFieldInput from "@/app/components/TextFieldInput";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import ProfileLayout from "@/app/layouts/ProfileLayout/ProfileLayout";
 import { useRouter } from "next/navigation";
@@ -25,8 +27,19 @@ function User() {
     return null;
   }
   return (
-    <div>
-      <ProfileLayout>My Profile</ProfileLayout>
+    <div className="">
+      <ProfileLayout>
+        <div className="grid grid-cols-2 gap-6 h-dvh mt-6">
+          <div className="col-span-1">
+            <TextFieldInput label="Tài khoản" name="fullName" value={authState.user?.username} />
+            <TextFieldInput label="Họ và tên" name="fullName" value={authState.user?.fullName} />
+          </div>
+          <div className="col-span-1">
+            <TextFieldInput label="Email" name="fullName" value={authState.user?.email} />
+            <TextFieldInput label="Số điện thoại" name="fullName" value={authState.user?.phone} />
+          </div>
+        </div>
+      </ProfileLayout>
     </div>
   );
 }

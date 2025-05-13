@@ -1,6 +1,6 @@
 "use client";
 // app/profile/layout.tsx
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
@@ -10,11 +10,14 @@ import { IconButton, Tooltip } from "@mui/material";
 interface ProfileLayoutProps {
   children: ReactNode;
 }
-
+const menus = [
+  { id: 1, name: "Thông tin cá nhân", path: "/user" },
+  { id: 2, name: "Vé của tôi", path: "/my-ticket" },
+];
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
-  const { authState } = useContext(AuthContext);
   const router = useRouter();
-
+  const { authState } = useContext(AuthContext);
+  const [toggleMenu, setToggleMenu] = useState(1);
   useEffect(() => {
     if (!authState.isLoading && !authState.isAuthenticated) {
       router.push("/");
@@ -57,6 +60,23 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
           <div className="mt-4 ml-6">
             <span className="text-xl">{authState.user?.username}</span>
           </div>
+        </div>
+        <div className="flex items-center pb-4 border-b-2 border-gray-400">
+          {menus.map((menu) => {
+            return (
+              <div
+                onClick={() => setToggleMenu(menu.id)}
+                key={menu.id}
+                className={`py-1 px-2 cursor-pointer ${
+                  toggleMenu === menu.id
+                    ? "bg-blue-950 text-pink-400 rounded-lg"
+                    : "text-white hover:text-pink-400"
+                }`}
+              >
+                <span className="text-lg">{menu.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
