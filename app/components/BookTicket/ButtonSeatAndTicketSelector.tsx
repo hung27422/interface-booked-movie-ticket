@@ -2,10 +2,10 @@ import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvi
 import Button from "../Button";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import { useContext } from "react";
-import useBooking from "@/app/hooks/useBooking";
 import useSnackbar from "../Hooks/useSnackbar";
 import { IShowTime } from "@/app/types/ShowTime";
 import { IBookingData } from "@/app/types/Booking";
+import useBooking from "@/app/hooks/useBooking";
 interface ButtonContinueBookingProps {
   getShowTimeById: IShowTime;
 }
@@ -37,7 +37,7 @@ function ButtonContinueBooking({ getShowTimeById }: ButtonContinueBookingProps) 
     await setStepBooking((prev) => prev + 1);
   };
   return (
-    <>
+    <div className="flex items-center gap-2">
       <Button
         onClick={handleSeatAndTicketSelector}
         title="Tiêp tục"
@@ -45,7 +45,7 @@ function ButtonContinueBooking({ getShowTimeById }: ButtonContinueBookingProps) 
         variant="contained"
         className="w-32"
       />
-    </>
+    </div>
   );
 }
 

@@ -19,6 +19,8 @@ type AppContextType = {
   setTotalPriceSnack: React.Dispatch<React.SetStateAction<number>>;
   selectedSnacks: Snack[];
   setSelectedSnacks: React.Dispatch<React.SetStateAction<Snack[]>>;
+  idBank: number;
+  setIdBank: React.Dispatch<React.SetStateAction<number>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -41,6 +43,9 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [totalPriceSnack, setTotalPriceSnack] = useState(0);
   // Tạo state để lưu trữ danh sách đồ ăn đã chọn
   const [selectedSnacks, setSelectedSnacks] = useState<Snack[]>([]);
+  // Tạo state để lưu trữ bank đã chọn
+  const [idBank, setIdBank] = useState<number>(1);
+
   const appContextValue = {
     selectedAddress,
     setSelectedAddress,
@@ -58,6 +63,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setTotalPriceSnack,
     selectedSnacks,
     setSelectedSnacks,
+    idBank,
+    setIdBank,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

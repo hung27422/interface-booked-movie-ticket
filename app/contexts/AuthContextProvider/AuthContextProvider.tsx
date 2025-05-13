@@ -9,6 +9,7 @@ import { LOCAL_STORAGE_TOKEN_NAME } from "../Constants/constants";
 const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
+  isLoading: true,
 };
 
 interface LoginData {
@@ -32,6 +33,7 @@ const defaultValue: AuthContextTypes = {
   authState: {
     isAuthenticated: false,
     user: null,
+    isLoading: true,
   },
   login: () => Promise.resolve({ success: false }),
   logout: () => {},
@@ -45,10 +47,14 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   // Load User (-- Khi đăng nhập hoặc đăng xuất isAuthenticated sẽ thay đổi --)
   const loadUser = async () => {
+    dispatch({ type: "LOADING" });
     try {
       const response = await api.get("/auth");
       if (response.data.success) {
-        dispatch({ type: "LOGIN", payload: { isAuthenticated: true, user: response.data.user } });
+        dispatch({
+          type: "LOGIN",
+          payload: { isAuthenticated: true, user: response.data.user, isLoading: false },
+        });
       }
     } catch {
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);

@@ -1,6 +1,7 @@
 interface IMovie {
   _id: string;
   title: string;
+  caption: string;
 }
 
 interface IRoom {

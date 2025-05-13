@@ -14,7 +14,6 @@ function CinemaSelector() {
   };
 
   if (!dataCinemaByLocation) return <div>Loading...</div>;
-  console.log({ dataCinemaByLocation });
 
   return (
     <>
@@ -25,8 +24,8 @@ function CinemaSelector() {
             {item.cinemas.map((cinema, index) => {
               return (
                 <div key={index}>
-                  <div className="hidden md:block mb-2">
-                    <div className="hidden md:flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10 ">
+                  <div className="mb-2 hidden md:block">
+                    <div className="flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10">
                       <Image
                         src={cinema.image}
                         alt="img-logo-cinemas"
@@ -54,15 +53,15 @@ function CinemaSelector() {
                       })}
                     </ul>
                   </div>
-                  <div className="mt-2 text-center md:hidden">
-                    <SearchCinemasInput />
-                  </div>
                 </div>
               );
             })}
           </div>
         );
       })}
+      <div className="mt-2 text-center md:hidden">
+        <SearchCinemasInput />
+      </div>
     </>
   );
 }

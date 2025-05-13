@@ -3,6 +3,7 @@ import FormattedTime from "@/app/utils/formattedTime";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import ButtonSeatAndTicketSelector from "./ButtonSeatAndTicketSelector";
 import ButtonSnackSelector from "./ButtonSnackSelector";
+import ModalInfoTicket from "./ModalInfoTicket";
 
 interface TicketSummaryProps {
   getShowTimeById: IShowTime;
@@ -10,7 +11,7 @@ interface TicketSummaryProps {
 function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   // context
   const { selectedSeats, stepBooking, totalPriceSnack } = useAppContext();
-  console.log({ selectedSeats });
+  console.log({ getShowTimeById });
 
   // contanst
   const totalPriceTicket = selectedSeats.reduce((total, seat) => {
@@ -65,6 +66,7 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
       <div className="mt-4">
         {stepBooking === 0 && <ButtonSeatAndTicketSelector getShowTimeById={getShowTimeById} />}
         {stepBooking === 1 && <ButtonSnackSelector getShowTimeById={getShowTimeById} />}
+        {stepBooking === 2 && <ModalInfoTicket getShowTimeById={getShowTimeById} />}
       </div>
     </div>
   );
