@@ -27,8 +27,6 @@ interface ModalInfoTicketProps {
   getShowTimeById: IShowTime;
 }
 export default function ModalInfoTicket({ getShowTimeById }: ModalInfoTicketProps) {
-  console.log(getShowTimeById._id);
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

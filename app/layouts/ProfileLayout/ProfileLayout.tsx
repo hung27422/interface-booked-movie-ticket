@@ -1,23 +1,33 @@
 "use client";
 // app/profile/layout.tsx
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import { useContext } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { IconButton, Tooltip } from "@mui/material";
+import Link from "next/link";
+import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 
 interface ProfileLayoutProps {
   children: ReactNode;
 }
 const menus = [
-  { id: 1, name: "Thông tin cá nhân", path: "/user" },
-  { id: 2, name: "Vé của tôi", path: "/my-ticket" },
+  { id: 1, name: "Thông tin cá nhân", path: "/pages/user" },
+  { id: 2, name: "Vé của tôi", path: "/pages/my-ticket" },
 ];
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
   const router = useRouter();
+  const pathName = usePathname();
+  const { toggleMenuProfile, setToggleMenuProfile } = useAppContext();
   const { authState } = useContext(AuthContext);
-  const [toggleMenu, setToggleMenu] = useState(1);
+  // Set menu mặc định
+  if (pathName.includes("my-ticket")) {
+    setToggleMenuProfile(2);
+  } else if (pathName.includes("user")) {
+    setToggleMenuProfile(1);
+  }
+  // Kiểm tra trạng thái xác thực
   useEffect(() => {
     if (!authState.isLoading && !authState.isAuthenticated) {
       router.push("/");
@@ -31,7 +41,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
   if (!authState.isAuthenticated) {
     return null;
   }
-
+  // Lấy tên người dùng từ authState
   const name = authState.user?.fullName;
   const words = name?.split(" ");
   const lastWord = words && words[words.length - 1];
@@ -64,17 +74,18 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
         <div className="flex items-center pb-4 border-b-2 border-gray-400">
           {menus.map((menu) => {
             return (
-              <div
-                onClick={() => setToggleMenu(menu.id)}
+              <Link
+                href={`${menu.path}`}
+                onClick={() => setToggleMenuProfile(menu.id)}
                 key={menu.id}
                 className={`py-1 px-2 cursor-pointer ${
-                  toggleMenu === menu.id
+                  toggleMenuProfile === menu.id
                     ? "bg-blue-950 text-pink-400 rounded-lg"
                     : "text-white hover:text-pink-400"
                 }`}
               >
                 <span className="text-lg">{menu.name}</span>
-              </div>
+              </Link>
             );
           })}
         </div>

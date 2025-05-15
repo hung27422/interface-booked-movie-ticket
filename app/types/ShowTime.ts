@@ -2,6 +2,7 @@ interface IMovie {
   _id: string;
   title: string;
   caption: string;
+  image: string;
 }
 
 interface IRoom {
@@ -11,6 +12,8 @@ interface IRoom {
 interface ICinemas {
   _id: string;
   name: string;
+  location: string;
+  image: string;
 }
 interface ISeatPricing {
   SINGLE: number;

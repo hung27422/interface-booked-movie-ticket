@@ -3,6 +3,7 @@ import CinemaSeatMap from "@/app/components/BookTicket/CinemaSeatMap";
 import PaymentBooking from "@/app/components/BookTicket/PaymentBooking";
 import SnackSelector from "@/app/components/BookTicket/SnackSelector";
 import StepperBookTicket from "@/app/components/BookTicket/StepperBookTicket";
+import TicketInformation from "@/app/components/BookTicket/TicketInformation";
 import TicketSummary from "@/app/components/BookTicket/TicketSummary";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import useRooms from "@/app/hooks/useRooms";
@@ -37,9 +38,10 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
           {stepBooking === 2 && <PaymentBooking />}
         </div>
         <div className="col-span-3">
-          <TicketSummary getShowTimeById={getShowTimeById} />
+          {stepBooking !== 3 && <TicketSummary getShowTimeById={getShowTimeById} />}
         </div>
       </div>
+      <div>{stepBooking === 3 && <TicketInformation />}</div>
     </div>
   );
 }

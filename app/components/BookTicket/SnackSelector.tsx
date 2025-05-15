@@ -9,7 +9,6 @@ interface SnackSelectorProps {
 }
 
 function SnackSelector({ dataRoom }: SnackSelectorProps) {
-  // state
   // hooks
   const { dataSnacksByCinema } = useSnacks({ cinemaId: dataRoom.cinemaId._id });
   // context

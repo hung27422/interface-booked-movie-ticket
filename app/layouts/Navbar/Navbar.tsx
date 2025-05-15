@@ -29,6 +29,7 @@ const menus = [
 function Navbar() {
   //Context
   const { authState } = useContext(AuthContext);
+  console.log({ authState });
 
   const pathName = usePathname();
 

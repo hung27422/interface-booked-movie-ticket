@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { IShowtimeByCinemaDate } from "../types/ShowTime";
 import FormattedTime from "../utils/formattedTime";
+import { useAppContext } from "../contexts/AppContextProvider/AppContextProvider";
 
 interface MovieShowTimesProps {
   data: IShowtimeByCinemaDate[];
 }
 const MovieShowTimes = ({ data }: MovieShowTimesProps) => {
+  const { setStepBooking } = useAppContext();
+
   return (
     <div className="flex flex-wrap gap-2">
       {data.map((item) => {
@@ -14,6 +17,7 @@ const MovieShowTimes = ({ data }: MovieShowTimesProps) => {
 
         return (
           <Link
+            onClick={() => setStepBooking(0)}
             key={item._id}
             href={isPast ? "#" : `pages/book-ticket/${item._id}`}
             className={`p-3 tech-border rounded text-sm w-16 h-10 flex flex-col justify-center items-center font-bold

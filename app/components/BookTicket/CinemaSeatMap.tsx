@@ -8,11 +8,18 @@ interface CinemaSeatMapProps {
   dataRoom: IRoom;
 }
 function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
+  //state
+
   //context
   const { selectedSeats, setSelectedSeats } = useAppContext();
-  console.log({ selectedSeats });
   // hooks
   const { showSnackbar } = useSnackbar();
+
+  const params = new URLSearchParams(window.location.search);
+  const responseCode = params.get("vnp_ResponseCode");
+  console.log({ responseCode });
+  // Kiểm tra mã phản hồi từ URL khi thanh toán thành công
+
   // function
   const toggleSeatSelection = (seat: Seat) => {
     // Kiểm tra nếu số ghế đã chọn >= 10 và ghế chưa được chọn
@@ -22,7 +29,6 @@ function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
       showSnackbar("Một người chỉ được đặt tối đa 10 ghế", "error");
       return;
     }
-
     // Cập nhật danh sách ghế đã chọn
     setSelectedSeats((prev: Seat[]) => {
       if (isSeatSelected) {
