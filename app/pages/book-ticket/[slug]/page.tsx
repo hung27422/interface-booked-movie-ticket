@@ -41,7 +41,7 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
           {stepBooking !== 3 && <TicketSummary getShowTimeById={getShowTimeById} />}
         </div>
       </div>
-      <div>{stepBooking === 3 && <TicketInformation />}</div>
+      <div>{stepBooking === 3 && <TicketInformation getShowTimeById={getShowTimeById} />}</div>
     </div>
   );
 }

@@ -53,6 +53,9 @@ export default function ModalInfoTicket({ getShowTimeById }: ModalInfoTicketProp
     } else if (idBank === 2) {
       // handle payment with Paypal
     }
+    if (dataBooking) {
+      localStorage.setItem("dataBooking", JSON.stringify(dataBooking));
+    }
   };
   // constants
   const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });

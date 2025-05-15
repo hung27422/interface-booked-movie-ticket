@@ -7,15 +7,16 @@ interface useTicketProps {
 }
 
 function useTicket({ userId }: useTicketProps = {}) {
-  const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } = useSWR<ITicket>(
-    `/tickets/user/${userId}`
-  );
+  const { data, mutate } = useSWR<ITicket[]>(`/tickets/user/${userId}`);
+  const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } =
+    useSWR<ITicket[]>(`/tickets`);
 
   // Thêm mới một booking
   const addTicket = async (ticket: ITicket) => {
     try {
       const newTicket = await ticketServices.addTicket(ticket);
       mutateDataTicketByUserID(); // Cập nhật dữ liệu ngay lập tức
+      mutate();
       return newTicket;
     } catch (error) {
       console.error("Lỗi khi thêm đơn đặt vé:", error);
@@ -47,7 +48,9 @@ function useTicket({ userId }: useTicketProps = {}) {
   };
 
   return {
+    data,
     dataTicketByUserID,
+    mutateDataTicketByUserID,
     addTicket,
     updateTicket,
     deleteTicket,

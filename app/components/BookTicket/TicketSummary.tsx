@@ -4,50 +4,21 @@ import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvi
 import ButtonSeatAndTicketSelector from "./ButtonSeatAndTicketSelector";
 import ButtonSnackSelector from "./ButtonSnackSelector";
 import ModalInfoTicket from "./ModalInfoTicket";
-import { useContext, useEffect, useRef } from "react";
-import { ITicket } from "@/app/types/Ticket";
-import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
-import useTicket from "@/app/hooks/useTicket";
+import { useEffect } from "react";
 
 interface TicketSummaryProps {
   getShowTimeById: IShowTime;
 }
 function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
-  //
   const params = new URLSearchParams(window.location.search);
   const responseCode = params.get("vnp_TransactionStatus");
-  const codeOrder = params.get("vnp_TransactionNo");
   // context
-  const { selectedSeats, stepBooking, setStepBooking, totalPriceSnack } = useAppContext();
-  const { authState } = useContext(AuthContext);
+  const { selectedSeats, stepBooking, totalPriceSnack, setStepBooking } = useAppContext();
 
   //hooks
   const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
   const timeStartShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "time" });
   const timeEndShowTime = FormattedTime({ isoString: getShowTimeById?.endTime, type: "time" });
-  const time = `${timeStartShowTime} - ${timeEndShowTime}`;
-  const { addTicket } = useTicket();
-
-  //state
-  const tickets: ITicket = {
-    userId: authState.user?._id || "",
-    cinemaName: getShowTimeById.cinema?.name || "",
-    movieName: getShowTimeById.movie?.title || "",
-    caption: getShowTimeById.movie?.caption || "",
-    imageMovie: getShowTimeById.movie?.image || "",
-    imageCinema: getShowTimeById.cinema?.image || "",
-    codeOrder: codeOrder || "",
-    time: time,
-    date: dateShowTime,
-    room: getShowTimeById.room?.name || "",
-    seatNumbers: "A1 A2",
-    snacks: "Bánh mì",
-    cinemaAddress: getShowTimeById.cinema?.name || "",
-    codeTransaction: codeOrder || "",
-    urlQrCode:
-      "https://cdn.tgdd.vn/GameApp/3/236809/Screentshots/qr-code-generator-cong-cu-tao-ma-qr-tren-dien-thoai-logo-01-04-2021.png",
-    status: "PENDING",
-  };
 
   // contanst
   const totalPriceTicket = selectedSeats.reduce((total, seat) => {
@@ -59,17 +30,11 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
 
   // constant
   const totalPrice = totalPriceSnack ? totalPriceTicket + totalPriceSnack : totalPriceTicket;
-
   // Check xem thanh toán có thành công hay không
-  const hasRun = useRef(false);
+
   useEffect(() => {
-    if (hasRun.current) return;
-    hasRun.current = true;
     if (responseCode === "00") {
       setStepBooking((prev) => prev + 3);
-
-      const response = addTicket(tickets);
-      console.log({ response });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

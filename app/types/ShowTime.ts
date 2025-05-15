@@ -2,7 +2,7 @@ interface IMovie {
   _id: string;
   title: string;
   caption: string;
-  image: string;
+  poster: string;
 }
 
 interface IRoom {

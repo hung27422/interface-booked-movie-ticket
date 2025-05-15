@@ -15,5 +15,6 @@ export interface ITicket {
   cinemaAddress: string; // Địa chỉ rạp
   codeTransaction: string; // Mã giao dịch
   urlQrCode: string; // Mã QR
+  payDate: string; // Ngày thanh toán
   status?: "PENDING" | "CONFIRMED" | "CANCELLED";
 }
