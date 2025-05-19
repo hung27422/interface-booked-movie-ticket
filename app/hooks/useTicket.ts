@@ -4,10 +4,13 @@ import ticketServices from "../services/ticketServices";
 
 interface useTicketProps {
   userId?: string;
+  idTicket?: string;
 }
 
-function useTicket({ userId }: useTicketProps = {}) {
+function useTicket({ userId, idTicket }: useTicketProps = {}) {
   const { data, mutate } = useSWR<ITicket[]>(`/tickets/user/${userId}`);
+  const { data: dataTicketByID } = useSWR<ITicket>(`/tickets/${idTicket}`);
+
   const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } =
     useSWR<ITicket[]>(`/tickets`);
 
@@ -50,6 +53,7 @@ function useTicket({ userId }: useTicketProps = {}) {
   return {
     data,
     dataTicketByUserID,
+    dataTicketByID,
     mutateDataTicketByUserID,
     addTicket,
     updateTicket,

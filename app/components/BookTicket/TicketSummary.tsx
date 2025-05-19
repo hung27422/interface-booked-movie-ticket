@@ -3,7 +3,7 @@ import FormattedTime from "@/app/utils/formattedTime";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import ButtonSeatAndTicketSelector from "./ButtonSeatAndTicketSelector";
 import ButtonSnackSelector from "./ButtonSnackSelector";
-import ModalInfoTicket from "./ModalInfoTicket";
+import ModalDetailTicket from "./ModalDetailTicket";
 import { useEffect } from "react";
 
 interface TicketSummaryProps {
@@ -34,7 +34,7 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
 
   useEffect(() => {
     if (responseCode === "00") {
-      setStepBooking((prev) => prev + 3);
+      setStepBooking(stepBooking + 3);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -76,7 +76,7 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
       <div className="mt-4">
         {stepBooking === 0 && <ButtonSeatAndTicketSelector getShowTimeById={getShowTimeById} />}
         {stepBooking === 1 && <ButtonSnackSelector getShowTimeById={getShowTimeById} />}
-        {stepBooking === 2 && <ModalInfoTicket getShowTimeById={getShowTimeById} />}
+        {stepBooking === 2 && <ModalDetailTicket getShowTimeById={getShowTimeById} />}
       </div>
     </div>
   );

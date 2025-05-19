@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
+import Link from "next/link";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -105,10 +106,16 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar>{firstLetter}</Avatar> Thông tin
-        </MenuItem>
-
+        <Link href={"/pages/user"}>
+          <MenuItem onClick={handleClose}>
+            <Avatar>{firstLetter}</Avatar> Thông tin
+          </MenuItem>
+        </Link>
+        <Link href={"/pages/my-ticket"}>
+          <MenuItem onClick={handleClose}>
+            <Avatar>{firstLetter}</Avatar> Vé của tôi
+          </MenuItem>
+        </Link>
         <Divider color="#ccc" />
 
         <MenuItem onClick={handleLogout}>

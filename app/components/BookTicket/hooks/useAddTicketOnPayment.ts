@@ -1,24 +1,62 @@
-// hooks/useAddTicketOnPayment.ts
+// ✅ Sửa useAddTicketOnPayment để tạo QR code bất đồng bộ tại đây
 import { ITicket } from "@/app/types/Ticket";
 import { useEffect, useRef } from "react";
-
+import QRCode from "qrcode";
+import { IShowTime } from "@/app/types/ShowTime";
+interface SnackItem {
+  quantity: number;
+  snackId: {
+    name: string;
+  };
+}
 const useAddTicketOnPayment = (
   responseCode: string | null,
-  ticket: ITicket,
-  addTicket: (ticket: ITicket) => Promise<void>
+  ticket: ITicket | null,
+  addTicket: (ticket: ITicket) => Promise<void>,
+  getShowTimeById: IShowTime | null
 ) => {
+  const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
+  const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
+  const seatsNumber = seats?.join(" - ");
+  const snackSummary: string =
+    savedBooking?.snacks
+      ?.map((item: SnackItem) => `${item.quantity} x ${item.snackId.name}`)
+      .join(" - ") || "";
   const hasRun = useRef(false);
-
   useEffect(() => {
     if (hasRun.current) return;
+    if (responseCode !== "00" || !ticket) return;
+
     hasRun.current = true;
 
-    if (responseCode === "00") {
-      (async () => {
-        await addTicket(ticket);
-      })();
-    }
-  }, [responseCode, ticket, addTicket]);
+    (async () => {
+      const qrString = JSON.stringify({
+        MaDonHang: savedBooking?._id,
+        Rap: getShowTimeById?.cinema?.name,
+        Phim: getShowTimeById?.movie?.title,
+        Phong: getShowTimeById?.room?.name,
+        Ghe: seatsNumber,
+        ThucAn: snackSummary,
+      });
+
+      const qrCodeUrl = await QRCode.toDataURL(qrString);
+
+      await addTicket({
+        ...ticket,
+        urlQrCode: qrCodeUrl,
+      });
+    })();
+  }, [
+    responseCode,
+    ticket,
+    addTicket,
+    savedBooking?._id,
+    seatsNumber,
+    getShowTimeById?.cinema?.name,
+    getShowTimeById?.movie?.title,
+    getShowTimeById?.room?.name,
+    snackSummary,
+  ]);
 };
 
 export default useAddTicketOnPayment;

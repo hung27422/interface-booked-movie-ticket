@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import ProfileLayout from "@/app/layouts/ProfileLayout/ProfileLayout";
 import Image from "next/image";
-import Button from "@/app/components/Button";
+import useTicket from "@/app/hooks/useTicket";
+import ModalInfoTicket from "@/app/components/MyTicket/ModalInfoTicket";
 const menus = [
   {
     id: 1,
@@ -24,12 +25,15 @@ function MyTicket() {
   const { authState } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(1);
 
+  //hooks
+  const { dataTicketByUserID } = useTicket({ userId: authState.user?._id });
+
+  // Check if user is authenticated
   useEffect(() => {
     if (!authState.isLoading && !authState.isAuthenticated) {
       router.push("/");
     }
   }, [authState, router]);
-
   if (authState.isLoading) {
     return (
       <div className="h-screen flex items-center justify-center text-2xl">
@@ -37,12 +41,11 @@ function MyTicket() {
       </div>
     );
   }
-
-  if (!authState.isAuthenticated) {
-    return null;
+  if (!dataTicketByUserID) {
+    return <div>Loading...</div>;
   }
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <ProfileLayout>
         <div className="flex items-center gap-4 justify-center">
           {menus.map((menu) => {
@@ -61,31 +64,35 @@ function MyTicket() {
             );
           })}
         </div>
-        <div className="mt-8 mx-40">
+        <div className="mt-8 mx-40 h-full">
           {toggleMenu === 1 && (
             <div>
-              <div className="flex items-center justify-between bg-gray-800 py-1 px-2 rounded-lg ">
-                <div className="flex items-center">
-                  <Image
-                    src={`https://ecosmartcitythuthiemlotte.vn/wp-content/uploads/2019/05/logo.png`}
-                    alt="logo"
-                    width={50}
-                    height={50}
-                  />
-                  <div className="ml-4">
-                    <div className="text-base font-bold">Đêm Thánh: Đội săn quỷ</div>
-                    <div className="text-sm">Lotte Nam Sài Gòn</div>
-                    <div className="text-sm">20:45 , 14/05/2025</div>
-                  </div>
-                </div>
+              {dataTicketByUserID.map((ticket) => {
+                return (
+                  <div key={ticket._id} className="py-2">
+                    <div className="flex items-center justify-between bg-gray-800 py-1 px-2 rounded-lg ">
+                      <div className="flex items-center">
+                        <Image src={ticket.imageCinema} alt="logo" width={50} height={50} />
+                        <div className="ml-4">
+                          <div className="text-base font-bold">{ticket.movieName}</div>
+                          <div className="text-sm">{ticket.cinemaName}</div>
+                          <div className="text-sm">
+                            {ticket.time} - {ticket.date}
+                          </div>
+                        </div>
+                      </div>
 
-                <div>
-                  <Button color="inherit" title="Xem chi tiết" size="medium" variant="outlined" />
-                </div>
-              </div>
+                      <div>
+                        <ModalInfoTicket idTicket={ticket._id} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
-          {toggleMenu === 2 && <div>Vé đã sử dụng</div>}
+
+          {toggleMenu === 2 && <div className="h-screen">Vé đã sử dụng</div>}
           {toggleMenu === 3 && <div>Vé đã hủy</div>}
         </div>
       </ProfileLayout>

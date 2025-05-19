@@ -2,7 +2,6 @@
 import { IShowTime } from "@/app/types/ShowTime";
 import { ITicket } from "@/app/types/Ticket";
 import FormattedTime from "@/app/utils/formattedTime";
-
 interface Params {
   getShowTimeById: IShowTime;
   userId?: string;
@@ -17,12 +16,13 @@ interface SnackItem {
 }
 const usePrepareTicket = ({ getShowTimeById, userId, codeOrder, payDate }: Params): ITicket => {
   const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
+
   const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
   const seatsNumber = seats?.join(" - ");
 
   const snackSummary: string =
     savedBooking?.snacks
-      ?.map((item: SnackItem) => `${item.quantity} ${item.snackId.name}`)
+      ?.map((item: SnackItem) => `${item.quantity} x ${item.snackId.name}`)
       .join(" - ") || "";
 
   const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
@@ -37,7 +37,7 @@ const usePrepareTicket = ({ getShowTimeById, userId, codeOrder, payDate }: Param
     caption: getShowTimeById.movie?.caption || "",
     imageMovie: getShowTimeById.movie?.poster || "",
     imageCinema: getShowTimeById.cinema?.image || "",
-    codeOrder: codeOrder || "",
+    codeOrder: savedBooking?._id || "",
     time,
     date: dateShowTime,
     room: getShowTimeById.room?.name || "",
@@ -45,8 +45,7 @@ const usePrepareTicket = ({ getShowTimeById, userId, codeOrder, payDate }: Param
     snacks: snackSummary || "",
     cinemaAddress: getShowTimeById.cinema?.name || "",
     codeTransaction: codeOrder || "",
-    urlQrCode:
-      "https://cdn.tgdd.vn/GameApp/3/236809/Screentshots/qr-code-generator-cong-cu-tao-ma-qr-tren-dien-thoai-logo-01-04-2021.png",
+    urlQrCode: "",
     payDate: payDate,
     status: "PENDING",
   };
