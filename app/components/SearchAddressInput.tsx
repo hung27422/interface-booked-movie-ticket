@@ -1,9 +1,9 @@
 import * as React from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import addressCinemas from "@/app/utils/addressCinemas";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -15,13 +15,6 @@ const MenuProps = {
     },
   },
 };
-
-// Danh sách tỉnh thành với title và slug
-const locations = [
-  { title: "TP.Hồ Chí Minh", slug: "tp-ho-chi-minh" },
-  { title: "Hà Nội", slug: "ha-noi" },
-  { title: "Đồng Nai", slug: "dong-nai" },
-];
 
 const selectStyles = {
   position: "relative",
@@ -58,20 +51,20 @@ const selectStyles = {
     borderRadius: "8px",
     border: "none",
     position: "absolute",
-    fontSize: "0.75rem",
+    fontSize: "0.5rem",
     fontWeight: "bold",
     transition: "all 0.3s ease-in-out",
     transform: "translate(14px, 12px) scale(1)",
   },
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.MuiFormLabel-filled": {
-    border: "2px solid #00eaff",
-    boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
+    border: "1px solid #00eaff",
+    boxShadow: "0 0 2px #00eaff, 0 0 2px #7d2aff",
     transform: "translate(14px, -12px) scale(0.85)",
   },
 };
 
 export default function SearchAddressInput() {
-  const [selectedLocation, setSelectedLocation] = React.useState<string[]>(["tp-ho-chi-minh"]);
+  const [selectedLocation, setSelectedLocation] = React.useState<string[]>(["ho-chi-minh"]);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedLocation>) => {
     const {
@@ -84,8 +77,7 @@ export default function SearchAddressInput() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 340, ...selectStyles }}>
-        <InputLabel id="location-select-label">Chọn địa điểm</InputLabel>
+      <FormControl sx={{ m: 1, width: 320, ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"
@@ -96,9 +88,27 @@ export default function SearchAddressInput() {
           sx={selectStyles}
           size="small"
         >
-          {locations.map((location) => (
-            <MenuItem key={location.slug} value={location.slug}>
-              {location.title}
+          {addressCinemas.map((location) => (
+            <MenuItem
+              key={location.slug}
+              value={location.slug}
+              sx={{
+                color: "white",
+                backgroundColor: "#1a1a1a", // 💡 Nền mặc định khi chưa selected
+                py: 0,
+                "&:hover": {
+                  backgroundColor: "#2c2c2c", // Hover khi chưa selected
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#242424", // Nền khi đã selected
+                  color: "#00eaff",
+                },
+                "&.Mui-selected:hover": {
+                  backgroundColor: "#333", // Hover khi đã selected
+                },
+              }}
+            >
+              {location.address}
             </MenuItem>
           ))}
         </Select>
