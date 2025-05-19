@@ -27,11 +27,12 @@ function BookTicketDetail({ params }: BookTicketDetailProps) {
   }
 
   return (
-    <div className="min-h-svh">
+    <div className="min-h-svh flex flex-col px-4">
       <div>
         <StepperBookTicket stepBooking={stepBooking} />
       </div>
-      <div className="mt-4 grid grid-cols-10 gap-4">
+
+      <div className="mt-4 flex flex-col md:grid md:grid-cols-10 gap-4">
         <div className="col-span-7">
           {stepBooking === 0 && <CinemaSeatMap dataRoom={dataRoom} />}
           {stepBooking === 1 && <SnackSelector dataRoom={dataRoom} />}

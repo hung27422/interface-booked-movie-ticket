@@ -43,6 +43,7 @@ const selectStyles = {
   },
   "& .MuiInputBase-input": {
     color: "white",
+    padding: "4px",
   },
   "& .MuiInputLabel-root": {
     color: "#fff",
@@ -84,7 +85,7 @@ export default function SearchCinemasInput() {
   if (!dataCinemaByLocation) return <div>Loading...</div>;
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 320, ...selectStyles }}>
+      <FormControl sx={{ m: 1, width: 340, ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"
@@ -126,7 +127,7 @@ export default function SearchCinemasInput() {
             ))}
 
             {/* Trạng thái đang tải giả định */}
-            <div className="px-3 py-2 text-sm text-gray-500">đang tải…</div>
+            <div className="px-3 py-2 text-sm text-gray-500">Hết!…</div>
           </div>
         </Select>
       </FormControl>

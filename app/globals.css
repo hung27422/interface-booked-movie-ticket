@@ -18,6 +18,7 @@
 body {
   color: var(--black-color);
   font-family: var(--font-barlow);
+  height: 100%;
 }
 
 @layer utilities {

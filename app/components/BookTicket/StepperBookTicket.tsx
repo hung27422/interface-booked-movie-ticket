@@ -10,6 +10,8 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 const stepIcons: { [key: number]: React.ReactElement } = {
   1: <ConfirmationNumberIcon />,
   2: <LocalDrinkIcon />,
@@ -20,7 +22,8 @@ const stepIcons: { [key: number]: React.ReactElement } = {
 const ColorStepIcon: React.FC<StepIconProps> = (props) => {
   const { active, completed, className, icon } = props;
   const stepIcon = stepIcons[Number(icon)];
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Mặc định <600px
   return (
     <div
       className={className}
@@ -38,6 +41,7 @@ const ColorStepIcon: React.FC<StepIconProps> = (props) => {
       {React.cloneElement(stepIcon, {
         style: {
           color: "#000",
+          fontSize: isMobile ? "1rem" : "1.5rem",
         },
       })}
     </div>
@@ -60,6 +64,8 @@ interface StepperBookTicketProps {
   stepBooking: number;
 }
 export default function StepperBookTicket({ stepBooking }: StepperBookTicketProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Mặc định <600px
   return (
     <Box
       sx={{
@@ -78,7 +84,7 @@ export default function StepperBookTicket({ stepBooking }: StepperBookTicketProp
                 ".MuiStepLabel-label": {
                   color: "#ccc",
                   fontWeight: "500",
-                  fontSize: "0.9rem",
+                  fontSize: isMobile ? "0.75rem" : "0.9rem",
                   "&.Mui-active": {
                     color: "#00eaff",
                     fontWeight: "bold",

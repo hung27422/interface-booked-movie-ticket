@@ -21,15 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fontBarlow.variable} bg-white antialiased`}>
+      <body className={`${fontBarlow.variable} antialiased h-full bg-[#0F0F0F]`}>
         <Providers>
           <div>
             <div className="fixed top-0 right-0 left-0 overflow-hidden z-50">
               <Navbar />
             </div>
-            <div className="bg-[#0F0F0F] text-[#EAEAEA] h-auto pb-10 pt-20 w-[100%] md:px-20 ">
-              {children}
-            </div>
+            <div className=" text-[#EAEAEA] h-full pb-10 pt-20 w-[100%] md:px-20 ">{children}</div>
           </div>
         </Providers>
       </body>

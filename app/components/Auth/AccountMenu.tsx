@@ -45,8 +45,8 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <div className="ml-3 rounded-full size-10 tech-border cursor-pointer">
-              <div className="flex flex-col items-center justify-center ">
+            <div className="rounded-full size-10 tech-border cursor-pointer flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
                 <span className="text-2xl font-bold text-red-500 text-center">{firstLetter}</span>
               </div>
             </div>

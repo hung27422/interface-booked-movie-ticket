@@ -23,6 +23,7 @@ const selectStyles = {
   textAlign: "center",
   textTransform: "uppercase",
   transition: "all 0.3s ease-in-out",
+
   "& .MuiOutlinedInput-root": {
     border: "2px solid #00eaff",
     borderRadius: "10px",
@@ -43,6 +44,7 @@ const selectStyles = {
   },
   "& .MuiInputBase-input": {
     color: "white",
+    padding: "4px",
   },
   "& .MuiInputLabel-root": {
     color: "#fff",
@@ -77,7 +79,7 @@ export default function SearchAddressInput() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 320, ...selectStyles }}>
+      <FormControl sx={{ m: 1, width: 340, ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"
@@ -95,7 +97,6 @@ export default function SearchAddressInput() {
               sx={{
                 color: "white",
                 backgroundColor: "#1a1a1a", // 💡 Nền mặc định khi chưa selected
-                py: 0,
                 "&:hover": {
                   backgroundColor: "#2c2c2c", // Hover khi chưa selected
                 },

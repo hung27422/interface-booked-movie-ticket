@@ -40,8 +40,8 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   }, []);
   return (
     <div>
-      <div className="flex flex-col items-center justify-center bg-gray-800 p-4 rounded-lg shadow-md">
-        <div className="text-xl font-bold text-white">Thông tin vé</div>
+      <div className="flex flex-col items-start md:items-center justify-start md:justify-center bg-gray-800 p-4 rounded-lg shadow-md ">
+        <div className="text-xl font-bold text-white text-center mx-auto">Thông tin vé</div>
         <div className="text-lg text-gray-400 ml-4">
           <p>Phim: {getShowTimeById?.movie?.title}</p>
           <p>
@@ -65,7 +65,7 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
           </div>
         </div>
       </div>
-      <div className="mt-4 bg-gray-800 p-4 rounded-lg shadow-md">
+      <div className="mt-4 bg-gray-800 p-4 rounded-lg shadow-md ">
         <div className="text-lg font-bold text-white">Tổng đơn hàng</div>
         <div className="mt-2 text-gray-400">
           <p className="text-white font-semibold mt-2">
