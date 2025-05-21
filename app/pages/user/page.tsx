@@ -29,7 +29,7 @@ function User() {
   return (
     <div className="">
       <ProfileLayout>
-        <div className="grid grid-cols-2 gap-6 h-dvh mt-6">
+        <div className="flex flex-col sm:grid grid-cols-2 sm:gap-6 h-dvh mt-6 px-4 sm:px-0">
           <div className="col-span-1">
             <TextFieldInput label="Tài khoản" name="fullName" value={authState.user?.username} />
             <TextFieldInput label="Họ và tên" name="fullName" value={authState.user?.fullName} />

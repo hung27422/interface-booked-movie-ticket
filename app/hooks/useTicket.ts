@@ -8,8 +8,8 @@ interface useTicketProps {
 }
 
 function useTicket({ userId, idTicket }: useTicketProps = {}) {
-  const { data, mutate } = useSWR<ITicket[]>(`/tickets/user/${userId}`);
-  const { data: dataTicketByID } = useSWR<ITicket>(`/tickets/${idTicket}`);
+  const { data, mutate } = useSWR<ITicket[]>(userId ? `/tickets/user/${userId} ` : null);
+  const { data: dataTicketByID } = useSWR<ITicket>(idTicket ? `/tickets/${idTicket}` : null);
 
   const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } =
     useSWR<ITicket[]>(`/tickets`);

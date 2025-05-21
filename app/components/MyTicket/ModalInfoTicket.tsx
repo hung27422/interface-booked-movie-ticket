@@ -14,17 +14,19 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
+  width: "90vw", // responsive
+  maxWidth: 700,
   bgcolor: "background.paper",
   border: "2px solid #ff00ff",
   backgroundColor: "rgba(0, 0, 0, 0.9)",
   boxShadow: 24,
-  p: 4,
-  overflowY: "scroll",
-  maxHeight: "80vh",
+  p: 2,
+  overflowY: "auto",
+  maxHeight: "70vh",
   scrollbarWidth: "none",
-  borderRadius: 4,
+  borderRadius: 8,
 };
+
 interface ModalInfoTicketProps {
   idTicket?: string;
 }
@@ -46,7 +48,9 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Xem chi tiết</Button>
+      <Button onClick={handleOpen} variant="contained">
+        Xem chi tiết
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -78,7 +82,7 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
                 className="rounded-lg w-full h-80"
               />
             </div>
-            <div className="flex items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2">
               <div className="flex flex-col">
                 <span>
                   Mã đặt vé: <p>{data.codeOrder}</p>
@@ -91,9 +95,11 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
                 </span>
               </div>
 
-              <Base64Image base64={data.urlQrCode} />
+              <div className="flex items-center justify-center mt-2">
+                <Base64Image base64={data.urlQrCode} />
+              </div>
             </div>
-            <div className="flex items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
               <div className="flex flex-col">
                 <span>Phòng chiếu : {data.room}</span>
                 <span>Số ghế: {data.seatNumbers}</span>
@@ -102,7 +108,7 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
               </div>
               <div>Thức ăn kèm: {data.snacks}</div>
             </div>
-            <div className="flex items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
               <span>Mã giao dịch: {data.codeTransaction}</span>
               <span>Thời gian giao dịch: {data?.payDate}</span>
             </div>

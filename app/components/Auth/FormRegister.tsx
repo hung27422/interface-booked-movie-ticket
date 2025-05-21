@@ -6,16 +6,17 @@ import { Register } from "@/app/types/User";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import useSnackbar from "../Hooks/useSnackbar";
 const style = {
-  position: "absolute",
+  position: "absolute" as const,
   color: "white",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: "90%",
+  maxWidth: 500,
   bgcolor: "rgba(0, 0, 0, 0.9)",
   border: "2px solid #ff00ff",
   boxShadow: 24,
-  p: 4,
+  p: { xs: 2, sm: 4 },
   borderRadius: 4,
 };
 interface FormRegisterProps {

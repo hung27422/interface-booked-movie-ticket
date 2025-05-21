@@ -14,7 +14,7 @@ function MovieShowtimeDetails() {
 
   return (
     <div className="">
-      <div className="flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10 mt-4">
+      <div className="flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10 mt-4 sm:mt-0">
         <InfoIcon />
         <h4 className="ml-3 text-sm md:text-xl"> Nhấn vào suất chiếu để tiến hành mua voucher </h4>
       </div>
