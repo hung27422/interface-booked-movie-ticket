@@ -10,6 +10,7 @@ import Base64Image from "../Base64Image";
 import useHandleDownloadPDF from "@/app/utils/hooks/useHandleDownloadPDF";
 import React from "react";
 import { Button } from "@mui/material";
+import Link from "next/link";
 interface TicketInformationProps {
   getShowTimeById: IShowTime;
 }
@@ -51,72 +52,98 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   }
 
   return (
-    <div
-      ref={ticketRef}
-      className="flex flex-col w-[620px] bg-gray-800 mx-auto border-white border-2 rounded-lg px-4 py-2"
-    >
-      <div>
-        <h1 className="text-2xl font-bold text-center">Thông tin vé</h1>
-      </div>
-      <div className="flex items-center gap-3">
-        <Image src={data?.imageCinema} alt="img-film" width={40} height={40} />
-        <div className="flex flex-col">
-          <span className="text-sm">{data.cinemaName}</span>
-          <span className="text-base font-bold">Phim: {data.movieName}</span>
-          <span className="text-sm">{data.caption}</span>
-        </div>
-      </div>
-      <div className="flex items-center justify-center py-4">
-        <Image
-          src={data.imageMovie}
-          alt="img"
-          width={300}
-          height={300}
-          className="rounded-lg w-full h-80"
-        />
-      </div>
-      <div className="flex items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2">
-        <div className="flex flex-col">
-          <span>
-            Mã đặt vé: <p>{data.codeOrder}</p>
-          </span>
-          <span>
-            Thời gian:
-            <p>
-              {data.time} - {data.date}
-            </p>
-          </span>
+    <div>
+      <div
+        ref={ticketRef}
+        className="flex flex-col w-full max-w-[620px] bg-gray-800 mx-auto border-white border-2 rounded-lg px-4 py-2"
+      >
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-center text-white">Thông tin vé</h1>
         </div>
 
-        <Base64Image base64={data.urlQrCode} />
-      </div>
-      <div className="flex items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
-        <div className="flex flex-col">
-          <span>Phòng chiếu : {data.room}</span>
-          <span>Số ghế: {data.seatNumbers}</span>
-          <span>Rạp chiếu: {data.cinemaName}</span>
-          <span>Địa chỉ: {data.cinemaAddress}</span>
-        </div>
-        <div>Thức ăn kèm: {data.snacks}</div>
-      </div>
-      <div className="flex items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300">
-        <span>Mã giao dịch: {data.codeTransaction}</span>
-        <span>Thời gian giao dịch: {data?.payDate}</span>
-      </div>
-      <div>
-        <h5 className="text-center mx-auto mt-2">Thông tin người nhận</h5>
-        <div className="flex items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2">
-          <div className="flex flex-col">
-            <span>Họ tên: {authState.user?.fullName}</span>
-            <span>Số điện thoại: {authState.user?.phone}</span>
-            <span>Email:{authState.user?.email}</span>
+        <div className="flex flex-col sm:flex-row items-center gap-3 mt-4">
+          <Image src={data?.imageCinema} alt="img-film" width={40} height={40} />
+          <div className="flex flex-col text-white text-center sm:text-left">
+            <span className="text-sm">{data.cinemaName}</span>
+            <span className="text-base font-bold">Phim: {data.movieName}</span>
+            <span className="text-sm">{data.caption}</span>
           </div>
         </div>
+
+        <div className="flex items-center justify-center py-4">
+          <Image
+            src={data.imageMovie}
+            alt="img"
+            width={300}
+            height={300}
+            className="rounded-lg w-full h-60 sm:h-80 object-cover"
+          />
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2 text-white gap-2">
+          <div className="flex flex-col">
+            <span>
+              Mã đặt vé: <p>{data.codeOrder}</p>
+            </span>
+            <span>
+              Thời gian:
+              <p>
+                {data.time} - {data.date}
+              </p>
+            </span>
+          </div>
+          <div className="flex items-center justify-center">
+            <Base64Image base64={data.urlQrCode} />
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-dashed border-b-2 border-b-gray-300 text-white gap-2">
+          <div className="flex flex-col">
+            <span>Phòng chiếu: {data.room}</span>
+            <span>Số ghế: {data.seatNumbers}</span>
+            <span>Rạp chiếu: {data.cinemaName}</span>
+            <span>Địa chỉ: {data.cinemaAddress}</span>
+          </div>
+          <div className="sm:text-right">Thức ăn kèm: {data.snacks}</div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-between py-2 border-dashed border-b-2 border-b-gray-300 text-white gap-2">
+          <span>Mã giao dịch: {data.codeTransaction}</span>
+          <span>Thời gian giao dịch: {data?.payDate}</span>
+        </div>
+
+        <div>
+          <h5 className="text-center mx-auto mt-2 text-white">Thông tin người nhận</h5>
+          <div className="flex items-center justify-between border-dashed border-b-2 border-b-gray-300 py-2 text-white">
+            <div className="flex flex-col">
+              <span>Họ tên: {authState.user?.fullName}</span>
+              <span>SĐT: {authState.user?.phone}</span>
+              <span>Email: {authState.user?.email}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <Button
+            onClick={handleDownloadPDF}
+            color="secondary"
+            variant="contained"
+            className="text-sm sm:text-base"
+          >
+            Lưu vé (PDF)
+          </Button>
+        </div>
       </div>
-      <div className="flex items-center justify-center gap-4 mt-4">
-        <Button onClick={handleDownloadPDF} color="secondary" variant="contained">
-          Lưu vé (PDF)
-        </Button>
+      <div className="mt-5 w-1/2 mx-auto">
+        <Link href="/pages/my-ticket">
+          <Button
+            color="primary"
+            variant="contained"
+            className="text-sm sm:text-base mt-4 w-full max-w-[620px] mx-auto"
+          >
+            Vé của tôi
+          </Button>
+        </Link>
       </div>
     </div>
   );

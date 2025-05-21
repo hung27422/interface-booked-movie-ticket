@@ -1,4 +1,4 @@
-import { IconButton, TextField, Stack } from "@mui/material";
+import { IconButton, TextField, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -16,6 +16,8 @@ export default function QuantityInput({
   max = 99,
 }: QuantityInputProps) {
   const [quantity, setQuantity] = useState<number>(value);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (newValue: number) => {
     if (newValue >= min && newValue <= max) {
@@ -29,14 +31,14 @@ export default function QuantityInput({
       direction="row"
       alignItems="center"
       spacing={1}
-      sx={{ color: "white", fontSize: "12px" }}
+      sx={{ color: "white", fontSize: isMobile ? "10px" : "12px" }}
     >
       <IconButton
-        sx={{ color: "white" }}
+        sx={{ color: "white", fontSize: isMobile ? "16px" : "24px" }}
         onClick={() => handleChange(quantity - 1)}
         disabled={quantity <= min}
       >
-        <Remove />
+        <Remove fontSize="inherit" />
       </IconButton>
       <TextField
         size="small"
@@ -47,16 +49,16 @@ export default function QuantityInput({
           max,
           style: {
             textAlign: "center",
-            width: "20px",
+            width: isMobile ? "16px" : "20px",
             padding: "6px",
-            color: "white", // chữ trắng
-            fontSize: "14px",
+            color: "white",
+            fontSize: isMobile ? "12px" : "14px",
           },
         }}
         sx={{
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "white", // border trắng
+              borderColor: "white",
             },
             "&:hover fieldset": {
               borderColor: "white",
@@ -68,11 +70,11 @@ export default function QuantityInput({
         }}
       />
       <IconButton
-        sx={{ color: "white" }}
+        sx={{ color: "white", fontSize: isMobile ? "16px" : "24px" }}
         onClick={() => handleChange(quantity + 1)}
         disabled={quantity >= max}
       >
-        <Add />
+        <Add fontSize="inherit" />
       </IconButton>
     </Stack>
   );

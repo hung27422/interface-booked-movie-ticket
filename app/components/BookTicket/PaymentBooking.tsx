@@ -38,15 +38,15 @@ function PaymentBooking() {
         <div className="text-pink-500 bg-blue-950 p-2 rounded-lg text-center">
           <span className="text-xl">TÓM TẮT ĐƠN HÀNG</span>
         </div>
-        <div className="grid grid-cols-4 items-center justify-center text-lg text-pink-400 border-2 border-[#9400ff] rounded-md py-1 px-4 mt-2">
-          <span className="col-span-2">Mô tả</span>
+        <div className="grid grid-cols-3 md:grid-cols-4 items-center justify-center text-lg text-pink-400 border-2 border-[#9400ff] rounded-md py-1 px-4 mt-2">
+          <span className="col-span-1 md:col-span-2">Mô tả</span>
           <span className="col-span-1 mx-auto">Số lượng</span>
           <span className="col-span-1 mx-auto">Thành tiền</span>
         </div>
         <div className="border-2 border-[#9400ff] rounded-md py-1 px-2 mt-2">
           {/* Ghế */}
-          <div className="grid grid-cols-4 items-center justify-center text-base py-1 border-b border-gray-500 px-2">
-            <span className="gap-2 col-span-2">Ghế: {seats?.join(" - ")}</span>
+          <div className="grid grid-cols-3 md:grid-cols-4 items-center justify-center text-base py-1 border-b border-gray-500 px-2">
+            <span className="col-span-1 md:col-span-2">Ghế: {seats?.join(" - ")}</span>
             <span className="col-span-1 mx-auto">{dataBooking?.seatNumbers.length}</span>
             <span className="col-span-1 mx-auto">{totalPriceSeats.toLocaleString()}đ</span>
           </div>
@@ -56,9 +56,9 @@ function PaymentBooking() {
               return (
                 <div
                   key={item.snackId._id}
-                  className="grid grid-cols-4 items-center justify-center text-base"
+                  className="grid grid-cols-3 md:grid-cols-4 items-center justify-center text-base"
                 >
-                  <span className="gap-2 col-span-2">{item.snackId.name}</span>
+                  <span className="gap-2 col-span-1 md:col-span-2">{item.snackId.name}</span>
                   <span className="col-span-1 mx-auto">{item.quantity}</span>
                   <span className="col-span-1 mx-auto">{item.subtotal.toLocaleString()}đ</span>
                 </div>
@@ -66,8 +66,8 @@ function PaymentBooking() {
             })}
           </div>
           {/* Tổng tiền */}
-          <div className="grid grid-cols-4 items-center justify-center text-base px-2 py-2">
-            <span className="gap-2 col-span-2">Tổng tiền</span>
+          <div className="grid grid-cols-3 md:grid-cols-4 items-center justify-center text-base px-2 py-2">
+            <span className="gap-2 col-span-1 md:col-span-2">Tổng tiền</span>
             <span className="col-span-1 mx-auto"></span>
             <span className="col-span-1 mx-auto">{totalOrder.toLocaleString()}đ</span>
           </div>
@@ -78,7 +78,7 @@ function PaymentBooking() {
         <div className="text-pink-500 bg-blue-950 p-2 rounded-lg text-center ">
           <span className="text-xl">THÔNG TIN CÁ NHÂN</span>
         </div>
-        <div className="grid grid-cols-3 items-center justify-center text-center py-2 border-2 border-[#9400ff] rounded-lg mt-2 text-base">
+        <div className="flex flex-col md:grid grid-cols-3 items-center justify-center text-center py-2 border-2 border-[#9400ff] rounded-lg mt-2 text-base">
           <span className="col-span-1">Họ và tên: {authState.user?.fullName} </span>
           <span className="col-span-1">Số điện thoại: {authState.user?.phone} </span>
           <span className="col-span-1">Email: {authState.user?.email} </span>

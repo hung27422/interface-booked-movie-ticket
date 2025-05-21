@@ -17,12 +17,17 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: "90%", // Chiếm 90% chiều rộng màn hình
+  maxWidth: 500, // Giới hạn tối đa trên desktop
   bgcolor: "rgba(0, 0, 0, 0.9)",
   border: "2px solid #ff00ff",
   boxShadow: 24,
   borderRadius: 4,
+  maxHeight: "90vh", // Tránh tràn màn hình nhỏ
+  overflowY: "auto", // Kích hoạt scroll nếu nội dung dài
+  paddingBottom: 2,
 };
+
 interface ModalInfoTicketProps {
   getShowTimeById: IShowTime;
 }
