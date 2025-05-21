@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import addressCinemas from "@/app/utils/addressCinemas";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,12 +45,12 @@ const selectStyles = {
   },
   "& .MuiInputBase-input": {
     color: "white",
-    padding: "4px",
+    padding: "0px",
   },
   "& .MuiInputLabel-root": {
     color: "#fff",
     backgroundColor: "#121212",
-    padding: "1px 10px",
+    padding: "0px 10px",
     borderRadius: "8px",
     border: "none",
     position: "absolute",
@@ -67,7 +68,8 @@ const selectStyles = {
 
 export default function SearchAddressInput() {
   const [selectedLocation, setSelectedLocation] = React.useState<string[]>(["ho-chi-minh"]);
-
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const handleChange = (event: SelectChangeEvent<typeof selectedLocation>) => {
     const {
       target: { value },
@@ -79,7 +81,7 @@ export default function SearchAddressInput() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 340, ...selectStyles }}>
+      <FormControl sx={{ m: 1, width: isTablet ? 600 : 340, ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"

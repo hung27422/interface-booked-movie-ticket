@@ -23,17 +23,17 @@ export default function Home() {
       <div className="mt-4">
         <SectionTitle title="Mua Vé Theo Rạp" />
 
-        <div className="flex flex-col justify-center md:grid md:grid-cols-12 md:gap-2 mt-3">
+        <div className="flex flex-col justify-center gap-2 mt-3 lg:grid lg:grid-cols-12">
           {/* Khu vực */}
-          <div className="md:col-span-3">
+          <div className="lg:col-span-3">
             <LocationSelector />
           </div>
           {/* Thông tin rạp */}
-          <div className="md:col-span-3">
+          <div className="lg:col-span-3">
             <CinemaSelector />
           </div>
           {/* Suất chiếu */}
-          <div className="md:col-span-6">
+          <div className="lg:col-span-6">
             <MovieShowtimeDetails />
           </div>
         </div>

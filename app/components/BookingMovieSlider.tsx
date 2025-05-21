@@ -31,7 +31,7 @@ const settings = {
     {
       breakpoint: 1024, // Tablet
       settings: {
-        slidesToShow: 5,
+        slidesToShow: 4,
         centerPadding: "10px",
       },
     },

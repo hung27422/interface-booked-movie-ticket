@@ -17,7 +17,7 @@ function MovieBookingCard({ movie, index }: MovieBookingCardProps) {
         height={170}
       />
       <div>
-        <h5 className="w-[65px] md:w-[120px] mt-1 text-sm max-md:text-xs  truncate">{title}</h5>
+        <h5 className="w-[65px] md:w-[120px] mt-1 text-sm max-md:text-xs truncate px-2">{title}</h5>
       </div>
       <div>
         <span>{index + 1}</span>

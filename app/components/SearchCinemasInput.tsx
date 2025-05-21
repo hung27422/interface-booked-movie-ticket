@@ -1,7 +1,8 @@
 import * as React from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
+import { useTheme, useMediaQuery, MenuItem, Typography } from "@mui/material";
 import useCinemas from "../hooks/useCinemas";
 import { useAppContext } from "../contexts/AppContextProvider/AppContextProvider";
 
@@ -11,126 +12,135 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      backgroundColor: "#1a1a1a",
+      color: "#fff",
     },
   },
 };
 
 const selectStyles = {
-  position: "relative",
   color: "white",
   borderRadius: "10px",
-  textAlign: "center",
-  textTransform: "uppercase",
-  transition: "all 0.3s ease-in-out",
+  border: "1px solid #00eaff",
   "& .MuiOutlinedInput-root": {
-    border: "2px solid #00eaff",
     borderRadius: "10px",
-    boxShadow: "0 0 3px #00eaff, 0 0 3px #7d2aff",
-    transition: "all 0.3s ease-in-out",
-    "&:hover": {
+    "& fieldset": {
+      borderColor: "#00eaff",
+    },
+    "&:hover fieldset": {
       borderColor: "#7d2aff",
-      boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
     },
-    "&.Mui-focused": {
+    "&.Mui-focused fieldset": {
       borderColor: "#ffffff",
-      boxShadow: "0 0 10px #00eaff, 0 0 10px #7d2aff, 0 0 12px #ffffff",
-      transform: "scale(1.02)",
+      boxShadow: "0 0 10px #00eaff, 0 0 10px #7d2aff",
     },
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "none",
   },
   "& .MuiInputBase-input": {
     color: "white",
-    padding: "4px",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#fff",
-    backgroundColor: "#121212",
-    padding: "1px 10px",
-    borderRadius: "8px",
-    border: "none",
-    position: "absolute",
-    fontSize: "0.5rem",
-    fontWeight: "bold",
-    transition: "all 0.3s ease-in-out",
-    transform: "translate(14px, 12px) scale(1)",
-  },
-  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.MuiFormLabel-filled": {
-    border: "2px solid #00eaff",
-    boxShadow: "0 0 2px #00eaff, 0 0 2px #7d2aff",
-    transform: "translate(14px, -12px) scale(0.85)",
+    padding: "10px",
   },
 };
 
 export default function SearchCinemasInput() {
   const { selectedAddress, cinemaIDSelected, setCinemaIDSelected } = useAppContext();
-
-  const [selectedLocation, setSelectedLocation] = React.useState<string[]>(["lt"]);
-
   const { dataCinemaByLocation } = useCinemas({ location: selectedAddress ?? "" });
+  const [open, setOpen] = React.useState(false);
+  const [selectedCinemaName, setSelectedCinemaName] = React.useState("");
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedLocation>) => {
-    const {
-      target: { value },
-    } = event;
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
-    // Chỉ giữ lại giá trị mới, bỏ đi giá trị cũ
-    setSelectedLocation(typeof value === "string" ? value.split(",").slice(-1) : value.slice(-1));
-  };
-  const handleSelectedCinema = (cinemaId: string) => {
+  const handleSelectCinema = (cinemaId: string, cinemaName: string) => {
     setCinemaIDSelected(cinemaId);
+    setSelectedCinemaName(cinemaName);
+    setOpen(false);
   };
-  if (!dataCinemaByLocation) return <div>Loading...</div>;
-  return (
-    <div>
-      <FormControl sx={{ m: 1, width: 340, ...selectStyles }}>
-        <Select
-          labelId="location-select-label"
-          id="location-select"
-          value={selectedLocation}
-          onChange={handleChange}
-          input={<OutlinedInput />}
-          MenuProps={MenuProps}
-          sx={selectStyles}
-          size="small"
-          renderValue={() => "Chọn rạp"} // 👉 Hiển thị mặc định
-        >
-          <div>
-            {dataCinemaByLocation?.map((item, index) => (
-              <div key={index}>
-                {item.cinemas.map((cinema, idx) => (
-                  <div key={idx} className="px-2 py-1">
-                    {/* Header tên hệ thống rạp */}
-                    <div className="text-[#444] font-semibold text-sm mb-1">
-                      {cinema.cinemaCode}
-                    </div>
-                    <ul className="border border-gray-300 rounded">
-                      {cinema?.items?.map((cinemaItem) => (
-                        <li
-                          key={cinemaItem._id}
-                          onClick={() => handleSelectedCinema(cinemaItem._id)}
-                          className={`text-[14px] py-2 px-3 cursor-pointer text-gray-800 ${
-                            cinemaIDSelected === cinemaItem._id
-                              ? "bg-blue-950 text-pink-400 font-semibold"
-                              : "hover:bg-gray-100"
-                          }`}
-                        >
-                          {cinemaItem.name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            ))}
 
-            {/* Trạng thái đang tải giả định */}
-            <div className="px-3 py-2 text-sm text-gray-500">Hết!…</div>
-          </div>
-        </Select>
-      </FormControl>
-    </div>
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  if (!dataCinemaByLocation) return <div>Loading...</div>;
+
+  return (
+    <FormControl sx={{ m: 1, width: isTablet ? "100%" : 360, ...selectStyles }}>
+      <Select
+        open={open}
+        onOpen={handleOpen}
+        onClose={handleClose}
+        displayEmpty
+        value={cinemaIDSelected || ""}
+        onChange={() => {}}
+        input={<OutlinedInput />}
+        MenuProps={MenuProps}
+        renderValue={() =>
+          selectedCinemaName ? (
+            <Typography fontWeight="bold">{selectedCinemaName}</Typography>
+          ) : (
+            <Typography color="#aaa">Chọn rạp</Typography>
+          )
+        }
+        size="small"
+        sx={selectStyles}
+      >
+        {dataCinemaByLocation.map((item, index) => (
+          <React.Fragment key={index}>
+            {item.cinemas.map((cinema, idx) => (
+              <React.Fragment key={idx}>
+                {/* Tiêu đề hệ thống rạp */}
+                <MenuItem
+                  sx={{
+                    pointerEvents: "none",
+                    paddingY: 1,
+                    backgroundColor: "#1e3a8a",
+                    borderTop: "1px solid #00eaff",
+                    borderBottom: "1px solid #00eaff",
+                    borderRadius: "6px",
+                    marginTop: idx !== 0 ? 2 : 0,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "0.85rem",
+                      color: "#ec4899",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {cinema.cinemaCode}
+                  </Typography>
+                </MenuItem>
+
+                {cinema.items.map((cinemaItem) => (
+                  <MenuItem
+                    key={cinemaItem._id}
+                    value={cinemaItem._id}
+                    onClick={() => handleSelectCinema(cinemaItem._id, cinemaItem.name)}
+                    selected={cinemaIDSelected === cinemaItem._id}
+                    sx={{
+                      fontSize: "0.875rem",
+                      color: "white",
+                      backgroundColor: cinemaIDSelected === cinemaItem._id ? "#242424" : "#1a1a1a",
+                      "&:hover": {
+                        backgroundColor: "#2c2c2c",
+                      },
+                      "&.Mui-selected": {
+                        backgroundColor: "#333",
+                        color: "#00eaff",
+                      },
+                    }}
+                  >
+                    {cinemaItem.name}
+                  </MenuItem>
+                ))}
+              </React.Fragment>
+            ))}
+          </React.Fragment>
+        ))}
+
+        <MenuItem disabled sx={{ fontSize: "0.8rem", color: "#666", backgroundColor: "#121212" }}>
+          Hết!…
+        </MenuItem>
+      </Select>
+    </FormControl>
   );
 }

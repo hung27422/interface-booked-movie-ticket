@@ -13,6 +13,7 @@ function CinemaSelector() {
     setCinemaIDSelected(cinemaId);
   };
 
+  // Tìm tên của rạp đã chọn
   if (!dataCinemaByLocation) return <div>Loading...</div>;
 
   return (
@@ -24,7 +25,7 @@ function CinemaSelector() {
             {item.cinemas.map((cinema, index) => {
               return (
                 <div key={index}>
-                  <div className="mb-2 hidden md:block">
+                  <div className="mb-2 hidden lg:block">
                     <div className="flex items-center justify-center bg-blue-950 text-pink-400 rounded-t-md h-10">
                       <Image
                         src={cinema.image}
@@ -35,15 +36,15 @@ function CinemaSelector() {
                       ></Image>
                       <h3 className="ml-3 text-xl">{cinema.cinemaCode}</h3>
                     </div>
-                    <ul className="border-2 border-[#9400ff] mt-2 rounded-md">
+                    <ul className="border border-purple-500 mt-2 rounded-md bg-blue-950 text-white transition-all">
                       {cinema?.items?.map((cinemaItem) => {
                         return (
                           <li
                             key={cinemaItem._id}
-                            className={`py-2 px-8 border-[#9400ff] border-b text-base cursor-pointer text-center ${
+                            className={`py-2 px-8 border-b border-purple-500 text-base cursor-pointer text-center transition-colors duration-200 ${
                               cinemaIDSelected === cinemaItem._id
-                                ? "bg-blue-950 text-pink-400"
-                                : "hover:bg-blue-950 hover:text-pink-400"
+                                ? "bg-blue-900 text-pink-400"
+                                : "hover:bg-blue-900 hover:text-pink-400"
                             }`}
                             onClick={() => handleSelectedCinema(cinemaItem._id)}
                           >
@@ -59,7 +60,7 @@ function CinemaSelector() {
           </div>
         );
       })}
-      <div className="mt-2 text-center md:hidden">
+      <div className="mt-2 text-center lg:hidden">
         <SearchCinemasInput />
       </div>
     </>

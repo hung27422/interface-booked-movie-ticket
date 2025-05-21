@@ -12,7 +12,7 @@ function LocationSelector() {
   return (
     <>
       {/* Hiển thị trên desktop */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <h3 className="flex items-center justify-center h-10 lg:text-xl text-pink-400  bg-blue-950  rounded-t-md  ">
           Khu Vực
         </h3>
@@ -34,7 +34,7 @@ function LocationSelector() {
         </ul>
       </div>
       {/* Hiển thị trên mobile */}
-      <div className="mt-2 text-center md:hidden">
+      <div className="mt-2 text-center lg:hidden">
         <SearchAddressInput />
       </div>
     </>
