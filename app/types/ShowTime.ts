@@ -1,3 +1,5 @@
+import { Seat } from "./Rooms";
+
 interface IMovie {
   _id: string;
   title: string;
@@ -8,6 +10,7 @@ interface IMovie {
 interface IRoom {
   _id: string;
   name: string;
+  seats: Seat[];
 }
 interface ICinemas {
   _id: string;

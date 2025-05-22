@@ -39,6 +39,8 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   // Always call the hook, passing nulls if ticket is not ready yet
   useAddTicketOnPayment(responseCode, ticket, addTicket, getShowTimeById);
 
+  
+
   const { handleDownloadPDF } = useHandleDownloadPDF({ ticketRef });
 
   if (!ticket) {

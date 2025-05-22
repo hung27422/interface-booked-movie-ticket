@@ -1,8 +1,8 @@
-// ✅ Sửa useAddTicketOnPayment để tạo QR code bất đồng bộ tại đây
 import { ITicket } from "@/app/types/Ticket";
 import { useEffect, useRef } from "react";
 import QRCode from "qrcode";
 import { IShowTime } from "@/app/types/ShowTime";
+import useRooms from "@/app/hooks/useRooms";
 interface SnackItem {
   quantity: number;
   snackId: {
@@ -16,7 +16,10 @@ const useAddTicketOnPayment = (
   getShowTimeById: IShowTime | null
 ) => {
   const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
+  const { updateBookedSeats, mutateRoomById } = useRooms();
+
   const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
+
   const seatsNumber = seats?.join(" - ");
   const snackSummary: string =
     savedBooking?.snacks
@@ -45,6 +48,12 @@ const useAddTicketOnPayment = (
         ...ticket,
         urlQrCode: qrCodeUrl,
       });
+      // ✅ Cập nhật ghế đã đặt
+      if (getShowTimeById?.room?._id) {
+        await updateBookedSeats(getShowTimeById.room._id, seats);
+        await mutateRoomById();
+        console.log("✅ Ghế đã được cập nhật sau khi thanh toán thành công");
+      }
     })();
   }, [
     responseCode,
@@ -56,6 +65,11 @@ const useAddTicketOnPayment = (
     getShowTimeById?.movie?.title,
     getShowTimeById?.room?.name,
     snackSummary,
+    getShowTimeById?.room?._id,
+    getShowTimeById?.room?.seats,
+    updateBookedSeats,
+    seats,
+    mutateRoomById,
   ]);
 };
 

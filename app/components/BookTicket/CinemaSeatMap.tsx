@@ -2,7 +2,6 @@ import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvi
 import { IRoom, Seat } from "@/app/types/Rooms";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect } from "react";
 import useSnackbar from "../Hooks/useSnackbar";
 
 interface CinemaSeatMapProps {
@@ -10,23 +9,30 @@ interface CinemaSeatMapProps {
 }
 
 function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
+  // context
   const { selectedSeats, setSelectedSeats } = useAppContext();
+
+  //hooks
   const { showSnackbar } = useSnackbar();
+  const toggleSeatSelection = (seat: Seat, secondSeat?: Seat) => {
+    const seatIds = secondSeat ? [seat._id, secondSeat._id] : [seat._id];
+    const areSeatsSelected = seatIds.every((id) => selectedSeats.some((s) => s._id === id));
 
-  const params = new URLSearchParams(window.location.search);
-  const responseCode = params.get("vnp_ResponseCode");
-  console.log({ responseCode });
-
-  const toggleSeatSelection = (seat: Seat) => {
-    const isSeatSelected = selectedSeats.some((s) => s._id === seat._id);
-    if (selectedSeats.length >= 10 && !isSeatSelected) {
+    if (!areSeatsSelected && selectedSeats.length + seatIds.length > 10) {
       showSnackbar("Một người chỉ được đặt tối đa 10 ghế", "error");
       return;
     }
 
-    setSelectedSeats((prev: Seat[]) =>
-      isSeatSelected ? prev.filter((s) => s._id !== seat._id) : [...prev, seat]
-    );
+    setSelectedSeats((prev: Seat[]) => {
+      if (areSeatsSelected) {
+        // Bỏ chọn cả hai ghế
+        return prev.filter((s) => !seatIds.includes(s._id));
+      } else {
+        // Chọn cả hai ghế
+        const newSeats = [seat, ...(secondSeat ? [secondSeat] : [])];
+        return [...prev, ...newSeats];
+      }
+    });
   };
 
   const groupedSeats = dataRoom.seats?.reduce((acc, seat) => {
@@ -36,12 +42,6 @@ function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
     acc[rowKey].push(seat);
     return acc;
   }, {} as Record<string, typeof dataRoom.seats>);
-
-  useEffect(() => {
-    if (selectedSeats.length > 10) {
-      showSnackbar("Một người chỉ được đặt tối đa 10 ghế", "error");
-    }
-  }, [selectedSeats.length, showSnackbar]);
 
   return (
     <div className="w-full max-w-screen-md mx-auto px-2 ">
@@ -83,10 +83,23 @@ function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
               const isSelected = selectedSeats.some(
                 (s) => s._id === seat._id || s._id === seats[i + 1]?._id
               );
+              const isEitherBooked = seat.isBooked || seats[i + 1]?.isBooked;
 
+              if (isEitherBooked) {
+                seatRow.push(
+                  <div
+                    key={seat._id}
+                    className="min-w-[4rem] w-1/5 sm:w-16 h-8 mr-2 sm:mr-3 flex items-center justify-center tech-border bg-gray-200 text-gray-400 cursor-not-allowed pointer-events-none"
+                  >
+                    <CheckIcon fontSize="small" />
+                  </div>
+                );
+                i++;
+                continue;
+              }
               seatRow.push(
                 <div
-                  onClick={() => toggleSeatSelection(seat)}
+                  onClick={() => toggleSeatSelection(seat, seats[i])}
                   key={seat._id}
                   className={`min-w-[4rem] w-1/5 sm:w-16 h-8 mr-2 sm:mr-3 flex items-center justify-center rounded-md text-white font-bold hover:cursor-pointer
               ${isSelected ? "tech-border tech-border-focused" : "bg-blue-500"}
@@ -98,7 +111,20 @@ function CinemaSeatMap({ dataRoom }: CinemaSeatMapProps) {
               i++; // Bỏ qua ghế tiếp theo vì đã gộp
             } else {
               const isSelected = selectedSeats.some((s) => s._id === seat._id);
-
+              if (seat.isBooked === true) {
+                seatRow.push(
+                  <div
+                    key={seat._id}
+                    className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center tech-border bg-gray-200 text-gray-400 cursor-not-allowed pointer-events-none  ${
+                      seat.type === "AISLE" ? "mr-4 sm:mr-6" : ""
+                    }
+              `}
+                  >
+                    <CheckIcon fontSize="small" />
+                  </div>
+                );
+                continue; // bỏ qua đoạn render thường
+              }
               seatRow.push(
                 <div
                   onClick={() => toggleSeatSelection(seat)}

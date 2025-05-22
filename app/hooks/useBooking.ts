@@ -10,7 +10,7 @@ function useBooking({ bookingId }: useBookingProps = {}) {
   const { data: bookings, error, mutate: mutateBookings } = useSWR<IBooking[]>("/bookings");
 
   const { data: dataBookingById, mutate: mutateDataBookingById } = useSWR<IBooking>(
-    `/bookings/${bookingId}`
+    bookingId ? `/bookings/${bookingId}` : null
   );
 
   // Thêm mới một booking
