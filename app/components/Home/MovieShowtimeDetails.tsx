@@ -7,8 +7,10 @@ import useShowTime from "@/app/hooks/useShowTimes";
 
 function MovieShowtimeDetails() {
   const { selectedDate, cinemaIDSelected } = useAppContext();
+  console.log({ cinemaIDSelected });
+
   const { filterByCinemaDateCinemaId } = useShowTime({
-    idCinema: cinemaIDSelected ?? "",
+    idCinema: cinemaIDSelected === "" ? "67b7575dba9c7545a6904d31" : cinemaIDSelected,
     date: selectedDate,
   });
 

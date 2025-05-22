@@ -32,7 +32,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   // Tạo state để lưu trữ địa chỉ đã chọn
   const [selectedAddress, setSelectedAddress] = useState("Hồ Chí Minh");
   // Tạo state để lưu trữ rạp đã chọn
-  const [cinemaIDSelected, setCinemaIDSelected] = useState<string>("");
+  const [cinemaIDSelected, setCinemaIDSelected] = useState<string>("67b7575dba9c7545a6904d31");
   // Tạo state để lưu trữ ngày đã chọn
   const [selectedDate, setSelectedDate] = useState<string>(getTodayVN());
   // Tạo state để lưu trữ danh sách ghế đã chọn

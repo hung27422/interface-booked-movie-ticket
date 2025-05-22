@@ -6,8 +6,12 @@ import useCinemas from "@/app/hooks/useCinemas";
 function CinemaSelector() {
   //states
   const { selectedAddress, cinemaIDSelected, setCinemaIDSelected } = useAppContext();
+  console.log({ selectedAddress });
+
   // hooks
-  const { dataCinemaByLocation } = useCinemas({ location: selectedAddress ?? "" });
+  const { dataCinemaByLocation } = useCinemas({
+    location: selectedAddress ?? "",
+  });
   // function
   const handleSelectedCinema = (cinemaId: string) => {
     setCinemaIDSelected(cinemaId);
