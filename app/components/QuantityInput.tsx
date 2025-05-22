@@ -34,7 +34,7 @@ export default function QuantityInput({
       sx={{ color: "white", fontSize: isMobile ? "10px" : "12px" }}
     >
       <IconButton
-        sx={{ color: "white", fontSize: isMobile ? "16px" : "24px" }}
+        sx={{ color: "white", fontSize: isMobile ? "16px" : "18px", padding: "2px" }}
         onClick={() => handleChange(quantity - 1)}
         disabled={quantity <= min}
       >
@@ -70,7 +70,7 @@ export default function QuantityInput({
         }}
       />
       <IconButton
-        sx={{ color: "white", fontSize: isMobile ? "16px" : "24px" }}
+        sx={{ color: "white", fontSize: isMobile ? "16px" : "24px", padding: "2px" }}
         onClick={() => handleChange(quantity + 1)}
         disabled={quantity >= max}
       >

@@ -74,7 +74,7 @@ function SnackSelector({ dataRoom }: SnackSelectorProps) {
             <span className="col-span-1 md:col-span-3 mx-auto text-base md:text-lg">
               {item.price.toLocaleString()} ₫
             </span>
-            <span className="col-span-1 mx-auto">
+            <div className="col-span-1 mx-auto ">
               <QuantityInput
                 value={selected?.quantity || 0}
                 onChange={(value) =>
@@ -88,13 +88,13 @@ function SnackSelector({ dataRoom }: SnackSelectorProps) {
                 }
                 min={0}
               />
-            </span>
+            </div>
           </div>
         );
       })}
 
       {/* Xem log mảng snack để kiểm tra */}
-      <pre className="text-white mt-4">{JSON.stringify(selectedSnacks, null, 2)}</pre>
+      {/* <pre className="text-white mt-4">{JSON.stringify(selectedSnacks, null, 2)}</pre> */}
     </div>
   );
 }

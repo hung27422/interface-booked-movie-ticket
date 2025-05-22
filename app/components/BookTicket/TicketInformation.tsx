@@ -39,8 +39,6 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   // Always call the hook, passing nulls if ticket is not ready yet
   useAddTicketOnPayment(responseCode, ticket, addTicket, getShowTimeById);
 
-  
-
   const { handleDownloadPDF } = useHandleDownloadPDF({ ticketRef });
 
   if (!ticket) {
@@ -136,7 +134,7 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
           </Button>
         </div>
       </div>
-      <div className="mt-5 w-1/2 mx-auto">
+      <div className="mt-5 w-1/2 mx-auto text-center flex item-center justify-center">
         <Link href="/pages/my-ticket">
           <Button
             color="primary"

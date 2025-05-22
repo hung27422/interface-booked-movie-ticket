@@ -45,7 +45,10 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
   const handlePayment = async () => {
     if (idBank === 1) {
       try {
-        const response = await paymentServices.addPaymentVNPay(getShowTimeById._id ?? "");
+        const response = await paymentServices.addPaymentVNPay(
+          getShowTimeById._id ?? "",
+          idBooking
+        );
         if (response.success && response.paymentUrl) {
           window.location.href = response.paymentUrl;
         } else {
