@@ -63,44 +63,7 @@ export default function AccountMenu() {
         slotProps={{
           paper: {
             elevation: 0,
-            sx: {
-              overflow: "visible",
-              mt: 1.5,
-              border: "2px solid #00eaff", // Thêm viền
-              borderRadius: "10px",
-              boxShadow: "0 0 3px #00eaff, 0 0 3px #7d2aff",
-              transition: "all 0.3s ease-in-out",
-              backgroundColor: "#121212", // Màu nền tối như TextField
-              color: "#fff",
-              borderBottom: "1px solid #ccc",
-              "&:hover": {
-                borderColor: "#7d2aff",
-                boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
-              },
-              "&:focus-within": {
-                borderColor: "#ffffff",
-                boxShadow: "0 0 10px #00eaff, 0 0 10px #7d2aff, 0 0 12px #ffffff",
-                transform: "scale(1.02)",
-              },
-              "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              "&::before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
+            sx: { styles },
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -128,3 +91,41 @@ export default function AccountMenu() {
     </React.Fragment>
   );
 }
+const styles = {
+  overflow: "visible",
+  mt: 1.5,
+  border: "2px solid #00eaff", // Thêm viền
+  borderRadius: "10px",
+  boxShadow: "0 0 3px #00eaff, 0 0 3px #7d2aff",
+  transition: "all 0.3s ease-in-out",
+  backgroundColor: "#121212", // Màu nền tối như TextField
+  color: "#fff",
+  borderBottom: "1px solid #ccc",
+  "&:hover": {
+    borderColor: "#7d2aff",
+    boxShadow: "0 0 6px #00eaff, 0 0 6px #7d2aff",
+  },
+  "&:focus-within": {
+    borderColor: "#ffffff",
+    boxShadow: "0 0 10px #00eaff, 0 0 10px #7d2aff, 0 0 12px #ffffff",
+    transform: "scale(1.02)",
+  },
+  "& .MuiAvatar-root": {
+    width: 32,
+    height: 32,
+    ml: -0.5,
+    mr: 1,
+  },
+  "&::before": {
+    content: '""',
+    display: "block",
+    position: "absolute",
+    top: 0,
+    right: 14,
+    width: 10,
+    height: 10,
+    bgcolor: "background.paper",
+    transform: "translateY(-50%) rotate(45deg)",
+    zIndex: 0,
+  },
+};

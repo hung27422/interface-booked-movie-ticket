@@ -21,8 +21,9 @@ function useBooking({ bookingId }: useBookingProps = {}) {
       console.log({ newBooking });
       return newBooking;
     } catch (error) {
-      console.error("Lỗi khi thêm đơn đặt vé:", error);
-      throw error;
+      return { error };
+      // console.error("Lỗi khi thêm đơn đặt vé:", error);
+      // throw error;
     }
   };
 

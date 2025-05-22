@@ -23,6 +23,8 @@ type AppContextType = {
   setIdBank: React.Dispatch<React.SetStateAction<number>>;
   toggleMenuProfile: number;
   setToggleMenuProfile: React.Dispatch<React.SetStateAction<number>>;
+  openModalAuth: boolean;
+  setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -49,6 +51,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [idBank, setIdBank] = useState<number>(1);
   // Tạo state để lưu trữ menu profile đã chọn
   const [toggleMenuProfile, setToggleMenuProfile] = useState<number>(1);
+  //
+  const [openModalAuth, setOpenModalAuth] = useState<boolean>(false);
 
   const appContextValue = {
     selectedAddress,
@@ -71,6 +75,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setIdBank,
     toggleMenuProfile,
     setToggleMenuProfile,
+    openModalAuth,
+    setOpenModalAuth,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

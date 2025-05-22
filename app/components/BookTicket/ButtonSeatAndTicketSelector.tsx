@@ -11,7 +11,7 @@ interface ButtonContinueBookingProps {
 }
 function ButtonContinueBooking({ getShowTimeById }: ButtonContinueBookingProps) {
   // context
-  const { selectedSeats, setStepBooking, setIdBooking } = useAppContext();
+  const { selectedSeats, setStepBooking, setIdBooking, setOpenModalAuth } = useAppContext();
 
   const { authState } = useContext(AuthContext);
   // hooks
@@ -20,6 +20,11 @@ function ButtonContinueBooking({ getShowTimeById }: ButtonContinueBookingProps) 
 
   // functions
   const handleSeatAndTicketSelector = async () => {
+    if (!authState.isAuthenticated) {
+      showSnackbar("Vui lòng đăng nhập tiếp tục", "error");
+      setOpenModalAuth(true);
+      return;
+    }
     if (selectedSeats.length === 0) {
       showSnackbar("Vui lòng chọn ghế để tiếp tục", "error");
       return;

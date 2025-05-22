@@ -40,7 +40,7 @@ function CinemaSelector() {
                       ></Image>
                       <h3 className="ml-3 text-xl">{cinema.cinemaCode}</h3>
                     </div>
-                    <ul className="border border-purple-500 mt-2 rounded-md bg-blue-950 text-white transition-all">
+                    <ul className="border border-purple-500 mt-2 rounded-md  text-white transition-all">
                       {cinema?.items?.map((cinemaItem) => {
                         return (
                           <li
