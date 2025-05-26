@@ -1,13 +1,22 @@
 import useSWR from "swr";
 import { IShowTime, IShowtimeByCinemaDate } from "../types/ShowTime";
+import { IGroupedByLocation } from "../types/Cinemas";
 interface useShowTimeProps {
+  location?: string;
   idRoom?: string;
   idMovie?: string;
   idShowTime?: string;
   idCinema?: string;
   date?: string;
 }
-function useShowTime({ idRoom, idMovie, idShowTime, date, idCinema }: useShowTimeProps = {}) {
+function useShowTime({
+  location,
+  idRoom,
+  idMovie,
+  idShowTime,
+  date,
+  idCinema,
+}: useShowTimeProps = {}) {
   const { data: showtimes } = useSWR<IShowTime[]>("/showtimes");
 
   const { data: getShowTimeByRoomId } = useSWR<IShowTime[]>(`/showtimes/room/${idRoom}`);
@@ -22,11 +31,15 @@ function useShowTime({ idRoom, idMovie, idShowTime, date, idCinema }: useShowTim
     idCinema && date && `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}`
   );
 
+  const { data: getCinemasByMovieId } = useSWR<IGroupedByLocation[]>(
+    idMovie && location && `/showtimes/group-by-location?movieId=${idMovie}&location=${location}`
+  );
   return {
     showtimes,
     getShowTimeByRoomId,
     getShowTimeByRoomIdAndMovieID,
     getShowTimeById,
+    getCinemasByMovieId,
     filterByCinemaDateCinemaId,
   };
 }

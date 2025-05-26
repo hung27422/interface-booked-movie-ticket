@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { IMovie } from "../types/Movie";
+import Link from "next/link";
 
 interface MovieBookingCardProps {
   movie: IMovie;
@@ -10,7 +11,10 @@ function MovieBookingCard({ movie, index }: MovieBookingCardProps) {
   const { title, poster } = movie;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px] p-2 mx-auto cursor-pointer tech-border rounded-md">
+    <Link
+      href={`/pages/buy-ticket/${movie._id}`}
+      className="flex flex-col justify-center items-center w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px] p-2 mx-auto cursor-pointer tech-border rounded-md"
+    >
       <Image
         src={poster}
         alt="img-film"
@@ -22,7 +26,7 @@ function MovieBookingCard({ movie, index }: MovieBookingCardProps) {
         <h5 className="truncate text-xs sm:text-sm md:text-base font-medium">{title}</h5>
       </div>
       <div className="text-xs sm:text-sm text-gray-300 mt-1">#{index + 1}</div>
-    </div>
+    </Link>
   );
 }
 

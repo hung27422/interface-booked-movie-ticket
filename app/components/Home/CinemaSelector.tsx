@@ -2,28 +2,47 @@ import Image from "next/image";
 import SearchCinemasInput from "../SearchCinemasInput";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import useCinemas from "@/app/hooks/useCinemas";
+import useShowTime from "@/app/hooks/useShowTimes";
+import { useEffect } from "react";
 
-function CinemaSelector() {
+interface CinemaSelectorProps {
+  idMovie?: string;
+}
+function CinemaSelector({ idMovie }: CinemaSelectorProps) {
   //states
   const { selectedAddress, cinemaIDSelected, setCinemaIDSelected } = useAppContext();
-  console.log({ selectedAddress });
 
   // hooks
   const { dataCinemaByLocation } = useCinemas({
     location: selectedAddress ?? "",
   });
+  const { getCinemasByMovieId } = useShowTime({
+    idMovie: idMovie,
+    location: selectedAddress ?? "",
+  });
+  console.log({ idMovie, selectedAddress, getCinemasByMovieId });
+
   // function
   const handleSelectedCinema = (cinemaId: string) => {
     setCinemaIDSelected(cinemaId);
   };
 
   // Tìm tên của rạp đã chọn
-  if (!dataCinemaByLocation) return <div>Loading...</div>;
+  useEffect(() => {
+    if (getCinemasByMovieId && getCinemasByMovieId.length > 0) {
+      const idCinemaSelected = getCinemasByMovieId[0]?.cinemas[0]?.items[0]?._id;
+      if (idCinemaSelected) {
+        setCinemaIDSelected(idCinemaSelected);
+      }
+    }
+  }, [getCinemasByMovieId, setCinemaIDSelected]);
 
+  if (!dataCinemaByLocation || !getCinemasByMovieId) return <div>Loading...</div>;
+  const data = getCinemasByMovieId ? getCinemasByMovieId : dataCinemaByLocation;
   return (
     <>
       {/* Hiển thị trên desktop */}
-      {dataCinemaByLocation.map((item, index) => {
+      {data.map((item, index) => {
         return (
           <div key={index}>
             {item.cinemas.map((cinema, index) => {

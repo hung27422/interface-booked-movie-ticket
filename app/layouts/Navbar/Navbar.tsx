@@ -9,42 +9,30 @@ import DrawerNavbar from "@/app/components/DrawerNavbar";
 import { useContext } from "react";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import AccountMenu from "@/app/components/Auth/AccountMenu";
-const menus = [
-  {
-    id: 1,
-    path: "/",
-    label: "Đặt vé",
-  },
-  {
-    id: 2,
-    path: "/pages/movies",
-    label: "Phim",
-  },
-  {
-    id: 3,
-    path: "/pages/evaluate",
-    label: "Đánh giá",
-  },
-];
-function Navbar() {
-  //Context
-  const { authState } = useContext(AuthContext);
-  console.log({ authState });
 
+const menus = [
+  { id: 1, path: "/", label: "Đặt vé" },
+  { id: 2, path: "/pages/movies", label: "Phim" },
+  { id: 3, path: "/pages/evaluate", label: "Đánh giá" },
+];
+
+function Navbar() {
+  const { authState } = useContext(AuthContext);
   const pathName = usePathname();
 
   return (
-    <div className="navbar-wrapper">
-      {/* Drawer menu - Chỉ hiển thị khi màn hình nhỏ */}
-      <div className="lg:hidden">
-        <DrawerNavbar />
-      </div>
+    <div className="navbar-wrapper ">
+      {/* Left: Drawer + Logo */}
+      <div className="flex items-center">
+        {/* Drawer menu - Hiện trên mobile */}
+        <div className="lg:hidden mr-2">
+          <DrawerNavbar />
+        </div>
 
-      {/* Logo */}
-      <div className="p-2 text-center tech-border">
-        <Link href={"/"}>
+        {/* Logo */}
+        <Link href="/" className="block">
           <Image
-            className="px-4 py-1"
+            className="px-2 py-1"
             src={Logo}
             alt="Logo"
             width={100}
@@ -54,8 +42,8 @@ function Navbar() {
         </Link>
       </div>
 
-      {/* Menu - Chỉ hiển thị trên màn hình lớn */}
-      <div className="hidden lg:flex items-center">
+      {/* Center: Menu - chỉ hiển thị trên màn hình lớn */}
+      <div className="hidden lg:flex items-center gap-4">
         {menus.map((item) => {
           const isActive =
             item.path === "/"
@@ -64,9 +52,11 @@ function Navbar() {
 
           return (
             <Link
-              className={`w-32 mx-2 py-2 px-1 tech-border ${isActive ? "tech-border-focused" : ""}`}
-              href={item.path}
               key={item.id}
+              href={item.path}
+              className={`lg:w-24 py-2 px-4 tech-border text-sm ${
+                isActive ? "tech-border-focused" : ""
+              }`}
             >
               {item.label}
             </Link>
@@ -74,11 +64,14 @@ function Navbar() {
         })}
       </div>
 
-      {/* SearchInput + User - Search chỉ hiển thị trên màn hình lớn */}
-      <div className="flex items-center justify-center">
-        <div className="hidden lg:block mr-3">
+      {/* Right: SearchInput + Auth */}
+      <div className="flex items-center gap-2">
+        {/* Chỉ hiện Search trên desktop */}
+        <div className="hidden lg:block">
           <SearchInput width={400} />
         </div>
+
+        {/* Auth */}
         {authState.isAuthenticated ? <AccountMenu /> : <ModalLAuth />}
       </div>
     </div>

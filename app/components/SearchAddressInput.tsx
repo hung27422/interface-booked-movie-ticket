@@ -45,7 +45,7 @@ const selectStyles = {
   },
   "& .MuiInputBase-input": {
     color: "white",
-    padding: "0px",
+    padding: "4px",
   },
   "& .MuiInputLabel-root": {
     color: "#fff",
@@ -81,7 +81,7 @@ export default function SearchAddressInput() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: isTablet ? 600 : 340, ...selectStyles }}>
+      <FormControl sx={{ m: 1, width: isTablet ? "100%" : 340, ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"
@@ -90,7 +90,6 @@ export default function SearchAddressInput() {
           input={<OutlinedInput label="Chọn địa điểm" />}
           MenuProps={MenuProps}
           sx={selectStyles}
-          size="small"
         >
           {addressCinemas.map((location) => (
             <MenuItem

@@ -37,7 +37,7 @@ const selectStyles = {
   },
   "& .MuiInputBase-input": {
     color: "white",
-    padding: "10px",
+    padding: "4px",
   },
 };
 
