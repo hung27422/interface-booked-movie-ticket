@@ -8,11 +8,13 @@ import { MovieContext } from "../contexts/MovieContextProvider/MovieContextProvi
 function BookingMovieSlider() {
   const { movieState } = useContext(MovieContext);
   return (
-    <div className="slider-container text-white">
+    <div className="slider-container text-white px-4">
       <Slider {...settings}>
         {movieState?.movies &&
           movieState.movies.map((movie, index) => (
-            <MovieBookingCard key={movie._id} movie={movie} index={index} />
+            <div key={movie._id} className="px-2">
+              <MovieBookingCard movie={movie} index={index} />
+            </div>
           ))}
       </Slider>
     </div>

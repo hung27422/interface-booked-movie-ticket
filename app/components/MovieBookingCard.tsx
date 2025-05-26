@@ -5,23 +5,23 @@ interface MovieBookingCardProps {
   movie: IMovie;
   index: number;
 }
+
 function MovieBookingCard({ movie, index }: MovieBookingCardProps) {
   const { title, poster } = movie;
+
   return (
-    <div className="flex flex-col justify-center items-center max-md:w-20 p-2 m-2 md:mx-2 mx-auto cursor-pointer tech-border">
+    <div className="flex flex-col justify-center items-center w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px] p-2 mx-auto cursor-pointer tech-border rounded-md">
       <Image
         src={poster}
         alt="img-film"
-        className="w-20 h-24 md:w-32 md:h-40 rounded-md"
-        width={120}
-        height={170}
+        className="rounded-md object-cover w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40"
+        width={128}
+        height={160}
       />
-      <div>
-        <h5 className="w-[65px] md:w-[120px] mt-1 text-sm max-md:text-xs truncate px-2">{title}</h5>
+      <div className="w-full text-center mt-2 px-1">
+        <h5 className="truncate text-xs sm:text-sm md:text-base font-medium">{title}</h5>
       </div>
-      <div>
-        <span>{index + 1}</span>
-      </div>
+      <div className="text-xs sm:text-sm text-gray-300 mt-1">#{index + 1}</div>
     </div>
   );
 }

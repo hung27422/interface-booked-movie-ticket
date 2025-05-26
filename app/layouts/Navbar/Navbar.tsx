@@ -17,8 +17,8 @@ const menus = [
   },
   {
     id: 2,
-    path: "/pages/showtimes",
-    label: "Lịch chiếu",
+    path: "/pages/movies",
+    label: "Phim",
   },
   {
     id: 3,
