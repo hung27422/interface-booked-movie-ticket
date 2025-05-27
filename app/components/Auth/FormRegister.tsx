@@ -47,8 +47,8 @@ const FormRegister = forwardRef<HTMLDivElement, FormRegisterProps>((props, ref) 
       showSnackbar("Mật khẩu không thống nhất", "error");
       return;
     }
+    
     const registerData = await register(valueRegister);
-    console.log({ registerData });
 
     if (registerData.success) {
       showSnackbar("Đăng Ký thành công", "success");

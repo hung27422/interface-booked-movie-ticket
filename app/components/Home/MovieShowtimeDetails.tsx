@@ -12,7 +12,6 @@ function MovieShowtimeDetails() {
     idCinema: cinemaIDSelected === "" ? "67b7575dba9c7545a6904d31" : cinemaIDSelected,
     date: selectedDate,
   });
-  console.log({ filterByCinemaDateCinemaId });
 
   return (
     <div className="">

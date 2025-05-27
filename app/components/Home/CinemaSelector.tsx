@@ -20,7 +20,6 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
     idMovie: idMovie,
     location: selectedAddress ?? "",
   });
-  console.log({ idMovie, selectedAddress, getCinemasByMovieId });
 
   // function
   const handleSelectedCinema = (cinemaId: string) => {
@@ -37,8 +36,9 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
     }
   }, [getCinemasByMovieId, setCinemaIDSelected]);
 
-  if (!dataCinemaByLocation || !getCinemasByMovieId) return <div>Loading...</div>;
   const data = getCinemasByMovieId ? getCinemasByMovieId : dataCinemaByLocation;
+  if (!data) return <div>Loading...</div>;
+
   return (
     <>
       {/* Hiển thị trên desktop */}

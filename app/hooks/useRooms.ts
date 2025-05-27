@@ -19,7 +19,6 @@ function useRooms({ idCinema, idRoom }: useRoomsProps = {}) {
     try {
       const updatedRoom = await roomServices.updateRoom(id, room);
       mutate();
-      console.log({ updatedRoom });
       return updatedRoom;
     } catch (error) {
       console.error("Lỗi khi cập nhật room:", error);
@@ -30,7 +29,6 @@ function useRooms({ idCinema, idRoom }: useRoomsProps = {}) {
     try {
       const updateBookedSeats = await roomServices.updateBookedSeats(id, bookedSeats);
       mutateRoomById();
-      console.log({ updateBookedSeats });
       return updateBookedSeats;
     } catch {
       console.error("Lỗi khi cập nhật room:", error);

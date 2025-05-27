@@ -52,7 +52,6 @@ function BuyTicket({ params }: BuyTicketProps) {
           </div>
         </div>
       </div>
-      <div>Mua vé : {params.idMovie}</div>
     </div>
   );
 }

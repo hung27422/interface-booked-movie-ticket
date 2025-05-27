@@ -31,7 +31,6 @@ function usePayment({ bookingId }: useBookingProps = {}) {
       const updatedBooking = await bookingServices.updateBooking(id, booking);
       mutateBookings();
       mutateDataBookingById(); // Cập nhật dữ liệu ngay lập tức
-      console.log({ updatedBooking });
       return updatedBooking;
     } catch (error) {
       console.error("Lỗi khi cập nhật đơn đặt vé:", error);

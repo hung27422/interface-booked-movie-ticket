@@ -18,12 +18,10 @@ function useBooking({ bookingId }: useBookingProps = {}) {
     try {
       const newBooking = await bookingServices.addBooking(booking);
       mutateBookings(); // Cập nhật dữ liệu ngay lập tức
-      console.log({ newBooking });
       return newBooking;
     } catch (error) {
-      return { error };
-      // console.error("Lỗi khi thêm đơn đặt vé:", error);
-      // throw error;
+      console.error("Lỗi khi thêm đơn đặt vé:", error);
+      throw error;
     }
   };
 
@@ -33,7 +31,6 @@ function useBooking({ bookingId }: useBookingProps = {}) {
       const updatedBooking = await bookingServices.updateBooking(id, booking);
       mutateBookings();
       mutateDataBookingById(); // Cập nhật dữ liệu ngay lập tức
-      console.log({ updatedBooking });
       return updatedBooking;
     } catch (error) {
       console.error("Lỗi khi cập nhật đơn đặt vé:", error);
