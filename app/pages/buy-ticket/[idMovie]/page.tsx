@@ -14,6 +14,7 @@ function BuyTicket({ params }: BuyTicketProps) {
   if (!dataMovieById) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="mt-4">
       <div className="w-full h-auto sm:h-36 text-center border-white border-2 rounded-md relative">
@@ -42,6 +43,7 @@ function BuyTicket({ params }: BuyTicketProps) {
           <div className="lg:col-span-3">
             <LocationSelector />
           </div>
+
           {/* Thông tin rạp */}
           <div className="lg:col-span-3">
             <CinemaSelector idMovie={params.idMovie} />
@@ -52,6 +54,7 @@ function BuyTicket({ params }: BuyTicketProps) {
           </div>
         </div>
       </div>
+      <div>{params.idMovie}</div>
     </div>
   );
 }

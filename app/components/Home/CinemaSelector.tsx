@@ -16,7 +16,7 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
   const { dataCinemaByLocation } = useCinemas({
     location: selectedAddress ?? "",
   });
-  const { getCinemasByMovieId } = useShowTime({
+  const { getCinemasByMovieId, errorCinemasByMovieId } = useShowTime({
     idMovie: idMovie,
     location: selectedAddress ?? "",
   });
@@ -36,7 +36,11 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
     }
   }, [getCinemasByMovieId, setCinemaIDSelected]);
 
+  if (errorCinemasByMovieId) {
+    return <div>{errorCinemasByMovieId.response.data.msg}</div>;
+  }
   const data = getCinemasByMovieId ? getCinemasByMovieId : dataCinemaByLocation;
+
   if (!data) return <div>Loading...</div>;
 
   return (

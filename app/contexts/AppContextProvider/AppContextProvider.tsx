@@ -25,6 +25,8 @@ type AppContextType = {
   setToggleMenuProfile: React.Dispatch<React.SetStateAction<number>>;
   openModalAuth: boolean;
   setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  saveErrorCinemasByMovieId: null | string;
+  setSaveErrorCinemasByMovieId: React.Dispatch<React.SetStateAction<null | string>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -51,8 +53,10 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const [idBank, setIdBank] = useState<number>(1);
   // Tạo state để lưu trữ menu profile đã chọn
   const [toggleMenuProfile, setToggleMenuProfile] = useState<number>(1);
-  //
+  // Tạo state để mở modal đăng nhập
   const [openModalAuth, setOpenModalAuth] = useState<boolean>(false);
+  //
+  const [saveErrorCinemasByMovieId, setSaveErrorCinemasByMovieId] = useState<null | string>(null);
 
   const appContextValue = {
     selectedAddress,
@@ -77,6 +81,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     setToggleMenuProfile,
     openModalAuth,
     setOpenModalAuth,
+    saveErrorCinemasByMovieId,
+    setSaveErrorCinemasByMovieId,
   };
   return <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>;
 };

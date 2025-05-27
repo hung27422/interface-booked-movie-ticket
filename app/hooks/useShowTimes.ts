@@ -31,15 +31,17 @@ function useShowTime({
     idCinema && date && `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}`
   );
 
-  const { data: getCinemasByMovieId } = useSWR<IGroupedByLocation[]>(
+  const { data: getCinemasByMovieId, error: errorCinemasByMovieId } = useSWR<IGroupedByLocation[]>(
     idMovie && location && `/showtimes/group-by-location?movieId=${idMovie}&location=${location}`
   );
+
   return {
     showtimes,
     getShowTimeByRoomId,
     getShowTimeByRoomIdAndMovieID,
     getShowTimeById,
     getCinemasByMovieId,
+    errorCinemasByMovieId,
     filterByCinemaDateCinemaId,
   };
 }
