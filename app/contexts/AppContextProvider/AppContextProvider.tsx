@@ -27,6 +27,8 @@ type AppContextType = {
   setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
   saveErrorCinemasByMovieId: null | string;
   setSaveErrorCinemasByMovieId: React.Dispatch<React.SetStateAction<null | string>>;
+  selectedAutoCompletedAddress: string;
+  setSelectedAutoCompletedAddress: React.Dispatch<React.SetStateAction<string>>;
   // Bạn có thể thêm nhiều biến khác ở đây trong tương lai
 };
 
@@ -35,6 +37,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   // Tạo state để lưu trữ địa chỉ đã chọn
   const [selectedAddress, setSelectedAddress] = useState("Hồ Chí Minh");
+  const [selectedAutoCompletedAddress, setSelectedAutoCompletedAddress] = useState("Hồ Chí Minh");
   // Tạo state để lưu trữ rạp đã chọn
   const [cinemaIDSelected, setCinemaIDSelected] = useState<string>("67b7575dba9c7545a6904d31");
   // Tạo state để lưu trữ ngày đã chọn
@@ -61,6 +64,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   const appContextValue = {
     selectedAddress,
     setSelectedAddress,
+    selectedAutoCompletedAddress,
+    setSelectedAutoCompletedAddress,
     cinemaIDSelected,
     setCinemaIDSelected,
     selectedDate,

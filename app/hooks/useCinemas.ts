@@ -4,15 +4,18 @@ import { ICinemas, IGroupedByLocation } from "../types/Cinemas";
 interface useCinemasProps {
   name?: string;
   location?: string;
+  idCinema?: string;
 }
-function useCinemas({ name, location }: useCinemasProps = {}) {
+function useCinemas({ name, location, idCinema }: useCinemasProps = {}) {
   const { data: cinemas, error, mutate } = useSWR<ICinemas[]>("/cinemas");
+
+  const { data: getCinemaByID } = useSWR<ICinemas>(idCinema ? `/cinemas/${idCinema}` : null);
   const { data: dataCinemaByName } = useSWR<ICinemas[]>(`/cinemas/search?name=${name}`);
   const { data: dataCinemaByLocation } = useSWR<IGroupedByLocation[]>(
     `/cinemas/group-by-location?location=${location}`
   );
 
-  return { cinemas, dataCinemaByName, dataCinemaByLocation, error, mutate };
+  return { cinemas, getCinemaByID, dataCinemaByName, dataCinemaByLocation, error, mutate };
 }
 
 export default useCinemas;

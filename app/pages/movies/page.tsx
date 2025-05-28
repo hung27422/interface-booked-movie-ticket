@@ -47,8 +47,8 @@ export default function Movies() {
           className="w-full h-full object-cover rounded-md opacity-30"
         />
         <div className="w-full absolute top-4 sm:top-8 text-white px-4">
-          <h2 className="font-bold text-lg sm:text-xl">{dataMenu.label}</h2>
-          <span className="text-sm">{dataMenu.desc}</span>
+          <h2 className="font-bold text-lg sm:text-2xl">{dataMenu.label}</h2>
+          <span className="text-sm sm:text-base">{dataMenu.desc}</span>
         </div>
       </div>
 

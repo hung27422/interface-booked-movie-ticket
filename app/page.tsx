@@ -12,7 +12,7 @@ export default function Home() {
       <div className="text-center ">
         <SectionTitle title="Mua Vé Theo Phim" />
         <div className="mt-4">
-          <BookingMovieSlider />
+          <BookingMovieSlider numberSlidesToShow={8} />
         </div>
       </div>
 

@@ -5,13 +5,21 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import useShowTime from "@/app/hooks/useShowTimes";
 
-function MovieShowtimeDetails() {
+interface MovieShowtimeDetailsProps {
+  idCinema?: string;
+}
+function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
   const { selectedDate, cinemaIDSelected } = useAppContext();
 
   const { filterByCinemaDateCinemaId } = useShowTime({
-    idCinema: cinemaIDSelected === "" ? "67b7575dba9c7545a6904d31" : cinemaIDSelected,
+    idCinema: idCinema
+      ? idCinema
+      : cinemaIDSelected === ""
+      ? "67b7575dba9c7545a6904d31"
+      : cinemaIDSelected,
     date: selectedDate,
   });
+  console.log({ idCinema });
 
   return (
     <div className="">

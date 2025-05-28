@@ -20,6 +20,13 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
     idMovie: idMovie,
     location: selectedAddress ?? "",
   });
+  console.log({
+    selectedAddress,
+    cinemaIDSelected,
+    idMovie,
+    dataCinemaByLocation,
+    getCinemasByMovieId,
+  });
 
   // function
   const handleSelectedCinema = (cinemaId: string) => {

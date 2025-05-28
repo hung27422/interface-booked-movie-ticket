@@ -13,7 +13,7 @@ import AccountMenu from "@/app/components/Auth/AccountMenu";
 const menus = [
   { id: 1, path: "/", label: "Đặt vé" },
   { id: 2, path: "/pages/movies", label: "Phim" },
-  { id: 3, path: "/pages/evaluate", label: "Đánh giá" },
+  { id: 3, path: "/pages/cinemas", label: "Rạp" },
 ];
 
 function Navbar() {
