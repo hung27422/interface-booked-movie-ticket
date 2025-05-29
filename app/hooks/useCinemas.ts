@@ -10,9 +10,11 @@ function useCinemas({ name, location, idCinema }: useCinemasProps = {}) {
   const { data: cinemas, error, mutate } = useSWR<ICinemas[]>("/cinemas");
 
   const { data: getCinemaByID } = useSWR<ICinemas>(idCinema ? `/cinemas/${idCinema}` : null);
-  const { data: dataCinemaByName } = useSWR<ICinemas[]>(`/cinemas/search?name=${name}`);
+  const { data: dataCinemaByName } = useSWR<ICinemas[]>(
+    name || name !== undefined ? `/cinemas/search?name=${name}` : null
+  );
   const { data: dataCinemaByLocation } = useSWR<IGroupedByLocation[]>(
-    `/cinemas/group-by-location?location=${location}`
+    location ? `/cinemas/group-by-location?location=${location}` : null
   );
 
   return { cinemas, getCinemaByID, dataCinemaByName, dataCinemaByLocation, error, mutate };

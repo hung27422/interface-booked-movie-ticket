@@ -38,7 +38,6 @@ function MyTicket() {
     userId: authState.user?._id,
     status: toggleMenu.status,
   });
-  console.log({ toggleMenu, dataTicketByUserID });
 
   useEffect(() => {
     if (!authState.isLoading && !authState.isAuthenticated) {
