@@ -19,8 +19,8 @@ export default function DrawerNavbar() {
 
   const navItems = [
     { href: "/", icon: <ConfirmationNumberIcon />, label: "Đặt vé" },
-    { href: "/", icon: <LocationOnIcon />, label: "Rạp" },
-    { href: "/", icon: <MovieIcon />, label: "Phim" },
+    { href: "/pages/cinemas", icon: <LocationOnIcon />, label: "Rạp" },
+    { href: "/pages/movies", icon: <MovieIcon />, label: "Phim" },
   ];
 
   const DrawerList = (
