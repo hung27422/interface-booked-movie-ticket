@@ -47,7 +47,7 @@ function BuyTicket({ params }: BuyTicketProps) {
           {/* Khu vực */}
           <div className="lg:col-span-3">
             <LocationSelector />
-          </div>  
+          </div>
 
           {/* Thông tin rạp */}
           <div className="lg:col-span-3">

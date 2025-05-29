@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import PosterMovies from "@/app/assets/images/poster-image.jpg";
-import useMovie from "@/app/hooks/useMovie";
 import MovieBookingCard from "@/app/components/MovieBookingCard";
 import { useState } from "react";
+import useMovie from "@/app/hooks/useMovie";
 
 const menus = [
   {
