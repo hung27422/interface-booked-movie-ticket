@@ -34,7 +34,7 @@ function MyTicket() {
     status: "PENDING",
   });
 
-  const { dataTicketByUserID } = useTicket({
+  const { dataTicketByUserIDandStatus } = useTicket({
     userId: authState.user?._id,
     status: toggleMenu.status,
   });
@@ -73,9 +73,9 @@ function MyTicket() {
         </div>
 
         <div className="mt-6 px-4 sm:px-8 md:px-20 lg:px-40 h-full">
-          {dataTicketByUserID ? (
+          {dataTicketByUserIDandStatus ? (
             <div className="space-y-4">
-              {dataTicketByUserID.map((ticket) => (
+              {dataTicketByUserIDandStatus.map((ticket) => (
                 <div
                   key={ticket._id}
                   className="bg-gray-800 rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"

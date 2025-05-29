@@ -27,7 +27,7 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
 
   const ticketRef = React.useRef<HTMLDivElement>(null);
 
-  const { dataTicketByUserID, addTicket } = useTicket({
+  const { dataTicketByUser, addTicket } = useTicket({
     userId: authState.user?._id,
   });
   // tạo object vé cần thêm dựa trên showtime, user, mã đơn hàng
@@ -47,7 +47,7 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   }
 
   // Lấy thông tin vé từ API
-  const data = dataTicketByUserID?.[0];
+  const data = dataTicketByUser?.[0];
   if (!data) {
     return (
       <div className="flex items-center justify-center h-screen">

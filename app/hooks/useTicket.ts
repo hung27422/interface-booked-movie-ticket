@@ -9,8 +9,11 @@ interface useTicketProps {
 }
 
 function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
-  const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } = useSWR<ITicket[]>(
-    userId && status ? `/tickets/user/${userId}?status=${status}` : null
+  const { data: dataTicketByUserIDandStatus, mutate: mutateDataTicketByUserIDandStatus } = useSWR<
+    ITicket[]
+  >(userId && status ? `/tickets/user/${userId}?status=${status}` : null);
+  const { data: dataTicketByUser, mutate: mutateDataTicketByUser } = useSWR<ITicket[]>(
+    userId ? `/tickets/user/${userId}` : null
   );
   const { data: dataTicketByID } = useSWR<ITicket>(idTicket ? `/tickets/${idTicket}` : null);
 
@@ -18,8 +21,8 @@ function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
   const addTicket = async (ticket: ITicket) => {
     try {
       const newTicket = await ticketServices.addTicket(ticket);
-      mutateDataTicketByUserID(); // Cập nhật dữ liệu ngay lập tức
-
+      mutateDataTicketByUserIDandStatus(); // Cập nhật dữ liệu ngay lập tức
+      mutateDataTicketByUser();
       return newTicket;
     } catch (error) {
       console.error("Lỗi khi thêm đơn đặt vé:", error);
@@ -31,7 +34,8 @@ function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
   const updateTicket = async (id: string, ticket: ITicket) => {
     try {
       const updatedTicket = await ticketServices.updateTicket(id, ticket);
-      mutateDataTicketByUserID(); // Cập nhật dữ liệu ngay lập tức
+      mutateDataTicketByUserIDandStatus(); // Cập nhật dữ liệu ngay lập tức
+      mutateDataTicketByUser();
       return updatedTicket;
     } catch (error) {
       console.error("Lỗi khi cập nhật đơn đặt vé:", error);
@@ -43,7 +47,8 @@ function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
   const deleteTicket = async (id: string) => {
     try {
       await ticketServices.deleteTicket(id);
-      mutateDataTicketByUserID(); // Cập nhật dữ liệu ngay lập tức
+      mutateDataTicketByUserIDandStatus(); // Cập nhật dữ liệu ngay lập tức
+      mutateDataTicketByUser();
     } catch (error) {
       console.error("Lỗi khi xóa đơn đặt vé:", error);
       throw error;
@@ -51,9 +56,10 @@ function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
   };
 
   return {
-    dataTicketByUserID,
+    dataTicketByUserIDandStatus,
+    dataTicketByUser,
     dataTicketByID,
-    mutateDataTicketByUserID,
+    mutateDataTicketByUserIDandStatus,
     addTicket,
     updateTicket,
     deleteTicket,
