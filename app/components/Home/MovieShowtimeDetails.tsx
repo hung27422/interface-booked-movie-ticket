@@ -19,7 +19,7 @@ function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
       : cinemaIDSelected,
     date: selectedDate,
   });
-  console.log({ idCinema });
+  const formatDate = new Date(selectedDate).toLocaleDateString("vi-VN");
 
   return (
     <div className="">
@@ -73,7 +73,7 @@ function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
         </>
       ) : (
         <div className="flex flex-col justify-center text-center p-1 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md">
-          Rạp hiện tại chưa có suất chiếu nào...
+          Hiện tại ngày {formatDate} chưa có suất chiếu nào...
         </div>
       )}
     </div>

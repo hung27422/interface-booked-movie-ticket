@@ -2,6 +2,7 @@
 import CinemaSelector from "@/app/components/Home/CinemaSelector";
 import LocationSelector from "@/app/components/Home/LocationSelector";
 import MovieShowtimeDetails from "@/app/components/Home/MovieShowtimeDetails";
+import LoaderSpinner from "@/app/components/LoaderSpinner";
 import SectionTitle from "@/app/components/SectionTitle";
 import useMovie from "@/app/hooks/useMovie";
 import Image from "next/image";
@@ -12,7 +13,11 @@ interface BuyTicketProps {
 function BuyTicket({ params }: BuyTicketProps) {
   const { dataMovieById } = useMovie({ idMovie: params.idMovie });
   if (!dataMovieById) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <LoaderSpinner />
+      </div>
+    );
   }
 
   return (
@@ -42,7 +47,7 @@ function BuyTicket({ params }: BuyTicketProps) {
           {/* Khu vực */}
           <div className="lg:col-span-3">
             <LocationSelector />
-          </div>
+          </div>  
 
           {/* Thông tin rạp */}
           <div className="lg:col-span-3">

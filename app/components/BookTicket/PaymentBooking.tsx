@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useContext } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import useBooking from "@/app/hooks/useBooking";
+import LoaderSpinner from "../LoaderSpinner";
 const banks = [
   {
     id: 1,
@@ -25,7 +26,11 @@ function PaymentBooking() {
   const { dataBookingById: dataBooking } = useBooking({ bookingId: idBooking });
 
   if (!dataBooking) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        <LoaderSpinner />
+      </div>
+    );
   }
 
   const seats = dataBooking?.seatNumbers.map((item) => item);

@@ -4,6 +4,7 @@ import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvi
 import useCinemas from "@/app/hooks/useCinemas";
 import useShowTime from "@/app/hooks/useShowTimes";
 import { useEffect } from "react";
+import LoaderSpinner from "../LoaderSpinner";
 
 interface CinemaSelectorProps {
   idMovie?: string;
@@ -48,8 +49,19 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
   }
   const data = getCinemasByMovieId ? getCinemasByMovieId : dataCinemaByLocation;
 
-  if (!data) return <div>Loading...</div>;
-
+  if (!data)
+    return (
+      <div>
+        <LoaderSpinner />
+      </div>
+    );
+  if (data.length === 0) {
+    return (
+      <div className="flex items-center justify-center mt-20 ">
+        Hiện tại khu vực này chưa có rạp nào...
+      </div>
+    );
+  }
   return (
     <>
       {/* Hiển thị trên desktop */}

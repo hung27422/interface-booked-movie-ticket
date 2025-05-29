@@ -51,7 +51,7 @@ const useAddTicketOnPayment = (
         urlQrCode: responseCode === "24" ? "" : qrCodeUrl,
       });
       // ✅ Cập nhật ghế đã đặt
-      if (getShowTimeById?.room?._id) {
+      if (getShowTimeById?.room?._id && responseCode !== "24") {
         await updateBookedSeats(getShowTimeById.room._id, seats);
         await mutateRoomById();
         console.log("✅ Ghế đã được cập nhật sau khi thanh toán thành công");

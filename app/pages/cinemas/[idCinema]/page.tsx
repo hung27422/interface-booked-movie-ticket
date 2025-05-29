@@ -1,5 +1,6 @@
 "use client";
 import MovieShowtimeDetails from "@/app/components/Home/MovieShowtimeDetails";
+import LoaderSpinner from "@/app/components/LoaderSpinner";
 import useCinemas from "@/app/hooks/useCinemas";
 import Image from "next/image";
 
@@ -9,7 +10,11 @@ interface DetailCinemaProps {
 function DetailCinema({ params }: DetailCinemaProps) {
   const { getCinemaByID } = useCinemas({ idCinema: params.idCinema });
   if (!getCinemaByID) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <LoaderSpinner />
+      </div>
+    );
   }
   return (
     <div>

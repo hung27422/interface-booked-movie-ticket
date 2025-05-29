@@ -11,6 +11,7 @@ import useHandleDownloadPDF from "@/app/utils/hooks/useHandleDownloadPDF";
 import React from "react";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import LoaderSpinner from "../LoaderSpinner";
 interface TicketInformationProps {
   getShowTimeById: IShowTime;
 }
@@ -48,7 +49,11 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   // Lấy thông tin vé từ API
   const data = dataTicketByUserID?.[0];
   if (!data) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <LoaderSpinner />
+      </div>
+    );
   }
 
   return (

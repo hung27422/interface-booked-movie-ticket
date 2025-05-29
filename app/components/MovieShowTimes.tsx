@@ -25,7 +25,7 @@ const MovieShowTimes = ({ data }: MovieShowTimesProps) => {
             `}
           >
             {time}
-            <span className="text-gray-400 text-sm font-bold">88K</span>
+            <span className="text-gray-400 text-sm font-bold">{item.price / 1000}K</span>
           </Link>
         );
       })}
