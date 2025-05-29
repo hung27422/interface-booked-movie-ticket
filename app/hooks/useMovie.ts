@@ -7,11 +7,14 @@ interface UseSnackProps {
 }
 
 function useMovie({ status, idMovie }: UseSnackProps = {}) {
+  const { data: dataMovies } = useSWR<IMovie[]>(`/movies`);
+
   const { data: dataMovieById } = useSWR<IMovie>(idMovie ? `/movies/${idMovie}` : null);
   // Lấy movies theo status
   const { data: dataMoviesByStatus } = useSWR<IMovie[]>(
     status && `/movies/status?status=${status}`
   );
+  // Lấy movie
   // Lấy movies theo tháng hiện tại
   const { data: dataMoviesByThisMonth } = useSWR<IMovie[]>(`/movies/this-month`);
 
@@ -19,6 +22,7 @@ function useMovie({ status, idMovie }: UseSnackProps = {}) {
     dataMoviesByStatus,
     dataMovieById,
     dataMoviesByThisMonth,
+    dataMovies,
   };
 }
 
