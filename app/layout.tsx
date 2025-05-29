@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="hide-scrollbar">
       <body className={`${fontBarlow.variable} antialiased h-full bg-[#0F0F0F]`}>
         <Providers>
           <div>

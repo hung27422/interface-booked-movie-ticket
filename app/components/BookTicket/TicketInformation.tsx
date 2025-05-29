@@ -18,8 +18,8 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   const { authState } = useContext(AuthContext);
 
   const params = new URLSearchParams(window.location.search);
-  const responseCode = params.get("vnp_TransactionStatus");
-  const codeOrder = params.get("vnp_TransactionNo");
+  const responseCode = params.get("vnp_ResponseCode");
+  const codeTransactionNo = params.get("vnp_TransactionNo");
 
   const responsePayDate = params.get("vnp_PayDate");
   const payDate = useFormattedDateTime(responsePayDate || "");
@@ -33,7 +33,7 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   const ticket = usePrepareTicket({
     getShowTimeById,
     userId: authState.user?._id,
-    codeOrder: codeOrder || "",
+    codeTransactionNo: codeTransactionNo || "",
     payDate: payDate,
   });
   // Always call the hook, passing nulls if ticket is not ready yet
@@ -58,7 +58,13 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
         className="flex flex-col w-full max-w-[620px] bg-gray-800 mx-auto border-white border-2 rounded-lg px-4 py-2"
       >
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-center text-white">Thông tin vé</h1>
+          <h1
+            className={`text-xl sm:text-2xl font-bold text-center ${
+              responseCode === "24" ? "text-red-500" : "text-white"
+            } `}
+          >
+            Thông tin vé {responseCode === "24" && "(Đã hủy)"}
+          </h1>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-3 mt-4">

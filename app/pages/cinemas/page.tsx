@@ -20,15 +20,15 @@ function Cinemas() {
       </div>
 
       <div className="w-[70%] mx-auto rounded-md py-4">
-        <div className="flex items-center justify-center py-2 px-4 rounded-lg">
+        <div className="flex flex-col sm:flex-row items-center justify-center py-2 px-4 rounded-lg gap-2">
           <div className="w-full">
             <TextFieldInput name="search" label="Tìm kiếm rạp..." size="small" />
           </div>
-          <div className="w-full">
+          <div className="w-full mt-1 sm:mt-0">
             <AutocompleteAddress />
           </div>
         </div>
-        <div>
+        <div className="mt-2 sm:mt-0">
           {dataCinemaByLocation && dataCinemaByLocation.length > 0 ? (
             <>
               {dataCinemaByLocation?.map((item) =>

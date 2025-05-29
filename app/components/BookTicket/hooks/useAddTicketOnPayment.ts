@@ -28,12 +28,13 @@ const useAddTicketOnPayment = (
   const hasRun = useRef(false);
   useEffect(() => {
     if (hasRun.current) return;
-    if (responseCode !== "00" || !ticket) return;
+    if (!ticket) return;
 
     hasRun.current = true;
 
     (async () => {
       const qrString = JSON.stringify({
+        TinhTrangVe: responseCode === "24" ? "THÀNH CÔNG" : "ĐÃ HỦY",
         MaDonHang: savedBooking?._id,
         Rap: getShowTimeById?.cinema?.name,
         Phim: getShowTimeById?.movie?.title,
@@ -46,7 +47,8 @@ const useAddTicketOnPayment = (
 
       await addTicket({
         ...ticket,
-        urlQrCode: qrCodeUrl,
+        status: responseCode === "24" ? "CANCELLED" : "PENDING",
+        urlQrCode: responseCode === "24" ? "" : qrCodeUrl,
       });
       // ✅ Cập nhật ghế đã đặt
       if (getShowTimeById?.room?._id) {

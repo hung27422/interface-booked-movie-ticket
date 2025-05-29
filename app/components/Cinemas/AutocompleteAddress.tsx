@@ -71,7 +71,7 @@ export default function AutocompleteAddress() {
   const { selectedAutoCompletedAddress, setSelectedAutoCompletedAddress } = useAppContext();
   return (
     <div>
-      <FormControl sx={{ m: 1, width: "100%", ...selectStyles }}>
+      <FormControl sx={{ m: 0, width: "100%", ...selectStyles }}>
         <Select
           labelId="location-select-label"
           id="location-select"

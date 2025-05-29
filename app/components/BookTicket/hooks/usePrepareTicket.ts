@@ -5,7 +5,7 @@ import FormattedTime from "@/app/utils/formattedTime";
 interface Params {
   getShowTimeById: IShowTime;
   userId?: string;
-  codeOrder?: string;
+  codeTransactionNo?: string;
   payDate: string;
 }
 interface SnackItem {
@@ -14,7 +14,12 @@ interface SnackItem {
     name: string;
   };
 }
-const usePrepareTicket = ({ getShowTimeById, userId, codeOrder, payDate }: Params): ITicket => {
+const usePrepareTicket = ({
+  getShowTimeById,
+  userId,
+  codeTransactionNo,
+  payDate,
+}: Params): ITicket => {
   const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
 
   const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
@@ -44,7 +49,7 @@ const usePrepareTicket = ({ getShowTimeById, userId, codeOrder, payDate }: Param
     seatNumbers: seatsNumber || "",
     snacks: snackSummary || "",
     cinemaAddress: getShowTimeById.cinema?.name || "",
-    codeTransaction: codeOrder || "",
+    codeTransaction: codeTransactionNo || "",
     urlQrCode: "",
     payDate: payDate,
     status: "PENDING",

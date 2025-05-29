@@ -63,7 +63,7 @@ export default function AccountMenu() {
         slotProps={{
           paper: {
             elevation: 0,
-            sx: { styles },
+            sx: styles,
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -113,7 +113,7 @@ const styles = {
   "& .MuiAvatar-root": {
     width: 32,
     height: 32,
-    ml: -0.5,
+    ml: -1,
     mr: 1,
   },
   "&::before": {

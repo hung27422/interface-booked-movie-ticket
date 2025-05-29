@@ -19,10 +19,12 @@ function useShowTime({
 }: useShowTimeProps = {}) {
   const { data: showtimes } = useSWR<IShowTime[]>("/showtimes");
 
-  const { data: getShowTimeByRoomId } = useSWR<IShowTime[]>(`/showtimes/room/${idRoom}`);
+  const { data: getShowTimeByRoomId } = useSWR<IShowTime[]>(
+    idRoom ? `/showtimes/room/${idRoom}` : null
+  );
 
   const { data: getShowTimeByRoomIdAndMovieID } = useSWR<IShowTime[]>(
-    `/showtimes/filter?roomId=${idRoom}&movieId=${idMovie}`
+    idRoom && idMovie ? `/showtimes/filter?roomId=${idRoom}&movieId=${idMovie}` : null
   );
 
   const { data: getShowTimeById } = useSWR<IShowTime>(idShowTime && `/showtimes/${idShowTime}`);

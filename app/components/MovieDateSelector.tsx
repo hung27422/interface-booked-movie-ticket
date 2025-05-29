@@ -28,17 +28,18 @@ const MovieDateSelector = () => {
 
   return (
     <div>
-      <ul className="flex space-x-2">
+      <ul className="flex flex-wrap gap-2">
         {dates.map(({ date, day }) => (
           <li
             key={date}
-            className={`p-2 tech-border rounded cursor-pointer text-center w-24  ${
-              selectedDate === date && "bg-purple-600"
-            }`}
+            className={`p-1 tech-border rounded cursor-pointer text-center w-16 sm:w-20 2xl:w-24
+              ${selectedDate === date ? "bg-purple-600 text-white" : ""} transition duration-200`}
             onClick={() => setSelectedDate(date)}
           >
-            <p className="font-bold text-sm">{day}</p>
-            <p>{date.split("-").reverse().join("/")}</p>
+            <p className="font-medium text-[10px] sm:text-sm 2xl:text-base">{day}</p>
+            <p className="text-[10px] sm:text-xs 2xl:text-sm">
+              {date.split("-").reverse().join("/")}
+            </p>
           </li>
         ))}
       </ul>

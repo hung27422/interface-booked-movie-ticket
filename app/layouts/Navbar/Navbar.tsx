@@ -28,19 +28,18 @@ function Navbar() {
         <div className="lg:hidden mr-2">
           <DrawerNavbar />
         </div>
-
-        {/* Logo */}
-        <Link href="/" className="block">
-          <Image
-            className="px-2 py-1"
-            src={Logo}
-            alt="Logo"
-            width={100}
-            height={60}
-            sizes="(max-width: 768px) 100px, auto"
-          />
-        </Link>
       </div>
+      {/* Logo */}
+      <Link href="/" className="block">
+        <Image
+          className="px-2 py-1"
+          src={Logo}
+          alt="Logo"
+          width={100}
+          height={60}
+          sizes="(max-width: 768px) 100px, auto"
+        />
+      </Link>
 
       {/* Center: Menu - chỉ hiển thị trên màn hình lớn */}
       <div className="hidden lg:flex items-center gap-4">

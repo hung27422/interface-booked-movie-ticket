@@ -29,8 +29,9 @@ const style = {
 
 interface ModalInfoTicketProps {
   idTicket?: string;
+  status?: string;
 }
-export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
+export default function ModalInfoTicket({ idTicket, status }: ModalInfoTicketProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -48,7 +49,7 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained">
+      <Button onClick={handleOpen} variant="contained" className="w-60">
         Xem chi tiết
       </Button>
       <Modal
@@ -63,7 +64,13 @@ export default function ModalInfoTicket({ idTicket }: ModalInfoTicketProps) {
             className="flex flex-col max-w-[620px] bg-gray-700 mx-auto border-white border-2 rounded-lg px-4 py-2 text-white"
           >
             <div>
-              <h1 className="text-2xl font-bold text-center">Thông tin vé</h1>
+              <h1
+                className={`text-2xl font-bold text-center ${
+                  status === "CANCELLED" ? "text-red-500" : "text-white"
+                }`}
+              >
+                Thông tin vé {status === "CANCELLED" && "(ĐÃ HỦY)"}
+              </h1>
             </div>
             <div className="flex items-center gap-3">
               <Image src={data?.imageCinema} alt="img-film" width={40} height={40} />

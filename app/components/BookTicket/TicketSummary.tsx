@@ -11,7 +11,7 @@ interface TicketSummaryProps {
 }
 function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   const params = new URLSearchParams(window.location.search);
-  const responseCode = params.get("vnp_TransactionStatus");
+  const responseCode = params.get("vnp_ResponseCode");
   // context
   const { selectedSeats, stepBooking, totalPriceSnack, setStepBooking } = useAppContext();
 
@@ -33,7 +33,7 @@ function TicketSummary({ getShowTimeById }: TicketSummaryProps) {
   // Check xem thanh toán có thành công hay không
 
   useEffect(() => {
-    if (responseCode === "00") {
+    if (responseCode === "00" || responseCode === "24") {
       setStepBooking(stepBooking + 3);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

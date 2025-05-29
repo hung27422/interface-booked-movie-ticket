@@ -5,21 +5,21 @@ import ticketServices from "../services/ticketServices";
 interface useTicketProps {
   userId?: string;
   idTicket?: string;
+  status?: string;
 }
 
-function useTicket({ userId, idTicket }: useTicketProps = {}) {
-  const { data, mutate } = useSWR<ITicket[]>(userId ? `/tickets/user/${userId} ` : null);
+function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
+  const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } = useSWR<ITicket[]>(
+    userId && status ? `/tickets/user/${userId}?status=${status}` : null
+  );
   const { data: dataTicketByID } = useSWR<ITicket>(idTicket ? `/tickets/${idTicket}` : null);
-
-  const { data: dataTicketByUserID, mutate: mutateDataTicketByUserID } =
-    useSWR<ITicket[]>(`/tickets`);
 
   // Thêm mới một booking
   const addTicket = async (ticket: ITicket) => {
     try {
       const newTicket = await ticketServices.addTicket(ticket);
       mutateDataTicketByUserID(); // Cập nhật dữ liệu ngay lập tức
-      mutate();
+
       return newTicket;
     } catch (error) {
       console.error("Lỗi khi thêm đơn đặt vé:", error);
@@ -51,7 +51,6 @@ function useTicket({ userId, idTicket }: useTicketProps = {}) {
   };
 
   return {
-    data,
     dataTicketByUserID,
     dataTicketByID,
     mutateDataTicketByUserID,

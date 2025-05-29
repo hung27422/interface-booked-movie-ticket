@@ -11,23 +11,34 @@ const menus = [
   {
     id: 1,
     name: "Vé chưa sử dụng",
+    status: "PENDING",
   },
   {
     id: 2,
     name: "Vé đã sử dụng",
+    status: "CONFIRMED",
   },
   {
     id: 3,
     name: "Vé đã hủy",
+    status: "CANCELLED",
   },
 ];
 
 function MyTicket() {
   const router = useRouter();
   const { authState } = useContext(AuthContext);
-  const [toggleMenu, setToggleMenu] = useState(1);
+  const [toggleMenu, setToggleMenu] = useState({
+    id: 1,
+    name: "Vé chưa sử dụng",
+    status: "PENDING",
+  });
 
-  const { dataTicketByUserID } = useTicket({ userId: authState.user?._id });
+  const { dataTicketByUserID } = useTicket({
+    userId: authState.user?._id,
+    status: toggleMenu.status,
+  });
+  console.log({ toggleMenu, dataTicketByUserID });
 
   useEffect(() => {
     if (!authState.isLoading && !authState.isAuthenticated) {
@@ -43,10 +54,6 @@ function MyTicket() {
     );
   }
 
-  if (!dataTicketByUserID) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="h-full">
       <ProfileLayout>
@@ -54,9 +61,9 @@ function MyTicket() {
           {menus.map((menu) => (
             <div
               key={menu.id}
-              onClick={() => setToggleMenu(menu.id)}
+              onClick={() => setToggleMenu(menu)}
               className={`px-3 py-2 border-2 border-pink-500 rounded-lg cursor-pointer transition-colors text-sm sm:text-base ${
-                toggleMenu === menu.id
+                toggleMenu.id === menu.id
                   ? "bg-gradient-to-r from-pink-500/80 to-pink-600/80 text-white"
                   : "text-pink-500"
               }`}
@@ -67,7 +74,7 @@ function MyTicket() {
         </div>
 
         <div className="mt-6 px-4 sm:px-8 md:px-20 lg:px-40 h-full">
-          {toggleMenu === 1 && (
+          {dataTicketByUserID ? (
             <div className="space-y-4">
               {dataTicketByUserID.map((ticket) => (
                 <div
@@ -84,18 +91,22 @@ function MyTicket() {
                       </div>
                     </div>
                   </div>
-                  <div className="self-end sm:self-auto">
-                    <ModalInfoTicket idTicket={ticket._id} />
+                  {ticket.status === "CANCELLED" && (
+                    <div className="text-center border-2 border-red-500 rounded-lg text-red-500 w-32 text-xl py-1 px-2">
+                      Vé đã hủy
+                    </div>
+                  )}
+                  <div className="self-center sm:self-auto">
+                    <ModalInfoTicket idTicket={ticket._id} status={ticket.status} />
                   </div>
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              Chưa có thông tin {toggleMenu.name}
+            </div>
           )}
-
-          {toggleMenu === 2 && (
-            <div className="text-center text-gray-400 h-40 mt-8">Vé đã sử dụng</div>
-          )}
-          {toggleMenu === 3 && <div className="text-center text-gray-400 h-40 mt-8">Vé đã hủy</div>}
         </div>
       </ProfileLayout>
     </div>
