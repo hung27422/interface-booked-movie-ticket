@@ -10,6 +10,8 @@ import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvi
 import CloseIcon from "@mui/icons-material/Close";
 import useBooking from "@/app/hooks/useBooking";
 import paymentServices from "@/app/services/paymentServices";
+import useSnackbar from "../Hooks/useSnackbar";
+import LoaderSpinner from "../LoaderSpinner";
 
 const style = {
   position: "absolute",
@@ -40,7 +42,15 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
   const { authState } = useContext(AuthContext);
   // hooks
   const { dataBookingById: dataBooking } = useBooking({ bookingId: idBooking });
+  const { showSnackbar } = useSnackbar();
 
+  const handleCheckDetailTicket = () => {
+    if (getShowTimeById.availableSeats <= 0) {
+      showSnackbar("Số lượng ghế đã hết", "error");
+    } else {
+      handleOpen();
+    }
+  };
   // function
   const handlePayment = async () => {
     if (idBank === 1) {
@@ -65,6 +75,7 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
       localStorage.setItem("dataBooking", JSON.stringify(dataBooking));
     }
   };
+
   // constants
   const dateShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "date" });
   const timeStartShowTime = FormattedTime({ isoString: getShowTimeById?.startTime, type: "time" });
@@ -74,6 +85,11 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
     (dataBooking && dataBooking?.ticketPrice * (dataBooking?.seatNumbers.length || 0)) || 0;
   const totalSnack = (dataBooking && dataBooking.snacks.reduce((a, b) => a + b.subtotal, 0)) || 0;
   const totalOrder = totalPriceSeats + totalSnack;
+
+  if (!getShowTimeById) {
+    return <LoaderSpinner />;
+  }
+
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -85,7 +101,7 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
           onClick={() => setStepBooking(stepBooking - 1)}
         />
         <Button
-          onClick={handleOpen}
+          onClick={handleCheckDetailTicket}
           title="Xác nhận"
           color="primary"
           variant="contained"

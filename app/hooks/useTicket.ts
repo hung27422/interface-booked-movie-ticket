@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { ITicket } from "../types/Ticket";
 import ticketServices from "../services/ticketServices";
+import { useState } from "react";
 
 interface useTicketProps {
   userId?: string;
@@ -9,6 +10,8 @@ interface useTicketProps {
 }
 
 function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
+  const [isValidSeatNumber, setIsValidSeatNumber] = useState("");
+
   const { data: dataTicketByUserIDandStatus, mutate: mutateDataTicketByUserIDandStatus } = useSWR<
     ITicket[]
   >(userId && status ? `/tickets/user/${userId}?status=${status}` : null);
@@ -24,8 +27,13 @@ function useTicket({ userId, idTicket, status }: useTicketProps = {}) {
       mutateDataTicketByUserIDandStatus(); // Cập nhật dữ liệu ngay lập tức
       mutateDataTicketByUser();
       return newTicket;
-    } catch (error) {
-      console.error("Lỗi khi thêm đơn đặt vé:", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      // console.error("Lỗi khi thêm đơn đặt vé:", error);
+      console.log({ error });
+      setIsValidSeatNumber(error?.response?.data.message);
+      console.log({ isValidSeatNumber });
+
       throw error;
     }
   };

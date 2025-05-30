@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 import QRCode from "qrcode";
 import { IShowTime } from "@/app/types/ShowTime";
 import useRooms from "@/app/hooks/useRooms";
+import useShowTime from "@/app/hooks/useShowTimes";
+import useSnackbar from "../../Hooks/useSnackbar";
 interface SnackItem {
   quantity: number;
   snackId: {
@@ -17,9 +19,11 @@ const useAddTicketOnPayment = (
 ) => {
   const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
   const { updateBookedSeats, mutateRoomById } = useRooms();
-
+  const { updateAvailableSeats } = useShowTime();
+  const { showSnackbar } = useSnackbar();
   const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
 
+  const numberSeats = seats.length;
   const seatsNumber = seats?.join(" - ");
   const snackSummary: string =
     savedBooking?.snacks
@@ -28,6 +32,11 @@ const useAddTicketOnPayment = (
   const hasRun = useRef(false);
   useEffect(() => {
     if (hasRun.current) return;
+
+    if (getShowTimeById && getShowTimeById?.availableSeats <= 0) {
+      return showSnackbar("Đã hết số lượng ghế đặt", "error");
+    }
+
     if (!ticket) return;
 
     hasRun.current = true;
@@ -55,7 +64,15 @@ const useAddTicketOnPayment = (
         await updateBookedSeats(getShowTimeById.room._id, seats);
         await mutateRoomById();
       }
+      if (getShowTimeById?._id && responseCode !== "24") {
+        await updateAvailableSeats(
+          getShowTimeById._id,
+          getShowTimeById.availableSeats,
+          numberSeats
+        );
+      }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     responseCode,
     ticket,
@@ -71,6 +88,10 @@ const useAddTicketOnPayment = (
     updateBookedSeats,
     seats,
     mutateRoomById,
+    getShowTimeById?._id,
+    getShowTimeById?.availableSeats,
+    updateAvailableSeats,
+    numberSeats,
   ]);
 };
 

@@ -21,10 +21,8 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
   const params = new URLSearchParams(window.location.search);
   const responseCode = params.get("vnp_ResponseCode");
   const codeTransactionNo = params.get("vnp_TransactionNo");
-
   const responsePayDate = params.get("vnp_PayDate");
   const payDate = useFormattedDateTime(responsePayDate || "");
-
   const ticketRef = React.useRef<HTMLDivElement>(null);
 
   const { dataTicketByUser, addTicket } = useTicket({

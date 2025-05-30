@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { IShowTime, IShowtimeByCinemaDate } from "../types/ShowTime";
 import { IGroupedByLocation } from "../types/Cinemas";
+import showtimeServices from "../services/showtimeServices";
 interface useShowTimeProps {
   location?: string;
   idRoom?: string;
@@ -27,7 +28,9 @@ function useShowTime({
     idRoom && idMovie ? `/showtimes/filter?roomId=${idRoom}&movieId=${idMovie}` : null
   );
 
-  const { data: getShowTimeById } = useSWR<IShowTime>(idShowTime && `/showtimes/${idShowTime}`);
+  const { data: getShowTimeById, mutate: mutateShowTimeById } = useSWR<IShowTime>(
+    idShowTime && `/showtimes/${idShowTime}`
+  );
 
   const { data: filterByCinemaDateCinemaId } = useSWR<IShowtimeByCinemaDate>(
     idCinema && date && `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}`
@@ -36,7 +39,20 @@ function useShowTime({
   const { data: getCinemasByMovieId, error: errorCinemasByMovieId } = useSWR<IGroupedByLocation[]>(
     idMovie && location && `/showtimes/group-by-location?movieId=${idMovie}&location=${location}`
   );
-
+  const updateAvailableSeats = async (id: string, totalSeats: number, bookedSeats: number) => {
+    try {
+      const updateAvailableSeats = await showtimeServices.updateAvailableSeats(
+        id,
+        totalSeats,
+        bookedSeats
+      );
+      mutateShowTimeById();
+      return updateAvailableSeats;
+    } catch (error) {
+      console.error("Lỗi khi cập nhật room:", error);
+      throw error;
+    }
+  };
   return {
     showtimes,
     getShowTimeByRoomId,
@@ -45,6 +61,7 @@ function useShowTime({
     getCinemasByMovieId,
     errorCinemasByMovieId,
     filterByCinemaDateCinemaId,
+    updateAvailableSeats,
   };
 }
 
