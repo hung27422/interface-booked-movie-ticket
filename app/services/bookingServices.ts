@@ -7,6 +7,9 @@ const BookingServices = {
   // Sửa phim
   updateBooking: (id: string, booking: IBookingData) =>
     api.put(`/bookings/${id}`, booking).then((res) => res.data),
+  // Update status
+  updateBookingStatus: (id: string, status: string) =>
+    api.patch(`/bookings/${id}/status`, { status }).then((res) => res.data),
   // Xóa phim
   deleteBooking: (id: string) => api.delete(`/bookings/${id}`).then((res) => res.data),
 };

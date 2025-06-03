@@ -28,14 +28,14 @@ function BuyTicket({ params }: BuyTicketProps) {
           width={500}
           height={100}
           alt="poster-movies"
-          className="w-full h-full object-cover rounded-md opacity-30"
+          className="w-full h-[200px] sm:h-full object-cover rounded-md opacity-30 "
         />
         <div className="flex flex-col w-full absolute top-4 text-white px-4">
-          <p className="font-bold text-lg sm:text-4xl">{dataMovieById.title}</p>
-          <span className="text-sm text-gray-300 mt-2">Đạo diễn: {dataMovieById.director}</span>
+          <p className="font-bold text-2xl sm:text-4xl">{dataMovieById.title}</p>
+          <span className="text-base text-gray-300 mt-2">Đạo diễn: {dataMovieById.director}</span>
           <div className="flex items-center justify-center gap-2 mt-2 text-gray-300">
-            <span className="text-sm">Thời gian: {dataMovieById.duration}</span>
-            <span className="text-sm">Độ tuổi: {dataMovieById.ageRate}T</span>
+            <span className="text-base">Thời gian: {dataMovieById.duration}</span>
+            <span className="text-base">Độ tuổi: {dataMovieById.ageRate}T</span>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@ function BuyTicket({ params }: BuyTicketProps) {
           </div>
           {/* Suất chiếu */}
           <div className="lg:col-span-6">
-            <MovieShowtimeDetails />
+            <MovieShowtimeDetails idMovie={params.idMovie} />
           </div>
         </div>
       </div>

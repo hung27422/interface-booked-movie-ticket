@@ -37,7 +37,17 @@ function useBooking({ bookingId }: useBookingProps = {}) {
       throw error;
     }
   };
-
+  const updateBookingStatus = async (id: string, status: string) => {
+    try {
+      const updateBookingStatus = await bookingServices.updateBookingStatus(id, status);
+      mutateBookings();
+      mutateDataBookingById();
+      return updateBookingStatus;
+    } catch (error) {
+      console.error("Lỗi khi cập nhật đơn đặt vé theo status:", error);
+      throw error;
+    }
+  };
   // Xóa một booking
   const deleteBooking = async (id: string) => {
     try {
@@ -53,6 +63,7 @@ function useBooking({ bookingId }: useBookingProps = {}) {
   return {
     bookings,
     dataBookingById,
+    updateBookingStatus,
     mutateBookings,
     mutateDataBookingById,
     error,

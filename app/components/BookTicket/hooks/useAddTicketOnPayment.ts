@@ -5,6 +5,7 @@ import { IShowTime } from "@/app/types/ShowTime";
 import useRooms from "@/app/hooks/useRooms";
 import useShowTime from "@/app/hooks/useShowTimes";
 import useSnackbar from "../../Hooks/useSnackbar";
+import useBooking from "@/app/hooks/useBooking";
 interface SnackItem {
   quantity: number;
   snackId: {
@@ -20,6 +21,7 @@ const useAddTicketOnPayment = (
   const savedBooking = JSON.parse(localStorage.getItem("dataBooking") || "{}");
   const { updateBookedSeats, mutateRoomById } = useRooms();
   const { updateAvailableSeats } = useShowTime();
+  const { updateBookingStatus } = useBooking();
   const { showSnackbar } = useSnackbar();
   const seats = savedBooking?.seatNumbers.map((item: unknown) => item);
 
@@ -59,6 +61,9 @@ const useAddTicketOnPayment = (
         status: responseCode === "24" ? "CANCELLED" : "PENDING",
         urlQrCode: responseCode === "24" ? "" : qrCodeUrl,
       });
+      if (responseCode === "00") {
+        updateBookingStatus(savedBooking._id, "CONFIRMED");
+      }
       // ✅ Cập nhật ghế đã đặt
       if (getShowTimeById?.room?._id && responseCode !== "24") {
         await updateBookedSeats(getShowTimeById.room._id, seats);

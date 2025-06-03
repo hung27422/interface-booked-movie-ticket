@@ -7,8 +7,9 @@ import useShowTime from "@/app/hooks/useShowTimes";
 
 interface MovieShowtimeDetailsProps {
   idCinema?: string;
+  idMovie?: string;
 }
-function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
+function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) {
   const { selectedDate, cinemaIDSelected } = useAppContext();
 
   const { filterByCinemaDateCinemaId } = useShowTime({
@@ -18,6 +19,7 @@ function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
       ? "67b7575dba9c7545a6904d31"
       : cinemaIDSelected,
     date: selectedDate,
+    idMovie: idMovie,
   });
   const formatDate = new Date(selectedDate).toLocaleDateString("vi-VN");
 
@@ -39,12 +41,12 @@ function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
             <span className="text-xs">{filterByCinemaDateCinemaId?.cinema.location}</span>
           </div>
           {/* Danh sách suất chiếu */}
-          <div className="flex p-2  border-2 border-[#9400ff] mt-2 rounded-md">
+          <div className="flex flex-col mt-2">
             {filterByCinemaDateCinemaId?.data?.map((item) => {
               return (
                 <div key={item._id}>
                   {/* Thông tin suất phim */}
-                  <div className="flex p-2 mt-2">
+                  <div className="flex border-2 border-[#9400ff] p-2 mt-2 rounded-md">
                     <div className="flex items-start justify-center mr-4 w-[20%] md:w-36 text-center ">
                       <Image
                         src={item.movie.poster}
@@ -72,7 +74,7 @@ function MovieShowtimeDetails({ idCinema }: MovieShowtimeDetailsProps) {
           </div>
         </>
       ) : (
-        <div className="flex flex-col justify-center text-center p-1 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md">
+        <div className="flex flex-col justify-center text-center p-4 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md ">
           Hiện tại ngày {formatDate} chưa có suất chiếu nào...
         </div>
       )}

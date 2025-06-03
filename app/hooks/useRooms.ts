@@ -29,6 +29,7 @@ function useRooms({ idCinema, idRoom }: useRoomsProps = {}) {
     try {
       const updateBookedSeats = await roomServices.updateBookedSeats(id, bookedSeats);
       mutateRoomById();
+      mutate();
       return updateBookedSeats;
     } catch {
       console.error("Lỗi khi cập nhật room:", error);

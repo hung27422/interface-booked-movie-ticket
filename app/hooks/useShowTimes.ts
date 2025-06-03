@@ -33,7 +33,11 @@ function useShowTime({
   );
 
   const { data: filterByCinemaDateCinemaId } = useSWR<IShowtimeByCinemaDate>(
-    idCinema && date && `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}`
+    idCinema &&
+      date &&
+      `/showtimes/filter-by-cinema-date?cinemaId=${idCinema}&releaseDate=${date}&idMovie=${
+        idMovie ? idMovie : ""
+      }`
   );
 
   const { data: getCinemasByMovieId, error: errorCinemasByMovieId } = useSWR<IGroupedByLocation[]>(
