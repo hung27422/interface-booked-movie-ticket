@@ -7,7 +7,7 @@ interface UseSnackProps {
 }
 
 function useMovie({ status, idMovie }: UseSnackProps = {}) {
-  const { data: dataMovies } = useSWR<IMovie[]>(`/movies`);
+  const { data: dataMovies } = useSWR<IMovie[]>(`/movies/getAll`);
 
   const { data: dataMovieById } = useSWR<IMovie>(idMovie ? `/movies/${idMovie}` : null);
   // Lấy movies theo status
