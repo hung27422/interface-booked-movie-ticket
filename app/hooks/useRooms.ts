@@ -4,16 +4,13 @@ import roomServices from "../services/roomServices";
 
 interface useRoomsProps {
   idRoom?: string;
-  idCinema?: string;
 }
-function useRooms({ idCinema, idRoom }: useRoomsProps = {}) {
-  const { data: rooms, error, mutate } = useSWR<IRoom[]>("/rooms");
+function useRooms({ idRoom }: useRoomsProps = {}) {
+  const { data: rooms, error, mutate } = useSWR<IRoom[]>("/rooms/getAll");
 
   const { data: getRoomsById, mutate: mutateRoomById } = useSWR<IRoom>(
     idRoom ? `/rooms/${idRoom}` : null
   );
-
-  const { data: getRoomsByCinemaId } = useSWR<IRoom[]>(idCinema ? `/rooms/${idCinema}` : null);
 
   const updateRoom = async (id: string, room: IRoom) => {
     try {
@@ -43,7 +40,7 @@ function useRooms({ idCinema, idRoom }: useRoomsProps = {}) {
     updateBookedSeats,
     mutateRoomById,
     updateRoom,
-    getRoomsByCinemaId,
+
     error,
     mutate,
   };

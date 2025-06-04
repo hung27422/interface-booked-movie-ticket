@@ -18,7 +18,7 @@ function useShowTime({
   date,
   idCinema,
 }: useShowTimeProps = {}) {
-  const { data: showtimes } = useSWR<IShowTime[]>("/showtimes");
+  const { data: showtimes } = useSWR<IShowTime[]>("/showtimes/getAll");
 
   const { data: getShowTimeByRoomId } = useSWR<IShowTime[]>(
     idRoom ? `/showtimes/room/${idRoom}` : null

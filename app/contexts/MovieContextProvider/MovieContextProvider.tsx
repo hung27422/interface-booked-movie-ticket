@@ -24,7 +24,7 @@ export const MovieContextProvider = ({ children }: { children: ReactNode }) => {
   const [movieState, dispatch] = useReducer(movieReducer, initialState);
 
   // Get data movie
-  const { data: dataMovie, error } = useSWR<IMovie[]>("/movies");
+  const { data: dataMovie, error } = useSWR<IMovie[]>("/movies/getAll");
 
   // useEffect
   useEffect(() => {

@@ -8,7 +8,7 @@ interface UseSnackProps {
 
 function useSnacks({ name, cinemaId }: UseSnackProps = {}) {
   // Lấy tất cả snacks theo cinemaId
-  const { data: snacks, error } = useSWR<ISnack[]>("/snacks");
+  const { data: snacks, error } = useSWR<ISnack[]>("/snacks/getAll");
 
   // Lấy snacks theo tên (search)
   const { data: dataSnackByName } = useSWR<ISnack[]>(name && `/snacks/search?name=${name}`);

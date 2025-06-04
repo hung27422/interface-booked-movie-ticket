@@ -7,7 +7,7 @@ interface useCinemasProps {
   idCinema?: string;
 }
 function useCinemas({ name, location, idCinema }: useCinemasProps = {}) {
-  const { data: cinemas, error, mutate } = useSWR<ICinemas[]>("/cinemas");
+  const { data: cinemas, error, mutate } = useSWR<ICinemas[]>("/cinemas/getAll");
 
   const { data: getCinemaByID } = useSWR<ICinemas>(idCinema ? `/cinemas/${idCinema}` : null);
   const { data: dataCinemaByName } = useSWR<ICinemas[]>(
