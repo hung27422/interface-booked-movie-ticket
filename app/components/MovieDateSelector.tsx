@@ -5,21 +5,36 @@ const MovieDateSelector = () => {
   const [dates, setDates] = useState<{ date: string; day: string }[]>([]);
   const { selectedDate, setSelectedDate } = useAppContext();
 
+  // Hàm định dạng ngày từ "yyyy-mm-dd" → "dd/mm/yyyy"
+  const formatDate = (isoDate: string) => {
+    const [year, month, day] = isoDate.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   useEffect(() => {
     const generateDates = () => {
       const tempDates = [];
-      const today = new Date();
       const formatter = new Intl.DateTimeFormat("vi-VN", { weekday: "long" });
 
       for (let i = 0; i < 6; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
+        const date = new Date();
+        date.setHours(0, 0, 0, 0); // reset giờ
+        date.setDate(date.getDate() + i); // cộng ngày
+
+        // ✅ Sửa chỗ sai múi giờ
+        const isoDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}-${String(date.getDate()).padStart(2, "0")}`;
+
+        const weekday = formatter.format(date); // thứ (tiếng Việt)
 
         tempDates.push({
-          date: date.toISOString().split("T")[0], // yyyy-mm-dd
-          day: formatter.format(date), // Thứ (thứ Hai, thứ Ba, ...)
+          date: isoDate,
+          day: weekday.charAt(0).toUpperCase() + weekday.slice(1), // Viết hoa chữ cái đầu
         });
       }
+
       setDates(tempDates);
     };
 
@@ -37,9 +52,7 @@ const MovieDateSelector = () => {
             onClick={() => setSelectedDate(date)}
           >
             <p className="font-medium text-[10px] sm:text-sm 2xl:text-base">{day}</p>
-            <p className="text-[10px] sm:text-xs 2xl:text-sm">
-              {date.split("-").reverse().join("/")}
-            </p>
+            <p className="text-[10px] sm:text-xs 2xl:text-sm">{formatDate(date)}</p>
           </li>
         ))}
       </ul>
