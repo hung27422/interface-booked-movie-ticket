@@ -74,7 +74,7 @@ function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) 
           </div>
         </>
       ) : (
-        <div className="flex flex-col justify-center text-center p-4 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md ">
+        <div className="flex flex-col justify-center text-center p-4 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md md:h-36">
           Hiện tại ngày {formatDate} chưa có suất chiếu nào...
         </div>
       )}
