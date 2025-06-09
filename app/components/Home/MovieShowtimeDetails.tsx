@@ -36,12 +36,12 @@ function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) 
       {filterByCinemaDateCinemaId ? (
         <>
           {/* Thông tin rạp */}
-          <div className="flex flex-col justify-center text-center p-1 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md">
+          <div className="flex flex-col justify-center text-center p-1 md:p-2 border-2 border-[#9400ff] mt-2 rounded-md">
             <h3 className="text-base md:text-lg">{filterByCinemaDateCinemaId?.cinema.name}</h3>
             <span className="text-xs">{filterByCinemaDateCinemaId?.cinema.location}</span>
           </div>
           {/* Danh sách suất chiếu */}
-          <div className="flex flex-col mt-2">
+          <div className="flex flex-col mt-1">
             {filterByCinemaDateCinemaId?.data?.map((item) => {
               return (
                 <div key={item._id}>
