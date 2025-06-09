@@ -59,7 +59,6 @@ function BuyTicket({ params }: BuyTicketProps) {
           </div>
         </div>
       </div>
-      <div>{params.idMovie}</div>
     </div>
   );
 }
