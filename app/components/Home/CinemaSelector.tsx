@@ -17,6 +17,8 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
   const { dataCinemaByLocation } = useCinemas({
     location: selectedAddress ?? "",
   });
+  console.log({ dataCinemaByLocation });
+
   const { getCinemasByMovieId, errorCinemasByMovieId } = useShowTime({
     idMovie: idMovie,
     location: selectedAddress ?? "",
@@ -36,6 +38,14 @@ function CinemaSelector({ idMovie }: CinemaSelectorProps) {
       }
     }
   }, [getCinemasByMovieId, setCinemaIDSelected]);
+  useEffect(() => {
+    if (dataCinemaByLocation && dataCinemaByLocation.length > 0) {
+      const idCinemaSelected = dataCinemaByLocation[0]?.cinemas[0]?.items[0]?._id;
+      if (idCinemaSelected) {
+        setCinemaIDSelected(idCinemaSelected);
+      }
+    }
+  }, [dataCinemaByLocation, setCinemaIDSelected]);
 
   if (errorCinemasByMovieId) {
     return <div>{errorCinemasByMovieId.response.data.msg}</div>;

@@ -1,6 +1,7 @@
 "use client";
 import AutocompleteAddress from "@/app/components/Cinemas/AutocompleteAddress";
 import useDebounce from "@/app/components/Hooks/useDebounce";
+import LoaderSpinner from "@/app/components/LoaderSpinner";
 import SectionTitle from "@/app/components/SectionTitle";
 import TextFieldInput from "@/app/components/TextFieldInput";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
@@ -16,7 +17,12 @@ function Cinemas() {
   // context
   const { selectedAutoCompletedAddress } = useAppContext();
   //custom hook
-  const { dataCinemaByLocation, dataCinemaByName } = useCinemas({
+  const {
+    dataCinemaByLocation,
+    dataCinemaByName,
+    isLoadingCinemaByLocation,
+    isLoadingCinemaByName,
+  } = useCinemas({
     location: selectedAutoCompletedAddress,
     name: debouncedValue ?? "",
   });
@@ -47,7 +53,7 @@ function Cinemas() {
         </div>
         {dataCinemaByName ? (
           <div>
-            {dataCinemaByName &&
+            {dataCinemaByName ? (
               dataCinemaByName.map((item, idx) => {
                 if (!item._id) return null;
                 return (
@@ -69,7 +75,18 @@ function Cinemas() {
                     </div>
                   </Link>
                 );
-              })}
+              })
+            ) : (
+              <div>
+                {isLoadingCinemaByName ? (
+                  <div className="flex items-center justify-center">
+                    <LoaderSpinner />
+                  </div>
+                ) : (
+                  "Không tìm thấy rạp nào..."
+                )}
+              </div>
+            )}
           </div>
         ) : (
           <div className="mt-2 sm:mt-0">
@@ -103,7 +120,13 @@ function Cinemas() {
               </>
             ) : (
               <div className="flex items-center justify-center mt-5">
-                Chưa có rạp nào ở địa chỉ này...
+                {isLoadingCinemaByLocation ? (
+                  <div className="flex items-center justify-center">
+                    <LoaderSpinner />
+                  </div>
+                ) : (
+                  "Chưa có rạp nào ở địa chỉ này..."
+                )}
               </div>
             )}
           </div>

@@ -4,6 +4,7 @@ import PosterMovies from "@/app/assets/images/poster-image.jpg";
 import MovieBookingCard from "@/app/components/MovieBookingCard";
 import { useState } from "react";
 import useMovie from "@/app/hooks/useMovie";
+import LoaderSpinner from "@/app/components/LoaderSpinner";
 
 const menus = [
   {
@@ -34,7 +35,9 @@ const menus = [
 
 export default function Movies() {
   const [dataMenu, setDataMenu] = useState(menus[0]);
-  const { dataMoviesByStatus, dataMoviesByThisMonth } = useMovie({ status: dataMenu.status });
+  const { dataMoviesByStatus, dataMoviesByThisMonth, isLoadingMovieByStatus } = useMovie({
+    status: dataMenu.status,
+  });
   const data = dataMenu.id === 4 ? dataMoviesByThisMonth : dataMoviesByStatus;
 
   return (
@@ -83,7 +86,13 @@ export default function Movies() {
             </div>
           ) : (
             <div className="flex items-center justify-center h-32 text-white">
-              Không có phim nào...
+              {isLoadingMovieByStatus ? (
+                <div className="flex items-center justify-center">
+                  <LoaderSpinner />
+                </div>
+              ) : (
+                "Không có phim nào..."
+              )}
             </div>
           )}
         </div>

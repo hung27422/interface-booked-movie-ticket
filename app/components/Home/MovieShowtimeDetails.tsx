@@ -4,6 +4,7 @@ import MovieShowTimes from "../MovieShowTimes";
 import InfoIcon from "@mui/icons-material/Info";
 import { useAppContext } from "@/app/contexts/AppContextProvider/AppContextProvider";
 import useShowTime from "@/app/hooks/useShowTimes";
+import LoaderSpinner from "../LoaderSpinner";
 
 interface MovieShowtimeDetailsProps {
   idCinema?: string;
@@ -12,7 +13,7 @@ interface MovieShowtimeDetailsProps {
 function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) {
   const { selectedDate, cinemaIDSelected } = useAppContext();
 
-  const { filterByCinemaDateCinemaId } = useShowTime({
+  const { filterByCinemaDateCinemaId, isLoading } = useShowTime({
     idCinema: idCinema
       ? idCinema
       : cinemaIDSelected === ""
@@ -75,7 +76,13 @@ function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) 
         </>
       ) : (
         <div className="flex flex-col justify-center text-center p-4 md:p-2  border-2 border-[#9400ff] mt-2 rounded-md md:h-56">
-          Hiện tại ngày {formatDate} chưa có suất chiếu nào...
+          {isLoading ? (
+            <div className="text-lg flex items-center justify-center">
+              <LoaderSpinner />
+            </div>
+          ) : (
+            <div className="text-lg">Không có suất chiếu nào cho ngày {formatDate}...</div>
+          )}
         </div>
       )}
     </div>
