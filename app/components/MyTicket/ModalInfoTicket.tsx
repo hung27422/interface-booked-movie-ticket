@@ -60,7 +60,7 @@ export default function ModalInfoTicket({ idTicket, status }: ModalInfoTicketPro
             <>
               <div
                 ref={ticketRef}
-                className="flex flex-col max-w-[620px] bg-gray-700 mx-auto border-white border-2 rounded-lg px-4 py-2 text-white"
+                className="flex flex-col max-w-[600px] bg-gray-700 mx-auto border-white border-2 rounded-lg px-4 py-2 text-white"
               >
                 <div>
                   <h1

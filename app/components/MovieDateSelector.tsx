@@ -8,7 +8,10 @@ const MovieDateSelector = () => {
   // Hàm định dạng ngày từ "yyyy-mm-dd" → "dd/mm/yyyy"
   const formatDate = (isoDate: string) => {
     const [year, month, day] = isoDate.split("-");
-    return `${day}/${month}/${year}`;
+    return {
+      dayMonth: `${day}/${month}`,
+      year: `/${year}`,
+    };
   };
 
   useEffect(() => {
@@ -43,16 +46,19 @@ const MovieDateSelector = () => {
 
   return (
     <div>
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex flex-nowrap gap-2">
         {dates.map(({ date, day }) => (
           <li
             key={date}
-            className={`p-1 tech-border rounded cursor-pointer text-center w-16 sm:w-20 2xl:w-24
-              ${selectedDate === date ? "bg-purple-600 text-white" : ""} transition duration-200`}
+            className={`p-1 sm:p-2 tech-border rounded cursor-pointer text-center w-16 sm:w-20 2xl:w-24
+    ${selectedDate === date ? "bg-purple-600 text-white" : ""} transition duration-200`}
             onClick={() => setSelectedDate(date)}
           >
-            <p className="font-medium text-[10px] sm:text-sm 2xl:text-base">{day}</p>
-            <p className="text-[10px] sm:text-xs 2xl:text-sm">{formatDate(date)}</p>
+            <p className="font-medium text-[8px] sm:text-sm 2xl:text-base leading-tight">{day}</p>
+            <p className="text-[10px] sm:text-xs 2xl:text-sm">
+              {formatDate(date).dayMonth}
+              <span className="hidden sm:inline">{formatDate(date).year}</span>
+            </p>
           </li>
         ))}
       </ul>

@@ -58,7 +58,7 @@ function TicketInformation({ getShowTimeById }: TicketInformationProps) {
     <div>
       <div
         ref={ticketRef}
-        className="flex flex-col w-full max-w-[620px] bg-gray-800 mx-auto border-white border-2 rounded-lg px-4 py-2"
+        className="flex flex-col w-full max-w-[600px] bg-gray-800 mx-auto border-white border-2 rounded-lg px-4 py-2"
       >
         <div>
           <h1
