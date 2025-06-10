@@ -46,7 +46,7 @@ function MovieShowtimeDetails({ idCinema, idMovie }: MovieShowtimeDetailsProps) 
               return (
                 <div key={item._id}>
                   {/* Thông tin suất phim */}
-                  <div className="flex border-2 border-[#9400ff] p-2 mt-2 rounded-md">
+                  <div className="flex border-2 border-[#9400ff] p-2 mt-1 rounded-md">
                     <div className="flex items-start justify-center mr-4 w-[20%] md:w-36 text-center ">
                       <Image
                         src={item.movie.poster}
