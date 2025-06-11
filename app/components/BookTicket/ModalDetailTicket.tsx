@@ -28,6 +28,11 @@ const style = {
   maxHeight: "90vh", // Tránh tràn màn hình nhỏ
   overflowY: "auto", // Kích hoạt scroll nếu nội dung dài
   paddingBottom: 2,
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+  scrollbarWidth: "none", // Firefox
+  msOverflowStyle: "none", // IE, Edge
 };
 
 interface ModalInfoTicketProps {
@@ -45,12 +50,16 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
   const { showSnackbar } = useSnackbar();
 
   const handleCheckDetailTicket = () => {
+    if (idBank === 2) {
+      return showSnackbar("Chức năng thanh toán PayPal đang được phát triển", "info");
+    }
     if (getShowTimeById.availableSeats <= 0) {
-      showSnackbar("Số lượng ghế đã hết", "error");
+      return showSnackbar("Số lượng ghế đã hết", "error");
     } else {
       handleOpen();
     }
   };
+
   // function
   const handlePayment = async () => {
     if (idBank === 1) {
@@ -69,7 +78,7 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
         alert("Đã có lỗi xảy ra khi thanh toán.");
       }
     } else if (idBank === 2) {
-      // handle payment with Paypal
+      showSnackbar("Chức năng thanh toán PayPal đang được phát triển", "info");
     }
     if (dataBooking) {
       localStorage.setItem("dataBooking", JSON.stringify(dataBooking));
@@ -117,14 +126,33 @@ export default function ModalDetailTicket({ getShowTimeById }: ModalInfoTicketPr
         disableScrollLock
       >
         <Box sx={style}>
-          <div className="flex items-center justify-between border-b-2 border-b-gray-300 w-full p-4">
-            <h4 className="text-pink-500 font-bold">Xác nhận đơn hàng</h4>
-            <div>
-              <CloseIcon
-                onClick={handleClose}
-                className="cursor-pointer hover:text-red-500"
-                fontSize="small"
-              />
+          <div className="border-b-2 border-b-gray-300 w-full">
+            <div className="flex items-center justify-between w-full p-4">
+              <h4 className="text-pink-500 font-bold">Xác nhận đơn hàng</h4>
+              <div>
+                <CloseIcon
+                  onClick={handleClose}
+                  className="cursor-pointer hover:text-red-500"
+                  fontSize="small"
+                />
+              </div>
+            </div>
+            <div className="px-4 pb-2 text-base text-gray-600">
+              <p className="text-white">Thông tin test VN Pay: Chọn ngân hàng NCB </p>
+              <div className="ml-4 mt-2">
+                <p>
+                  Số thẻ: <span className="text-red-500">9704198526191432198</span>
+                </p>
+                <p>
+                  Tên chủ thẻ: <span className="text-red-500">NGUYEN VAN A</span>
+                </p>
+                <p>
+                  Ngày phát hành: <span className="text-red-500">07/15</span>
+                </p>
+                <p>
+                  Mã OTP: <span className="text-red-500">123456</span>
+                </p>
+              </div>
             </div>
           </div>
           <div className="px-4 mt-4">

@@ -1,11 +1,12 @@
 "use client";
 import React, { forwardRef, useContext, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import TextFieldInput from "../TextFieldInput";
 import Button from "../Button";
 import { Account } from "@/app/types/User";
 import { AuthContext } from "@/app/contexts/AuthContextProvider/AuthContextProvider";
 import useSnackbar from "../Hooks/useSnackbar";
+import { pink } from "@mui/material/colors";
 
 const style = {
   position: "absolute" as const,
@@ -26,7 +27,6 @@ interface FormLoginProps {
   setIsLoginPage: (value: boolean) => void;
   setOpen: (value: boolean) => void;
 }
-
 const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
   const { showSnackbar } = useSnackbar();
   const { login } = useContext(AuthContext);
@@ -34,6 +34,7 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
   const [valueAccount, setValueAccount] = useState<Account>({ username: "", password: "" });
   const { username, password } = valueAccount;
   const [helperText, setHelperText] = useState<string>("");
+  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
 
   const handleChangValueAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -75,7 +76,15 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
           onClick={() => props.setOpen(false)}
         />
       </Box>
-
+      <Box>
+        <Typography
+          sx={{ mt: 1, textAlign: "center", fontSize: { xs: 13, sm: 15 } }}
+          className="text-gray-400"
+        >
+          Thông tin test: Tài khoản: <span className="text-red-500">tanhungho2</span> - Mật khẩu:
+          <span className="text-red-500"> 123456</span>
+        </Typography>
+      </Box>
       <Box id="modal-modal-description" sx={{ mt: 2 }}>
         <TextFieldInput
           label="Tài khoản"
@@ -87,11 +96,27 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
         <TextFieldInput
           label="Mật khẩu"
           name="password"
+          type={isShowPassword ? "text" : "password"}
           value={password}
           onChange={handleChangValueAccount}
           helperText={helperText}
         />
 
+        <FormControlLabel
+          control={
+            <Checkbox
+              onChange={() => setIsShowPassword(!isShowPassword)}
+              defaultChecked
+              sx={{
+                color: pink[800],
+                "&.Mui-checked": {
+                  color: pink[600],
+                },
+              }}
+            />
+          }
+          label="Hiển thị mật khẩu"
+        />
         <Box sx={{ textAlign: "center", mt: 2 }}>
           <Button
             onClick={handleLogin}
