@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import useMovie from "../hooks/useMovie";
-import LoaderSpinner from "./LoaderSpinner";
 import { useRouter } from "next/navigation";
 
 const textFieldStyles = {
@@ -65,13 +64,7 @@ interface SearchInputProps {
 export default function SearchInput({ width }: SearchInputProps) {
   const router = useRouter();
   const { dataMovies } = useMovie();
-  if (!dataMovies) {
-    return (
-      <div>
-        <LoaderSpinner />
-      </div>
-    );
-  }
+
   return (
     <Stack spacing={2} sx={{ width: width }}>
       <Autocomplete
@@ -79,9 +72,10 @@ export default function SearchInput({ width }: SearchInputProps) {
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={dataMovies.map((option) => option.title)}
+        options={(dataMovies ? dataMovies.map((option) => option.title) : [])}
         onChange={(_, selectedTitle) => {
-          const selectedMovie = dataMovies.find((movie) => movie.title === selectedTitle);
+          const selectedMovie =
+            dataMovies && dataMovies.find((movie) => movie.title === selectedTitle);
           if (selectedMovie) {
             // Ví dụ: chuyển đến /movie/123
             router.push(`/pages/buy-ticket/${selectedMovie._id}`);

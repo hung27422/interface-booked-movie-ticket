@@ -5,7 +5,20 @@ import SectionTitle from "./components/SectionTitle";
 import LocationSelector from "./components/Home/LocationSelector";
 import CinemaSelector from "./components/Home/CinemaSelector";
 import MovieShowtimeDetails from "./components/Home/MovieShowtimeDetails";
+import useMovie from "./hooks/useMovie";
+import LoaderSpinner from "./components/LoaderSpinner";
 export default function Home() {
+  const { isLoadingAllMovie, dataMovies } = useMovie();
+  if (isLoadingAllMovie || !dataMovies) {
+    return (
+      <main className="mt-4 h-full">
+        <div className="flex flex-col justify-center items-center h-full">
+          <LoaderSpinner />
+          <div>Vui lòng đợi vài giây..</div>
+        </div>
+      </main>
+    );
+  }
   return (
     <main className="mt-4 h-full">
       {/* Book movie tickets according to movies: Đặt vé xem phim theo phim */}

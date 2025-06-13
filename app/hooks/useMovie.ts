@@ -7,7 +7,7 @@ interface UseSnackProps {
 }
 
 function useMovie({ status, idMovie }: UseSnackProps = {}) {
-  const { data: dataMovies } = useSWR<IMovie[]>(`/movies/getAll`);
+  const { data: dataMovies, isLoading: isLoadingAllMovie } = useSWR<IMovie[]>(`/movies/getAll`);
 
   const { data: dataMovieById } = useSWR<IMovie>(idMovie ? `/movies/${idMovie}` : null);
   // Lấy movies theo status
@@ -24,6 +24,7 @@ function useMovie({ status, idMovie }: UseSnackProps = {}) {
     isLoadingMovieByStatus,
     dataMoviesByThisMonth,
     dataMovies,
+    isLoadingAllMovie,
   };
 }
 
