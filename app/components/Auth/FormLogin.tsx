@@ -106,7 +106,6 @@ const FormLogin = forwardRef<HTMLDivElement, FormLoginProps>((props, ref) => {
           control={
             <Checkbox
               onChange={() => setIsShowPassword(!isShowPassword)}
-              defaultChecked
               sx={{
                 color: pink[800],
                 "&.Mui-checked": {
